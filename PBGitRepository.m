@@ -21,6 +21,7 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 @implementation PBGitRepository
 
 @synthesize revisionList, branches, currentBranch, refs, hasChanged, config;
+@dynamic gitDir, baseDir;
 
 - (BOOL)readFromData:(NSData *)data ofType:(NSString *)typeName error:(NSError **)outError
 {
@@ -56,6 +57,14 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 		return [NSURL fileURLWithPath:newPath];
 
 	return nil;
+}
+
+- (NSURL *)gitDir {
+	return self.fileURL;
+}
+
+- (NSURL *)baseDir {
+	return [[self class] baseDirForURL:[self gitDir]];
 }
 
 // For a given path inside a repository, return either the .git dir

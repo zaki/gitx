@@ -21,6 +21,7 @@
 	{
 		self.repository = theRepository;
 		[self showWindow:nil];
+		watcher = [[PBGitRepositoryWatcher alloc] initWithRepository:theRepository];
 	}
 	
 	if (displayDefault) {
@@ -34,6 +35,7 @@
 
 - (void)windowWillClose:(NSNotification *)notification
 {
+	[watcher stop];
 	NSLog(@"Window will close!");
 	if (historyViewController)
 		[historyViewController removeView];

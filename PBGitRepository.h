@@ -27,6 +27,9 @@ extern NSString* PBGitRepositoryErrorDomain;
 	PBGitRevSpecifier *_headRef; // Caching
 }
 
+@property (readonly) NSURL *gitDir;
+@property (readonly) NSURL *baseDir;
+
 - (NSFileHandle*) handleForCommand:(NSString*) cmd;
 - (NSFileHandle*) handleForArguments:(NSArray*) args;
 - (NSFileHandle *) handleInWorkDirForArguments:(NSArray *)args;

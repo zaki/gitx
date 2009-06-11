@@ -10,6 +10,7 @@
 #import "NSFileHandleExt.h"
 #import "PBChangedFile.h"
 #import "PBWebChangesController.h"
+#import "PBGitRepositoryWatcher.h"
 
 
 @interface PBGitCommitController (PrivateMethods)
@@ -40,9 +41,22 @@
 		[[NSSortDescriptor alloc] initWithKey:@"path" ascending:true], nil]];
 	[cachedFilesController setSortDescriptors:[NSArray arrayWithObject:
 		[[NSSortDescriptor alloc] initWithKey:@"path" ascending:true]]];
+
+    // listen for updates
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_repositoryUpdatedNotification:) name:PBGitRepositoryEventNotification object:nil];
 }
+
+- (void) _repositoryUpdatedNotification:(NSNotification *)notification {
+	PBGitRepositoryWatcherEvent *event = [notification object];
+	if(event.repository == repository && (event.eventType & (PBGitRepositoryWatcherEventTypeWorkingDirectory | PBGitRepositoryWatcherEventTypeIndex))){
+		// refresh if the working directory or index
+		[self refresh:NULL];
+	}
+}
+
 - (void) removeView
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[webController closeView];
 	[super finalize];
 }
@@ -114,6 +128,7 @@
 
 	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter]; 
 	[nc removeObserver:self]; 
+	[nc addObserver:self selector:@selector(_repositoryUpdatedNotification:) name:PBGitRepositoryEventNotification object:nil];
 
 	// Other files (not tracked, not ignored)
 	NSArray *arguments = [NSArray arrayWithObjects:@"ls-files", @"--others", @"--exclude-standard", @"-z", nil];
