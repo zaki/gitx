@@ -43,12 +43,12 @@
 		[[NSSortDescriptor alloc] initWithKey:@"path" ascending:true]]];
 
     // listen for updates
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_repositoryUpdatedNotification:) name:PBGitRepositoryEventNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_repositoryUpdatedNotification:) name:PBGitRepositoryEventNotification object:repository];
 }
 
 - (void) _repositoryUpdatedNotification:(NSNotification *)notification {
-	PBGitRepositoryWatcherEvent *event = [notification object];
-	if(event.repository == repository && (event.eventType & (PBGitRepositoryWatcherEventTypeWorkingDirectory | PBGitRepositoryWatcherEventTypeIndex))){
+	PBGitRepositoryWatcherEventType eventType = [(NSNumber *)[[notification userInfo] objectForKey:kPBGitRepositoryEventTypeUserInfoKey] unsignedIntValue];
+	if(eventType & (PBGitRepositoryWatcherEventTypeWorkingDirectory | PBGitRepositoryWatcherEventTypeIndex)){
 		// refresh if the working directory or index
 		[self refresh:NULL];
 	}

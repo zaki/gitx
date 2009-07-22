@@ -44,14 +44,14 @@
 	[[commitList headerView] setMenu:[self tableColumnMenu]];
 
     // listen for updates
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_repositoryUpdatedNotification:) name:PBGitRepositoryEventNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(_repositoryUpdatedNotification:) name:PBGitRepositoryEventNotification object:repository];
     
 	[super awakeFromNib];
 }
 
 - (void) _repositoryUpdatedNotification:(NSNotification *)notification {
-	PBGitRepositoryWatcherEvent *event = [notification object];
-	if(event.repository == repository && (event.eventType & PBGitRepositoryWatcherEventTypeGitDirectory)){
+	PBGitRepositoryWatcherEventType eventType = [(NSNumber *)[[notification userInfo] objectForKey:kPBGitRepositoryEventTypeUserInfoKey] unsignedIntValue];
+	if(eventType & PBGitRepositoryWatcherEventTypeGitDirectory){
 		// refresh if the .git repository is modified
 		[self refresh:NULL];
 	}

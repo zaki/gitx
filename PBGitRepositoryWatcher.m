@@ -10,6 +10,8 @@
 #import "PBEasyPipe.h"
 
 NSString *PBGitRepositoryEventNotification = @"PBGitRepositoryModifiedNotification";
+NSString *kPBGitRepositoryEventTypeUserInfoKey = @"kPBGitRepositoryEventTypeUserInfoKey";
+NSString *kPBGitRepositoryEventPathsUserInfoKey = @"kPBGitRepositoryEventPathsUserInfoKey";
 
 @interface PBGitRepositoryWatcher (internal_callback)
 - (void) _handleEventCallback:(NSArray *)eventPaths;
@@ -27,19 +29,6 @@ NSString *PBGitRepositoryEventNotification = @"PBGitRepositoryModifiedNotificati
 @implementation PBGitRepositoryWatcherEventPath
 @synthesize path, flag;
 @end
-
-@implementation PBGitRepositoryWatcherEvent
-@synthesize repository, eventType;
-
-- (id) initWithRepository:(PBGitRepository *)theRepository eventType:(PBGitRepositoryWatcherEventType) theType {
-	if(self = [super init]){
-		repository = theRepository;
-		eventType = theType;
-	}
-	return self;
-}
-@end
-
 
 
 static void PBGitRepositoryWatcherCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, 
@@ -122,16 +111,20 @@ static void PBGitRepositoryWatcherCallback(ConstFSEventStreamRef streamRef, void
 		event = event | PBGitRepositoryWatcherEventTypeIndex;
 	}
 	
+    NSMutableArray *paths = [NSMutableArray array];
+    
 	for(PBGitRepositoryWatcherEventPath *eventPath in eventPaths){
 		// .git dir
 		if([[eventPath.path stringByStandardizingPath] isEqual:[repository.gitDir.path stringByStandardizingPath]]){
 			if([self _gitDirectoryChanged] || eventPath.flag != kFSEventStreamEventFlagNone){
 				event = event | PBGitRepositoryWatcherEventTypeGitDirectory;
+                [paths addObject:eventPath.path];
 			}
 		}
 		// subdirs of .git dir
 		else if([eventPath.path rangeOfString:repository.gitDir.path].location != NSNotFound){
 			event = event | PBGitRepositoryWatcherEventTypeGitDirectory;
+            [paths addObject:eventPath.path];
 		}
 		// working dir
 		else if([[eventPath.path stringByStandardizingPath] isEqual:[[repository workingDirectory] stringByStandardizingPath]]){
@@ -139,18 +132,23 @@ static void PBGitRepositoryWatcherCallback(ConstFSEventStreamRef streamRef, void
 				event = event | PBGitRepositoryWatcherEventTypeGitDirectory;
 			}
 			event = event | PBGitRepositoryWatcherEventTypeWorkingDirectory;
+            [paths addObject:eventPath.path];
 		}
 		// subdirs of working dir
 		else {
 			event = event | PBGitRepositoryWatcherEventTypeWorkingDirectory;
+            [paths addObject:eventPath.path];
 		}
 	}
 	
 	if(event != 0x0){
 //		NSLog(@"PBGitRepositoryWatcher firing notification for repository %@ with flag %lu", repository, event);
-		PBGitRepositoryWatcherEvent *e = [[PBGitRepositoryWatcherEvent alloc] initWithRepository:repository eventType:event];
-		[[NSNotificationCenter defaultCenter] postNotificationName:PBGitRepositoryEventNotification object:e];
-		[e release];
+        NSDictionary *eventInfo = [NSDictionary dictionaryWithObjectsAndKeys: 
+                                   [NSNumber numberWithUnsignedInt:event], kPBGitRepositoryEventTypeUserInfoKey,
+                                   paths, kPBGitRepositoryEventPathsUserInfoKey,
+                                   NULL];
+        
+		[[NSNotificationCenter defaultCenter] postNotificationName:PBGitRepositoryEventNotification object:self userInfo:eventInfo];
 	}
 }
 

@@ -20,16 +20,8 @@ enum {
 };
 
 extern NSString *PBGitRepositoryEventNotification;
-
-@interface PBGitRepositoryWatcherEvent : NSObject
-{
-	PBGitRepository *repository;
-	PBGitRepositoryWatcherEventType eventType;
-}
-@property (readonly) PBGitRepository *repository;
-@property (readonly) PBGitRepositoryWatcherEventType eventType;
-@end
-
+extern NSString *kPBGitRepositoryEventTypeUserInfoKey;
+extern NSString *kPBGitRepositoryEventPathsUserInfoKey;
 
 @interface PBGitRepositoryWatcher : NSObject {
     PBGitRepository *repository;

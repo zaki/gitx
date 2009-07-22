@@ -446,6 +446,15 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		79EB24001016D80C00FB2820 /* Repository Watcher */ = {
+			isa = PBXGroup;
+			children = (
+				79E1F1DB0F2E630C00FE1516 /* PBGitRepositoryWatcher.h */,
+				79E1F1DC0F2E630C00FE1516 /* PBGitRepositoryWatcher.m */,
+			);
+			name = "Repository Watcher";
+			sourceTree = "<group>";
+		};
 		913D5E420E5563FD00CECEA2 /* cli */ = {
 			isa = PBXGroup;
 			children = (
@@ -468,6 +477,7 @@
 		F56174540E05887E001DCD79 /* Git */ = {
 			isa = PBXGroup;
 			children = (
+				79EB24001016D80C00FB2820 /* Repository Watcher */,
 				F5E927E30E883D6800056E75 /* Commit */,
 				F5E927E10E883D2E00056E75 /* History */,
 				F5945E150E02B0C200706420 /* PBGitRepository.h */,
@@ -631,8 +641,6 @@
 				F52BCE060E84211300AA3741 /* PBGitHistoryController.m */,
 				F574A2830EAE2EAC003F2CB1 /* PBRefController.h */,
 				F574A2840EAE2EAC003F2CB1 /* PBRefController.m */,
-				79E1F1DB0F2E630C00FE1516 /* PBGitRepositoryWatcher.h */,
-				79E1F1DC0F2E630C00FE1516 /* PBGitRepositoryWatcher.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
