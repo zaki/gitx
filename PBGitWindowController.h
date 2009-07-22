@@ -8,7 +8,6 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PBGitRepository.h"
-#import "PBGitRepositoryWatcher.h"
 
 @class PBViewController;
 @interface PBGitWindowController : NSWindowController {
@@ -18,8 +17,6 @@
 
 	PBViewController *historyViewController;
 	PBViewController *commitViewController;
-
-	PBGitRepositoryWatcher *watcher;
 
 	PBViewController* viewController;
 }
