@@ -26,8 +26,8 @@ extern NSString *kPBGitRepositoryEventPathsUserInfoKey;
 @interface PBGitRepositoryWatcher : NSObject {
     PBGitRepository *repository;
     FSEventStreamRef eventStream;
-	NSString *gitDirDigest;
-	NSString *indexDigest;
+	NSDate *gitDirTouchDate;
+	NSDate *indexTouchDate;
     
     BOOL _running;
 }

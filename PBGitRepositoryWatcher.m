@@ -73,10 +73,21 @@ static void PBGitRepositoryWatcherCallback(ConstFSEventStreamRef streamRef, void
     return self;
 }
 
+- (NSDate *) _fileModificationDateAtPath:(NSString *)path {
+    NSDictionary *attrs = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES];
+    NSDate *modDate;
+    if(modDate = [attrs objectForKey:NSFileModificationDate]){
+        return modDate;
+    }
+    else{
+        return nil;
+    }
+}
+
 - (BOOL) _indexChanged {
-	NSString *newDigest = [PBEasyPipe outputForCommand:@"/sbin/md5" withArgs:[NSArray arrayWithObject:[repository.gitDir.path stringByAppendingPathComponent:@"index"]]];
-	if(![newDigest isEqual:indexDigest]){
-		indexDigest = newDigest;
+    NSDate *newTouchDate = [self _fileModificationDateAtPath:[repository.gitDir.path stringByAppendingPathComponent:@"index"]];
+	if(![newTouchDate isEqual:indexTouchDate]){
+		indexTouchDate = newTouchDate;
 		return YES;
 	}
 	else{
@@ -85,23 +96,20 @@ static void PBGitRepositoryWatcherCallback(ConstFSEventStreamRef streamRef, void
 }
 
 - (BOOL) _gitDirectoryChanged {
-	NSMutableArray *paths = [[NSMutableArray alloc] init];
 	BOOL isDirectory;
+    NSDate *touchDate;
 	for(NSString *filename in [[NSFileManager defaultManager] directoryContentsAtPath:repository.gitDir.path]){
 		NSString *filepath = [repository.gitDir.path stringByAppendingPathComponent:filename];
 		[[NSFileManager defaultManager] fileExistsAtPath:filepath isDirectory:&isDirectory];
 		if(!isDirectory){
-			[paths addObject:filepath];
+			touchDate = [self _fileModificationDateAtPath:filepath];
+            if([gitDirTouchDate isLessThan:touchDate]){
+                gitDirTouchDate = touchDate;
+                return YES;
+            }
 		}
 	}
-	NSString *newDigest = [PBEasyPipe outputForCommand:@"/sbin/md5" withArgs:paths];
-	if(![newDigest isEqual:gitDirDigest]){
-		gitDirDigest = newDigest;
-		return YES;
-	}
-	else{
-		return NO;
-	}
+    return NO;
 }
 
 - (void) _handleEventCallback:(NSArray *)eventPaths {
