@@ -1,80 +1,42 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+---
+layout: default
+title: Home
+---
+<div class="nohover" id="download">
+	<div id="version">
+	<a href="http://frim.frim.nl/GitXStable.app.zip" title="Latest GitX download" id="download_link" class="nohover">
+	<span style="font-size: 125%">Download GitX</span><br>Version <%= ReleaseNotes::last_version %>
+	</a></div>
+	<p id="donate_link">(you can help GitX by <a href="http://www.pledgie.com/campaigns/1816">donating</a>)</p>
+</div>
 
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<h2 class="noclear">GitX</h2>
+<p>
+	GitX is a git GUI made for Mac OS X. It currently
+features a history viewer much like gitk and a commit GUI like git gui. But
+then in silky smooth OS X style!
+</p>
 
-	<title>dgrijalva/gitx @ GitHub</title>
-	
-	<style type="text/css">
-		body {
-  		margin-top: 1.0em;
-  		background-color: #6ee1ea;
-		  font-family: "Helvetica,Arial,FreeSans";
-  		color: #000000;
-    }
-    #container {
-      margin: 0 auto;
-      width: 700px;
-    }
-		h1 { font-size: 3.8em; color: #911e15; margin-bottom: 3px; }
-		h1 .small { font-size: 0.4em; }
-		h1 a { text-decoration: none }
-		h2 { font-size: 1.5em; color: #911e15; }
-    h3 { text-align: center; color: #911e15; }
-    a { color: #911e15; }
-    .description { font-size: 1.2em; margin-bottom: 30px; margin-top: 30px; font-style: italic;}
-    .download { float: right; }
-		pre { background: #000; color: #fff; padding: 15px;}
-    hr { border: 0; width: 80%; border-bottom: 1px solid #aaa}
-    .footer { text-align:center; padding-top:30px; font-style: italic; }
-	</style>
-	
-</head>
+<h3 class="noclear">Features</h3>
+<ul>
+	<li>Detailed history viewer</li>
+	<li>Nice commit GUI, allowing hunk- and line-wise staging</li>
+	<li>Fast workflow</li>
+	<li>Explore tree of any revision</li>
+	<li>Nice Aqua interface</li>
+	<li>Paste commits to <a href="http://gist.github.com/">gist.github.com</a></li>
+	<li>QuickLook integration</li>
+</ul>
 
-<body>
-  <a href="http://github.com/dgrijalva/gitx"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub" /></a>
+<h3>Requirements</h3>
+<p>
+	GitX runs on Mac OS X 10.5 Leopard and Mac OS X 10.6 Snow Leopard. Because it uses features like Garbage Collection, you can't compile it on earlier systems. GitX also requires a fairly recent Git -- version 1.6.0 and higher are all supported. 
+</p>
 
-  <div id="container">
-
-    <div class="download">
-      <a href="http://github.com/dgrijalva/gitx/zipball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/zip.png"></a>
-      <a href="http://github.com/dgrijalva/gitx/tarball/master">
-        <img border="0" width="90" src="http://github.com/images/modules/download/tar.png"></a>
-    </div>
-
-    <h1><a href="http://github.com/dgrijalva/gitx">gitx</a>
-      <span class="small">by <a href="http://github.com/dgrijalva">dgrijalva</a></span></h1>
-
-    <div class="description">
-      A gitk clone for OS X
-    </div>
-
-    <h2>Authors</h2>
-<p>Anders Carling (anders.carling@d05.se)<br/>Arjen Laarhoven (arjen@yaph.org)<br/>Ben Walding (ben@walding.com)<br/>Benjamin Kramer (benny.kra@googlemail.com)<br/>bkerley (bkerley@gmail.com)<br/>Bob Aman (bob@sporkmonger.com)<br/>Bryce Kerley (bryce@worldmedia.net)<br/>Charles O'Rourke (charles@newportwebs.com)<br/>Christian Jacobsen (christian@transterpreter.org)<br/>Nicholas Riley (com-github@sabi.net)<br/>Daniel Lundqvist (daniel@malarhojden.nu)<br/>dbr (dbr.onix@gmail.com)<br/>Douglas Creager (dcreager@alum.mit.edu)<br/>Gerd Knops (gerti@bitart.com)<br/>Ciarán Walsh (git@ciaranwal.sh)<br/>Michiel Holtkamp (github@elfstone.nl)<br/>Mark Bestley (gitx@bestley.co.uk)<br/>Kim Does (gitx@kdoes.nl)<br/>Johannes Gilger (heipei@hackvalue.de)<br/>JD Smith (jdtsmith@gmail.com)<br/>Jeremy Sanderson (jeremy@codingkoi.com)<br/>Jeff Mesnil (jmesnil@gmail.com)<br/>Joe Fiorini (joe@faithfulgeek.org)<br/>Jean-Paul van Oosten (jp@webdevel.nl)<br/>Kevin Ballard (kevin@sb.org)<br/>Martin Svangren (martin@masv.net)<br/>Mike Czepiel (mczepiel@apple.com)<br/>Michael Stephens (mike@mindleak.com)<br/>Owen Yamauchi (owen.yamauchi@gmail.com)<br/>Pieter de Bie (pdebie@ai.rug.nl)<br/>Rick Berry (rick@writhe.org.uk)<br/>Rufus Cable (rufus@threebytesfull.com)<br/>Stonewall Ballard (sb@stonetics.com)<br/>Nick Zitzmann (seiryu@comcast.net)<br/>Steven Michalske (smichalske@gmail.com)<br/>Ben Alpert (spicyjalapeno@gmail.com)<br/>Stephen Bannasch (stephen.bannasch@deanbrook.org)<br/>Stephen Celis (stephen@stephencelis.com)<br/>Travis Cline (travis.cline@gmail.com)<br/>Till Salzer (tsalzer@noemail.com)<br/><br/>      </p>
-<h2>Contact</h2>
-<p>Dave Grijalva (grijalva@gmail.com)<br/>      </p>
-
-
-    <h2>Download</h2>
-    <p>
-      You can download this project in either
-      <a href="http://github.com/dgrijalva/gitx/zipball/master">zip</a> or
-      <a href="http://github.com/dgrijalva/gitx/tarball/master">tar</a> formats.
-    </p>
-    <p>You can also clone the project with <a href="http://git-scm.com">Git</a>
-      by running:
-      <pre>$ git clone git://github.com/dgrijalva/gitx</pre>
-    </p>
-
-    <div class="footer">
-      get the source code on GitHub : <a href="http://github.com/dgrijalva/gitx">dgrijalva/gitx</a>
-    </div>
-
-  </div>
-
-  
-</body>
-</html>
+<h3>Download</h3>
+<p>
+	The newest version of GitX is <%= ReleaseNotes::last_version %>. This version can be downloaded from <a href="http://frim.frim.nl/GitXStable.app.zip">here</a>. To see what has changed, read the <a href="release_history.html">Release History</a>.
+</p>
+<p>
+	After starting GitX, you can install the command-line tool through the menu (GitX-&gt;Enable Terminal Usage…). This will install a “gitx” binary in /usr/local/bin.
+</p>

@@ -1,0 +1,60 @@
+<% 
+def create_link(name, description)
+	"<a href='#{name}.html' class='#{name == @filename.gsub(".html", "") ? 'here' : ''}'>#{description}</a>"
+end
+ %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+	<head>
+		<title>
+			GitX - {{ page.title }}
+		</title>
+		<link rel="stylesheet" href="{{site.site_root}}/css/master.css" type="text/css" media="screen" title="Main Style" charset="utf-8">
+		<link rel="shortcut icon" href="{{site.site_root}}/images/favicon.png" type="image/x-icon">
+		<link href="http://gitx.frim.nl/Downloads/appcast.xml" rel="alternate" type="application/rss+xml" title="GitX Application Update Feed">
+
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	</head>
+	<body>
+		<div id="container">
+			<div id="header">
+				GitX
+			</div>
+			<div id="nav">
+			  <a href="{{site.site_root}}/">Home</a>
+			  <a href="{{site.site_root}}/seeit.html">See It</a>
+			  <a href="{{site.site_root}}/contribute.html">Contribute</a>
+			  <a href="{{site.site_root}}/release_history.html">Release History</a>
+			  <a href="{{site.site_root}}/user_manual.html">User Manual</a>
+			  <a href="{{site.site_root}}/links.html">Links</a>
+			  <a href="{{site.site_root}}/contact.html">Contact</a>
+			</div>
+			<script type="text/javascript" charset="utf-8">
+			// Set a class on the current tab
+			new (function() {
+			  var links = document.getElementById('nav').childNodes;
+			  for(var i = 0; i < links.length; ++i){
+			    var link = links[i];
+			    if(document.location.href == link.href){
+			      link.className = 'here';
+			    }
+			  }
+			});
+			</script>
+			<div id="content">
+				{{ content }}
+			</div>
+			<div id="footer">
+				© Some rights reserved. <a href="http://github.com/pieter/gitx/tree/master/COPYING" title="GPL">GPL v2</a>. <a href="mailto:frimmirf+gitx@gmail.com">Pieter de Bie</a> (<a href="http://twitter.com/pdebie">@pdebie</a>) is the GitX maintainer. Website design by <a href="http://www.ai.rug.nl/~kdoes/index.php?id=webdesign">Kim Does</a>.
+			</div>
+		</div>
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	var pageTracker = _gat._getTracker("UA-4534244-3");
+	pageTracker._trackPageview();
+	</script>
+	</body>
+</html>
