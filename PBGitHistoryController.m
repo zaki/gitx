@@ -71,6 +71,7 @@
 
 - (void)awakeFromNib
 {
+    NSLog(@"[%@ %s]", [self class], _cmd);
 	self.selectedCommitDetailsIndex = [[NSUserDefaults standardUserDefaults] integerForKey:kHistorySelectedDetailIndexKey];
 
 	[commitController addObserver:self forKeyPath:@"selection" options:0 context:@"commitChange"];
@@ -131,6 +132,8 @@
 	[sv insertObject:[fileViewerController view] atIndex:1];
 	[[fileViewer superview] setSubviews:sv];
 	
+	[branchMenuController setRepository:repository];
+	[branchMenuController reloadBranchs];
 	[super awakeFromNib];
 }
 

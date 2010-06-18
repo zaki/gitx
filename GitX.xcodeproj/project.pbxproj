@@ -146,6 +146,7 @@
 		C3138C3111C2F48400BE6CBE /* diff.css in Resources */ = {isa = PBXBuildFile; fileRef = C3138BE311C2F48400BE6CBE /* diff.css */; };
 		C3138C3211C2F48400BE6CBE /* GitX.css in Resources */ = {isa = PBXBuildFile; fileRef = C3138BE411C2F48400BE6CBE /* GitX.css */; };
 		C3138C3311C2F48400BE6CBE /* notification.css in Resources */ = {isa = PBXBuildFile; fileRef = C3138BE511C2F48400BE6CBE /* notification.css */; };
+		C358008911CAE58E003FE217 /* BranchMenuController.m in Sources */ = {isa = PBXBuildFile; fileRef = C358008811CAE58E003FE217 /* BranchMenuController.m */; };
 		D26DC6450E782C9000C777B2 /* gitx.icns in Resources */ = {isa = PBXBuildFile; fileRef = D26DC6440E782C9000C777B2 /* gitx.icns */; };
 		D8083A43111E045D00337480 /* PBRemoteProgressSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = D8083A42111E045D00337480 /* PBRemoteProgressSheet.m */; };
 		D8083C44111F106800337480 /* PBAddRemoteSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = D8083C43111F106800337480 /* PBAddRemoteSheet.m */; };
@@ -468,6 +469,8 @@
 		C3138BE311C2F48400BE6CBE /* diff.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = diff.css; sourceTree = "<group>"; };
 		C3138BE411C2F48400BE6CBE /* GitX.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = GitX.css; sourceTree = "<group>"; };
 		C3138BE511C2F48400BE6CBE /* notification.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = notification.css; sourceTree = "<group>"; };
+		C358008711CAE58E003FE217 /* BranchMenuController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BranchMenuController.h; sourceTree = "<group>"; };
+		C358008811CAE58E003FE217 /* BranchMenuController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BranchMenuController.m; sourceTree = "<group>"; };
 		D26DC6440E782C9000C777B2 /* gitx.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = gitx.icns; sourceTree = "<group>"; };
 		D8083A2D111E045300337480 /* PBRemoteProgressSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBRemoteProgressSheet.h; sourceTree = "<group>"; };
 		D8083A42111E045D00337480 /* PBRemoteProgressSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBRemoteProgressSheet.m; sourceTree = "<group>"; };
@@ -1381,6 +1384,8 @@
 				F52BCE060E84211300AA3741 /* PBGitHistoryController.m */,
 				F574A2830EAE2EAC003F2CB1 /* PBRefController.h */,
 				F574A2840EAE2EAC003F2CB1 /* PBRefController.m */,
+				C358008711CAE58E003FE217 /* BranchMenuController.h */,
+				C358008811CAE58E003FE217 /* BranchMenuController.m */,
 			);
 			name = History;
 			sourceTree = "<group>";
@@ -1851,6 +1856,7 @@
 				F5E424180EA3E4EB0046E362 /* PBWebDiffController.m in Sources */,
 				F565262B0E03D89B00F03B52 /* PBWebHistoryController.m in Sources */,
 				F5140DC90E8A8EB20091E9F3 /* RoundedRectangle.m in Sources */,
+				C358008911CAE58E003FE217 /* BranchMenuController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

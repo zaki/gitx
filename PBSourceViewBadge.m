@@ -75,11 +75,8 @@
 #pragma mark -
 #pragma mark badges
 
-+ (NSImage *) badge:(NSString *)badge forCell:(NSTextFieldCell *)cell
++ (NSImage *) badge:(NSString *)badge badgeColor:(NSColor *)badgeColor textColor:(NSColor *)textColor
 {
-	NSColor *badgeColor = [self badgeColorForCell:cell];
-
-	NSColor *textColor = [self badgeTextColorForCell:cell];
 	NSMutableDictionary *badgeTextAttributes = [self badgeTextAttributes];
 	[badgeTextAttributes setObject:textColor forKey:NSForegroundColorAttributeName];
 	NSAttributedString *badgeString = [[NSAttributedString alloc] initWithString:badge attributes:badgeTextAttributes];
@@ -108,9 +105,26 @@
 	return badgeImage;
 }
 
++ (NSImage *) badge:(NSString *)badge
+{
+	return [self badge:@"✔" badgeColor:[NSColor windowFrameColor] textColor:[NSColor whiteColor]];
+}
+
++ (NSImage *) badge:(NSString *)badge forCell:(NSTextFieldCell *)cell
+{
+	NSColor *badgeColor = [self badgeColorForCell:cell];
+	NSColor *textColor = [self badgeTextColorForCell:cell];
+	return [self badge:@"✔" badgeColor:badgeColor textColor:textColor];
+}
+
 + (NSImage *) checkedOutBadgeForCell:(NSTextFieldCell *)cell
 {
 	return [self badge:@"✔" forCell:cell];
+}
+
++ (NSImage *) checkedOutBadge
+{
+	return [self badge:@"✔"];
 }
 
 + (NSImage *) numericBadge:(NSInteger)number forCell:(NSTextFieldCell *)cell

@@ -30,6 +30,11 @@
 - (BOOL) isAllBranchesRev;
 - (BOOL) isLocalBranchesRev;
 
+
+-(bool)isLocalBranch;
+-(bool)isRemoteBranch;
+-(bool)isTag;
+
 + (PBGitRevSpecifier *)allBranchesRevSpec;
 + (PBGitRevSpecifier *)localBranchesRevSpec;
 

@@ -177,4 +177,19 @@
     return copy;
 }
 
+//TODO:revisar
+-(bool)isLocalBranch
+{
+	return [[self simpleRef] hasPrefix:@"refs/heads/"];
+}
+
+-(bool)isRemoteBranch
+{
+	return [[self simpleRef] hasPrefix:@"refs/remotes/"];
+}
+
+-(bool)isTag
+{
+	return [[self simpleRef] hasPrefix:@"refs/tags/"];
+}
 @end

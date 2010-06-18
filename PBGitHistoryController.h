@@ -13,6 +13,7 @@
 #import "PBViewController.h"
 #import "PBCollapsibleSplitView.h"
 #import "FileViewerController.h"
+#import "BranchMenuController.h"
 
 @class PBQLOutlineView;
 @class PBGitSidebarController;
@@ -28,6 +29,7 @@
 	IBOutlet PBCollapsibleSplitView *historySplitView;
 	IBOutlet PBGitGradientBarView *upperToolbarView;
 	IBOutlet PBGitGradientBarView *scopeBarView;
+	IBOutlet BranchMenuController *branchMenuController;
 
 	IBOutlet NSSearchField *searchField;
 	IBOutlet NSArrayController* commitController;

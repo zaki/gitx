@@ -13,6 +13,7 @@
 
 }
 
++ (NSImage *) checkedOutBadge;
 + (NSImage *) checkedOutBadgeForCell:(NSTextFieldCell *)cell;
 + (NSImage *) numericBadge:(NSInteger)number forCell:(NSTextFieldCell *)cell;
 
