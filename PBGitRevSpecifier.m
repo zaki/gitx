@@ -177,6 +177,16 @@
     return copy;
 }
 
+- (NSString *) remoteName
+{
+	return (NSString *)[[[self simpleRef] componentsSeparatedByString:@"/"] objectAtIndex:2];
+}
+
+- (NSString *) remoteBranchName
+{
+	return [[self.description substringFromIndex:[[self remoteName] length]] substringFromIndex:1];
+}
+
 //TODO:revisar
 -(bool)isLocalBranch
 {

@@ -30,6 +30,8 @@
 - (BOOL) isAllBranchesRev;
 - (BOOL) isLocalBranchesRev;
 
+- (NSString *) remoteBranchName;
+- (NSString *) remoteName;
 
 -(bool)isLocalBranch;
 -(bool)isRemoteBranch;

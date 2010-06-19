@@ -21,5 +21,6 @@
 
 -(void)reloadBranchs;
 -(IBAction)change:(id)sender;
+-(void)setCommit:(PBGitCommit *)commit;
 
 @end

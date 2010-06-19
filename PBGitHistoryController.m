@@ -151,6 +151,9 @@
 	else // kHistoryDetailViewIndex
 		self.webCommit = selectedCommit;
 
+	
+	[branchMenuController setCommit:selectedCommit];
+	
 	BOOL isOnHeadBranch = [selectedCommit isOnHeadBranch];
 	[mergeButton setEnabled:!isOnHeadBranch];
 	[cherryPickButton setEnabled:!isOnHeadBranch];
