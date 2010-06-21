@@ -153,11 +153,29 @@
 
 	
 	[branchMenuController setCommit:selectedCommit];
+	NSMutableArray *refs=[selectedCommit refs];
+	if(refs!=nil){
+		PBGitRef *ref=[refs objectAtIndex:0];
+		[self addMenuItemsForRef:ref toMenu:[branchActionMenu menu]];
+	}
 	
 	BOOL isOnHeadBranch = [selectedCommit isOnHeadBranch];
 	[mergeButton setEnabled:!isOnHeadBranch];
 	[cherryPickButton setEnabled:!isOnHeadBranch];
 	[rebaseButton setEnabled:!isOnHeadBranch];
+}
+
+- (void) addMenuItemsForRef:(PBGitRef *)ref toMenu:(NSMenu *)menu
+{
+	if (!ref)
+		return;
+	
+	NSMenuItem *title=[menu itemAtIndex:0];
+	[menu removeAllItems];
+	[menu addItem:title];
+	
+	for (NSMenuItem *menuItem in [refController menuItemsForRef:ref])
+		[menu addItem:menuItem];
 }
 
 - (void) updateBranchFilterMatrix

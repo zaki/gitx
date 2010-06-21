@@ -30,6 +30,7 @@
 	IBOutlet PBGitGradientBarView *upperToolbarView;
 	IBOutlet PBGitGradientBarView *scopeBarView;
 	IBOutlet BranchMenuController *branchMenuController;
+	IBOutlet NSPopUpButton *branchActionMenu;
 
 	IBOutlet NSSearchField *searchField;
 	IBOutlet NSArrayController* commitController;
