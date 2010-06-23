@@ -69,6 +69,9 @@
 	NSImage *terminalImage = [[NSWorkspace sharedWorkspace] iconForFile:@"/Applications/Utilities/Terminal.app/"];
 	[terminalItem setImage:terminalImage];
 
+	[branchMenuController setRepository:repository];
+	[branchMenuController reloadBranchs];
+
 	[self showWindow:nil];
 }
 
@@ -98,6 +101,21 @@
 	[[self window] makeFirstResponder:[contentController firstResponder]];
 	[contentController updateView];
 	[contentController addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial context:@"statusChange"];
+}
+
+- (void) switchView:(id)sender
+{
+	NSSegmentedControl *vc=sender;
+	switch ([vc selectedSegment]) {
+		case 0:
+			[self showHistoryView:sender];
+			break;
+		case 1:
+			[self showCommitView:sender];
+			break;
+		default:
+			break;
+	}
 }
 
 - (void) showCommitView:(id)sender

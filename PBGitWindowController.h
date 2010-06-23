@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "PBGitRepository.h"
 
-@class PBViewController, PBGitSidebarController, PBGitHistoryController;
+@class PBViewController, PBGitSidebarController, PBGitHistoryController, BranchMenuController;
 
 @interface PBGitWindowController : NSWindowController <NSWindowDelegate> {
 	__weak PBGitRepository* repository;
@@ -29,6 +29,9 @@
 
 	IBOutlet NSToolbarItem *terminalItem;
 	IBOutlet NSToolbarItem *finderItem;
+
+	IBOutlet BranchMenuController *branchMenuController;
+	IBOutlet NSPopUpButton *branchActionMenu;
 }
 
 @property (assign) __weak PBGitRepository *repository;
@@ -45,6 +48,7 @@
 - (void)showErrorSheet:(NSError *)error;
 - (void)showErrorSheetTitle:(NSString *)title message:(NSString *)message arguments:(NSArray *)arguments output:(NSString *)output;
 
+- (IBAction) switchView:(id)sender;
 - (IBAction) showCommitView:(id)sender;
 - (IBAction) showHistoryView:(id)sender;
 - (IBAction) revealInFinder:(id)sender;
