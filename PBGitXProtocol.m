@@ -39,7 +39,6 @@
 	}
 	NSString *specifier = [NSString stringWithFormat:@"%@%@:%@", [url host], v,path];
 	handle = [repo handleInWorkDirForArguments:[NSArray arrayWithObjects:@"cat-file", @"blob", specifier, nil]];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(didFinishFileLoad:) name:NSFileHandleReadToEndOfFileCompletionNotification object:handle];
 	[handle readToEndOfFileInBackgroundAndNotify];
 	
     NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[[self request] URL]
@@ -61,7 +60,6 @@
 
 - (void) stopLoading
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

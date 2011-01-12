@@ -254,7 +254,7 @@ a.showdiff {
 
 #header {
 	font-size: 13px;
-	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(.7, #EAF2f6), color-stop(1, #e3ebf3));
+	background-image: -webkit-gradient(linear,left top,left bottom, color-stop(.0, #f4f4f4), color-stop(1, #d1d1d1));
 }
 
 #header table.references  a {
@@ -299,10 +299,11 @@ a.showdiff {
 }
 
 #header div#badges {
-	clear: left;
-	float: left;
-	margin: 5px;
-	padding-bottom: 5px;
+	clear: both;
+	margin-top: 5px;
+	 border-top: 1px solid  #efefef;
+  outline: 1px solid #d4d4d4;
+	padding: 6px;
 }
 
 #diffs {

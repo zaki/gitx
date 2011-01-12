@@ -28,12 +28,6 @@
 	NSURLRequest * request = [NSURLRequest requestWithURL:[NSURL fileURLWithPath:file]];
 	callbacks = [NSMapTable mapTableWithKeyOptions:(NSPointerFunctionsObjectPointerPersonality|NSPointerFunctionsStrongMemory) valueOptions:(NSPointerFunctionsObjectPointerPersonality|NSPointerFunctionsStrongMemory)];
 
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	[nc addObserver:self
-	       selector:@selector(preferencesChangedWithNotification:)
-		   name:NSUserDefaultsDidChangeNotification
-		 object:nil];
-
 	finishedLoading = NO;
 	[view setUIDelegate:self];
 	[view setFrameLoadDelegate:self];
@@ -52,8 +46,6 @@
 		[[self script] setValue:nil forKey:@"Controller"];
 		[view close];
 	}
-
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 # pragma mark Delegate methods
@@ -158,7 +150,6 @@
 
 	NSFileHandle *handle = [repo handleInWorkDirForArguments:realArguments];
 	[callbacks setObject:callBack forKey:handle];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(JSRunCommandDone:) name:NSFileHandleReadToEndOfFileCompletionNotification object:handle]; 
 	[handle readToEndOfFileInBackgroundAndNotify];
 }
 

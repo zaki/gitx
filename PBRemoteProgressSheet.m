@@ -92,7 +92,6 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 	[NSApp beginSheet:[self window] modalForWindow:[controller window] modalDelegate:self didEndSelector:nil contextInfo:nil];
 
 	gitTask = [PBEasyPipe taskForCommand:[PBGitBinary path] withArgs:arguments inDir:dir];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskCompleted:) name:NSTaskDidTerminateNotification object:gitTask];
 
 	// having intermittent problem with long running git tasks not sending a termination notice, so periodically check whether the task is done
 	taskTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(checkTask:) userInfo:nil repeats:YES];
@@ -107,7 +106,6 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 - (void) taskCompleted:(NSNotification *)notification
 {
 	[taskTimer invalidate];
-	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[self.progressIndicator stopAnimation:nil];
 	[NSApp endSheet:[self window]];

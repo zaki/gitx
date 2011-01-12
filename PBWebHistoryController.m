@@ -62,17 +62,11 @@
 		[taskArguments insertObject:@"-w" atIndex:1];
 	
 	NSFileHandle *handle = [repository handleForArguments:taskArguments];
-	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
-	// Remove notification, in case we have another one running
-	[nc removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:nil];
-	[nc addObserver:self selector:@selector(commitDetailsLoaded:) name:NSFileHandleReadToEndOfFileCompletionNotification object:handle]; 
 	[handle readToEndOfFileInBackgroundAndNotify];
 }
 
 - (void)commitDetailsLoaded:(NSNotification *)notification
-{
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:nil];
-	
+{	
 	NSData *data = [[notification userInfo] valueForKey:NSFileHandleNotificationDataItem];
 	if (!data)
 		return;

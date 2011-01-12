@@ -390,7 +390,6 @@
 {
 	if (backgroundSearchTask) {
 		NSFileHandle *handle = [[backgroundSearchTask standardOutput] fileHandleForReading];
-		[[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:handle];
 		[backgroundSearchTask terminate];
 	}
 
@@ -421,7 +420,6 @@
 	[backgroundSearchTask launch];
 
 	NSFileHandle *handle = [[backgroundSearchTask standardOutput] fileHandleForReading];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(parseBackgroundSearchResults:) name:NSFileHandleReadToEndOfFileCompletionNotification object:handle];
 	[handle readToEndOfFileInBackgroundAndNotify];
 
 	[self startProgressIndicator];
@@ -429,7 +427,6 @@
 
 - (void)parseBackgroundSearchResults:(NSNotification *)notification
 {
-	[[NSNotificationCenter defaultCenter] removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:[notification object]];
 	backgroundSearchTask = nil;
 
 	NSMutableIndexSet *indexes = [NSMutableIndexSet indexSet];
