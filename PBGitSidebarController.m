@@ -145,21 +145,24 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 			NSLog(@"remote.title=%@",[remote title]);
 			[remote setAlert:[self remoteNeedFetch:[remote title]]];
 		}
-		
-		for(PBGitSVBranchItem* branch in [branches children]){
-			NSString *bName=[branch title];
-			[branch setAhead:[self countCommintsOf:[NSString stringWithFormat:@"origin/%@..%@",bName,bName]]];
-			[branch setBehind:[self countCommintsOf:[NSString stringWithFormat:@"%@..origin/%@",bName,bName]]];
-			[branch setIsCheckedOut:[branch.revSpecifier isEqual:[repository headRef]]];
-		}
-		
+				
 	}else{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
+	
+	[self refreshBabges];
 }
 
 #pragma mark Badges Methods
-// XXX move to repository
+-(void)refreshBabges
+{
+	for(PBGitSVBranchItem* branch in [branches children]){
+		NSString *bName=[branch title];
+		[branch setAhead:[self countCommintsOf:[NSString stringWithFormat:@"origin/%@..%@",bName,bName]]];
+		[branch setBehind:[self countCommintsOf:[NSString stringWithFormat:@"%@..origin/%@",bName,bName]]];
+		[branch setIsCheckedOut:[branch.revSpecifier isEqual:[repository headRef]]];
+	}	
+}
 
 -(NSNumber *)countCommintsOf:(NSString *)range
 {
@@ -319,6 +322,8 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 	[sourceView expandItem:branches expandChildren:YES];
 	[sourceView expandItem:remotes];
 	//[sourceView expandItem:submodules expandChildren:YES];
+	
+	[self refreshBabges];
 	
 	[sourceView reloadItem:nil reloadChildren:YES];
 }

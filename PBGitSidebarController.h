@@ -41,6 +41,7 @@
 
 - (void)setHistorySearch:(NSString *)searchString mode:(NSInteger)mode;
 
+-(void)refreshBabges;
 -(NSNumber *)countCommintsOf:(NSString *)range;
 -(bool)remoteNeedFetch:(NSString *)remote;
 
