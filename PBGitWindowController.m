@@ -59,6 +59,10 @@
 	[[self window] setAutorecalculatesContentBorderThickness:NO forEdge:NSMinYEdge];
 	[[self window] setContentBorderThickness:31.0f forEdge:NSMinYEdge];
 
+	historyViewController = [[PBGitHistoryController alloc] initWithRepository:repository superController:self];
+	commitViewController = [[PBGitCommitController alloc] initWithRepository:repository superController:self];
+	[self changeContentController:historyViewController];
+	
 	sidebarController = [[PBGitSidebarController alloc] initWithRepository:repository superController:self];
 	[[sidebarController view] setFrame:[sourceSplitView bounds]];
 	[sourceSplitView addSubview:[sidebarController view]];

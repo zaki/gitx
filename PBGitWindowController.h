@@ -10,11 +10,15 @@
 #import "PBGitRepository.h"
 
 @class PBViewController, PBGitSidebarController, PBGitCommitController;
+@class PBGitHistoryController;
+@class PBGitCommitController;
 
 @interface PBGitWindowController : NSWindowController {
 	__weak PBGitRepository* repository;
 
 	PBViewController *contentController;
+	PBGitCommitController *commitViewController;
+	PBGitHistoryController *historyViewController;
 
 	PBGitSidebarController *sidebarController;
 	IBOutlet NSView *sourceListControlsView;
@@ -31,6 +35,8 @@
 	IBOutlet NSToolbarItem *finderItem;
 }
 
+@property(readonly) PBGitHistoryController *historyViewController;
+@property(readonly) PBGitCommitController *commitViewController;
 @property (assign) __weak PBGitRepository *repository;
 
 - (id)initWithRepository:(PBGitRepository*)theRepository displayDefault:(BOOL)display;
