@@ -48,8 +48,8 @@
 
 - (void) changeContentTo: (PBGitCommit *) content
 {
-	if (content == nil || !finishedLoading)
-		return;
+	//if (content == nil || !finishedLoading)
+	//	return;
 	
 	currentSha = [content sha];
 	
@@ -57,11 +57,16 @@
 	// but this caused some funny behaviour because NSTask's and NSThread's don't really
 	// like each other. Instead, just do it async.
 	
+	// TODO: cahange this call to sync (no notification), in a therad?
 	NSMutableArray *taskArguments = [NSMutableArray arrayWithObjects:@"show", @"--numstat", @"--summary", @"--pretty=raw", [currentSha string], nil];
 	if (![PBGitDefaults showWhitespaceDifferences])
 		[taskArguments insertObject:@"-w" atIndex:1];
 	
 	NSFileHandle *handle = [repository handleForArguments:taskArguments];
+	NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+	// Remove notification, in case we have another one running
+	[nc removeObserver:self name:NSFileHandleReadToEndOfFileCompletionNotification object:nil];
+	[nc addObserver:self selector:@selector(commitDetailsLoaded:) name:NSFileHandleReadToEndOfFileCompletionNotification object:handle]; 
 	[handle readToEndOfFileInBackgroundAndNotify];
 }
 
