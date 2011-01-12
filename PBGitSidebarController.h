@@ -10,10 +10,8 @@
 #import "PBViewController.h"
 
 @class PBSourceViewItem;
-@class PBGitHistoryController;
-@class PBGitCommitController;
 
-@interface PBGitSidebarController : PBViewController {
+@interface PBGitSidebarController : PBViewController <NSOutlineViewDelegate,NSMenuDelegate>{
 	IBOutlet NSWindow *window;
 	IBOutlet NSOutlineView *sourceView;
 	IBOutlet NSView *sourceListControlsView;
@@ -28,11 +26,7 @@
 
 	/* Specific things */
 	PBSourceViewItem *stage;
-
 	PBSourceViewItem *branches, *remotes, *tags, *others, *stashes, *submodules;
-
-	PBGitHistoryController *historyViewController;
-	PBGitCommitController *commitViewController;
 }
 
 - (void) selectStage;
@@ -52,7 +46,5 @@
 
 @property(readonly) NSMutableArray *items;
 @property(readonly) NSView *sourceListControlsView;
-@property(readonly) PBGitHistoryController *historyViewController;
-@property(readonly) PBGitCommitController *commitViewController;
 
 @end

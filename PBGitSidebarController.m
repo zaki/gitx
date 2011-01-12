@@ -26,6 +26,8 @@
 
 static NSString * const kObservingContextStashes = @"stashesChanged";
 static NSString * const kObservingContextSubmodules = @"submodulesChanged";
+static NSString * const kObservingContextBranches = @"branchesModified";
+static NSString * const kObservingContextRefs = @"updateRefs";
 
 @interface PBGitSidebarController ()
 
@@ -40,8 +42,6 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 @implementation PBGitSidebarController
 @synthesize items;
 @synthesize sourceListControlsView;
-@synthesize historyViewController;
-@synthesize commitViewController;
 
 - (id)initWithRepository:(PBGitRepository *)theRepository superController:(PBGitWindowController *)controller
 {
@@ -58,12 +58,8 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 	window.contentView = self.view;
 	[self populateList];
 	
-	historyViewController = [[PBGitHistoryController alloc] initWithRepository:repository superController:superController];
-	commitViewController = [[PBGitCommitController alloc] initWithRepository:repository superController:superController];
-	
-	[repository addObserver:self forKeyPath:@"refs" options:0 context:@"updateRefs"];
-	[repository addObserver:self forKeyPath:@"currentBranch" options:0 context:@"currentBranchChange"];
-	[repository addObserver:self forKeyPath:@"branches" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:@"branchesModified"];
+	[repository addObserver:self forKeyPath:@"refs" options:0 context:kObservingContextRefs];
+	[repository addObserver:self forKeyPath:@"branches" options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew) context:kObservingContextBranches];
 	[repository addObserver:self forKeyPath:@"stashController.stashes" options:NSKeyValueObservingOptionNew context:kObservingContextStashes];
 	[repository addObserver:self forKeyPath:@"submoduleController.submodules" options:NSKeyValueObservingOptionNew context:kObservingContextSubmodules];
 	
@@ -81,10 +77,7 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 
 - (void)closeView
 {
-	[historyViewController closeView];
-	[commitViewController closeView];
-	
-	[repository removeObserver:self forKeyPath:@"currentBranch"];
+	[repository removeObserver:self forKeyPath:@"refs"];
 	[repository removeObserver:self forKeyPath:@"branches"];
 	[repository removeObserver:self forKeyPath:@"stashController.stashes"];
 	[repository removeObserver:self forKeyPath:@"submoduleController.submodules"];
@@ -94,10 +87,9 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([@"currentBranchChange" isEqualToString:context]) {
-		[sourceView reloadData];
-		[self selectCurrentBranch];
-	}else if ([@"branchesModified" isEqualToString:context]) {
+	DLog(@"keyPath: '%@' context: '%@'",keyPath,context);
+	
+	if ([kObservingContextBranches isEqualToString:context]) {
 		NSInteger changeKind = [(NSNumber *)[change objectForKey:NSKeyValueChangeKindKey] intValue];
 		
 		if (changeKind == NSKeyValueChangeInsertion) {
@@ -148,7 +140,7 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 			[sourceView PBExpandItem:item expandParents:YES];
 		}
 		[sourceView reloadData];
-	}else if ([@"updateRefs" isEqualToString:context]) {
+	}else if ([kObservingContextRefs isEqualToString:context]) {
 		for(PBGitSVRemoteItem* remote in [remotes children]){
 			NSLog(@"remote.title=%@",[remote title]);
 			[remote setAlert:[self remoteNeedFetch:[remote title]]];
@@ -167,6 +159,7 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 }
 
 #pragma mark Badges Methods
+// XXX move to repository
 
 -(NSNumber *)countCommintsOf:(NSString *)range
 {
@@ -189,7 +182,7 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 	return ((ret==0) && ([o length]!=0));
 }
 
-#pragma mark -----
+#pragma mark -
 
 - (PBSourceViewItem *) selectedItem
 {
@@ -289,69 +282,8 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 
 - (void)setHistorySearch:(NSString *)searchString mode:(NSInteger)mode
 {
-	[historyViewController.searchController setHistorySearch:searchString mode:mode];
-}
-
-#pragma mark NSOutlineView delegate methods
-
-- (void)outlineViewSelectionDidChange:(NSNotification *)notification
-{
-	NSInteger index = [sourceView selectedRow];
-	PBSourceViewItem *item = [sourceView itemAtRow:index];
-	
-	if ([item revSpecifier]) {
-		if (![repository.currentBranch isEqual:[item revSpecifier]])
-			repository.currentBranch = [item revSpecifier];
-		[superController changeContentController:historyViewController];
-		[PBGitDefaults setShowStageView:NO];
-	}
-	
-	if (item == stage) {
-		[superController changeContentController:commitViewController];
-		[PBGitDefaults setShowStageView:YES];
-	}
-	
-	[self updateActionMenu];
-	[self updateRemoteControls];
-}
-
-#pragma mark NSOutlineView delegate methods
-- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item
-{
-	return [item isGroupItem];
-}
-
-- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(PBSourceViewCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(PBSourceViewItem *)item
-{
-	
-	BOOL showsActionButton = NO;
-	if ([item respondsToSelector:@selector(showsActionButton)]) {
-		showsActionButton = [item showsActionButton];
-		[cell setTarget:self];
-		cell.iInfoButtonAction = @selector(infoButtonAction:);
-	}
-	cell.showsActionButton = showsActionButton;
-	
-	[cell setBadge:[item badge]];
-	[cell setImage:[item icon]];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
-{
-	return ![item isGroupItem];
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldTrackCell:(NSCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
-	return [item isGroupItem];
-}
-
-//
-// The next method is necessary to hide the triangle for uncollapsible items
-// That is, items which should always be displayed, such as the Project group.
-// This also moves the group item to the left edge.
-- (BOOL) outlineView:(NSOutlineView *)outlineView shouldShowOutlineCellForItem:(id)item
-{
-	return ![item isUncollapsible];
+	// TODO: ????
+	DLog(@"!!!!!!");
 }
 
 - (void)populateList
@@ -391,6 +323,7 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 	[sourceView reloadItem:nil reloadChildren:YES];
 }
 
+#pragma mark -
 #pragma mark NSOutlineView Datasource methods
 
 - (id)outlineView:(NSOutlineView *)outlineView child:(NSInteger)index ofItem:(id)item
@@ -419,7 +352,60 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 	return [(PBSourceViewItem *)item title];
 }
 
+- (void)outlineViewSelectionDidChange:(NSNotification *)notification
+{
+	NSInteger index = [sourceView selectedRow];
+	PBSourceViewItem *item = [sourceView itemAtRow:index];
+	
+	if ([item revSpecifier]) {
+		if (![repository.currentBranch isEqual:[item revSpecifier]])
+			repository.currentBranch = [item revSpecifier];
+		[PBGitDefaults setShowStageView:NO];
+	}
+	
+	if (item == stage) {
+		[PBGitDefaults setShowStageView:YES];
+	}
+	
+	[self updateActionMenu];
+	[self updateRemoteControls];
+}
 
+- (BOOL)outlineView:(NSOutlineView *)outlineView isGroupItem:(id)item
+{
+	return [item isGroupItem];
+}
+
+- (void)outlineView:(NSOutlineView *)outlineView willDisplayCell:(PBSourceViewCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(PBSourceViewItem *)item
+{
+	
+	BOOL showsActionButton = NO;
+	if ([item respondsToSelector:@selector(showsActionButton)]) {
+		showsActionButton = [item showsActionButton];
+		[cell setTarget:self];
+		cell.iInfoButtonAction = @selector(infoButtonAction:);
+	}
+	cell.showsActionButton = showsActionButton;
+	
+	[cell setBadge:[item badge]];
+	[cell setImage:[item icon]];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
+{
+	return ![item isGroupItem];
+}
+
+- (BOOL)outlineView:(NSOutlineView *)outlineView shouldTrackCell:(NSCell *)cell forTableColumn:(NSTableColumn *)tableColumn item:(id)item {
+	return [item isGroupItem];
+}
+
+- (BOOL) outlineView:(NSOutlineView *)outlineView shouldShowOutlineCellForItem:(id)item
+{
+	return ![item isUncollapsible];
+}
+
+#pragma mark -
 #pragma mark Menus
 
 - (void) updateActionMenu
@@ -432,8 +418,8 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 	if (!ref)
 		return;
 	
-	for (NSMenuItem *menuItem in [historyViewController.refController menuItemsForRef:ref])
-		[menu addItem:menuItem];
+	//for (NSMenuItem *menuItem in [historyViewController.refController menuItemsForRef:ref])
+	//	[menu addItem:menuItem];
 }
 
 - (NSMenuItem *) actionIconItem
@@ -448,37 +434,38 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 
 - (NSMenu *) menuForRow:(NSInteger)row
 {
-	if (row == 0) {
-		return [historyViewController.repository menu];
-	}
-	PBSourceViewItem *viewItem = [sourceView itemAtRow:row];
-	if ([viewItem isKindOfClass:[PBGitMenuItem class]]) {
-		PBGitMenuItem *stashItem = (PBGitMenuItem *) viewItem;
-		NSMutableArray *commands = [[NSMutableArray alloc] init];
-		[commands addObjectsFromArray:[PBStashCommandFactory commandsForObject:[stashItem sourceObject] repository:historyViewController.repository]];
-		[commands addObjectsFromArray:[PBRemoteCommandFactory commandsForObject:[stashItem sourceObject] repository:historyViewController.repository]];
-		if (!commands) {
-			return nil;
-		}
-		NSMenu *menu = [[NSMenu alloc] init];
-		[menu setAutoenablesItems:NO];
-		for (PBCommand *command in commands) {
-			PBCommandMenuItem *item = [[PBCommandMenuItem alloc] initWithCommand:command];
-			[menu addItem:item];
-			[item release];
-		}
-		return menu;
-	}
-	
-	PBGitRef *ref = [viewItem ref];
-	if (!ref)
-		return nil;
-	
-	NSMenu *menu = [[NSMenu alloc] init];
-	[menu setAutoenablesItems:NO];
-	[self addMenuItemsForRef:ref toMenu:menu];
-	
-	return menu;
+	/*	if (row == 0) {
+	 //return [historyViewController.repository menu];
+	 }
+	 PBSourceViewItem *viewItem = [sourceView itemAtRow:row];
+	 if ([viewItem isKindOfClass:[PBGitMenuItem class]]) {
+	 PBGitMenuItem *stashItem = (PBGitMenuItem *) viewItem;
+	 NSMutableArray *commands = [[NSMutableArray alloc] init];
+	 [commands addObjectsFromArray:[PBStashCommandFactory commandsForObject:[stashItem sourceObject] repository:historyViewController.repository]];
+	 [commands addObjectsFromArray:[PBRemoteCommandFactory commandsForObject:[stashItem sourceObject] repository:historyViewController.repository]];
+	 if (!commands) {
+	 return nil;
+	 }
+	 NSMenu *menu = [[NSMenu alloc] init];
+	 [menu setAutoenablesItems:NO];
+	 for (PBCommand *command in commands) {
+	 PBCommandMenuItem *item = [[PBCommandMenuItem alloc] initWithCommand:command];
+	 [menu addItem:item];
+	 [item release];
+	 }
+	 return menu;
+	 }
+	 
+	 PBGitRef *ref = [viewItem ref];
+	 if (!ref)
+	 return nil;
+	 
+	 NSMenu *menu = [[NSMenu alloc] init];
+	 [menu setAutoenablesItems:NO];
+	 [self addMenuItemsForRef:ref toMenu:menu];
+	 
+	 return menu;*/
+	return nil;
 }
 
 // delegate of the action menu
@@ -491,9 +478,9 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 	[self addMenuItemsForRef:ref toMenu:menu];
 }
 
-
+#pragma mark -
 #pragma mark Remote controls
-
+// TODO: maybe move to the toolbar
 enum  {
 	kAddRemoteSegment = 0,
 	kFetchSegment,
@@ -547,12 +534,12 @@ enum  {
 		[repository beginFetchFromRemoteForRef:ref];
 	else if (selectedSegment == kPullSegment)
 		[repository beginPullFromRemote:remoteRef forRef:ref];
-	else if (selectedSegment == kPushSegment) {
-		if ([ref isRemote])
-			[historyViewController.refController showConfirmPushRefSheet:nil remote:remoteRef];
-		else if ([ref isBranch])
-			[historyViewController.refController showConfirmPushRefSheet:ref remote:remoteRef];
-	}
+	/*	else if (selectedSegment == kPushSegment) {
+	 if ([ref isRemote])
+	 [historyViewController.refController showConfirmPushRefSheet:nil remote:remoteRef];
+	 else if ([ref isBranch])
+	 [historyViewController.refController showConfirmPushRefSheet:ref remote:remoteRef];
+	 }*/
 }
 
 - (IBAction) svnFetch:(id)sender
@@ -562,13 +549,11 @@ enum  {
 
 - (IBAction) svnRebase:(id)sender
 {
-    printf("git svn rebase");
     [repository svnRebase:nil];
 }
 
 - (IBAction) svnDcommit:(id)sender
 {
-    printf("git svn dcommit");
     [repository svnDcommit:nil];
 }
 
