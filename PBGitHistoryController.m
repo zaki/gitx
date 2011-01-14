@@ -69,13 +69,6 @@
 	[fileBrowser setTarget:self];
 	[fileBrowser setDoubleAction:@selector(openSelectedFile:)];
 
-	if (!repository.currentBranch) {
-		[repository reloadRefs];
-		[repository readCurrentBranch];
-	}
-	else
-		[repository lazyReload];
-
 	// Set a sort descriptor for the subject column in the history list, as
 	// It can't be sorted by default (because it's bound to a PBGitCommit)
 	[[commitList tableColumnWithIdentifier:@"SubjectColumn"] setSortDescriptorPrototype:[[NSSortDescriptor alloc] initWithKey:@"subject" ascending:YES]];
@@ -229,6 +222,7 @@
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+	DLog(@"keyPath: '%@' context: '%@'",keyPath,context);
     if ([(NSString *)context isEqualToString: @"commitChange"]) {
 		[self updateKeys];
 		//[self restoreFileBrowserSelection];

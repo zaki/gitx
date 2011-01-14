@@ -24,6 +24,8 @@
     
 	NSMutableArray *items;
 
+	NSThread *thread;
+
 	/* Specific things */
 	PBSourceViewItem *stage;
 	PBSourceViewItem *branches, *remotes, *tags, *others, *stashes, *submodules;
@@ -31,6 +33,8 @@
 
 - (void) selectStage;
 - (void) selectCurrentBranch;
+- (void) addSubmodules:(NSArray *)newSubmodules;
+- (void) addStashes:(NSArray *)newStashes;
 
 - (NSMenu *) menuForRow:(NSInteger)row;
 

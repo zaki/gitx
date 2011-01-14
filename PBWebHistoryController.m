@@ -52,6 +52,7 @@
 	//	return;
 	
 	currentSha = [content sha];
+	if(currentSha==nil) return;
 	
 	// Now we load the extended details. We used to do this in a separate thread,
 	// but this caused some funny behaviour because NSTask's and NSThread's don't really

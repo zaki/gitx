@@ -45,7 +45,7 @@
 		[loadedSubmodules addObject:submodule];
 	}
 	
-	NSMutableArray *groupedSubmodules = [[NSMutableArray alloc] init];
+	/*NSMutableArray *groupedSubmodules = [[NSMutableArray alloc] init];
 	for (PBGitSubmodule *submodule in loadedSubmodules) {
 		BOOL added = NO;
 		for (PBGitSubmodule *addedItem in groupedSubmodules) {
@@ -57,10 +57,11 @@
 		if (!added) {
 			[groupedSubmodules addObject:submodule];
 		}
-	}
+	}*/
 	
 	
-	self.submodules = loadedSubmodules;
+	DLog(@"loadedSubmodules count:%d",[loadedSubmodules count]);
+	[self setSubmodules:loadedSubmodules];
 }
 
 #pragma mark -

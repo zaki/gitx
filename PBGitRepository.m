@@ -159,7 +159,7 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 {
 	config = [[PBGitConfig alloc] initWithRepositoryPath:[[self fileURL] path]];
 	self.branches = [NSMutableArray array];
-	[self reloadRefs];
+	//[self reloadRefs];
 	currentBranchFilter = [PBGitDefaults branchFilter];
 	revisionList = [[PBGitHistoryList alloc] initWithRepository:self];
 	
@@ -284,7 +284,7 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 	_headSha = nil;
 
 	refs = [NSMutableDictionary dictionary];
-	NSMutableArray *oldBranches = [branches mutableCopy];
+	NSMutableArray *newBranches = [branches mutableCopy];
 
 	NSArray *arguments = [NSArray arrayWithObjects:@"for-each-ref", @"--format=%(refname) %(objecttype) %(objectname) %(*objectname)", @"refs", nil];
 	NSString *output = [self outputForArguments:arguments];
@@ -300,14 +300,14 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 		PBGitRef *newRef = [PBGitRef refFromString:[components objectAtIndex:0]];
 		PBGitRevSpecifier *revSpec = [[PBGitRevSpecifier alloc] initWithRef:newRef];
 
-		[self addBranch:revSpec];
+		[newBranches addObject:revSpec];
 		[self addRef:newRef fromParameters:components];
-		[oldBranches removeObject:revSpec];
 	}
 
-	for (PBGitRevSpecifier *branch in oldBranches)
-		if ([branch isSimpleRef] && ![branch isEqual:[self headRef]])
-			[self removeBranch:branch];
+	[self willChangeValueForKey:@"branches"];
+	[branches removeAllObjects];
+	[branches addObjectsFromArray:newBranches];
+	[self didChangeValueForKey:@"branches"];
 
 	[self willChangeValueForKey:@"refs"];
 	[self didChangeValueForKey:@"refs"];
@@ -1123,7 +1123,10 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 		}
 	}
 
+	
+	[self reloadRefs];
 	[super showWindows];
+	[self setCurrentBranch:[self headRef]];
 }
 
 // for the scripting bridge

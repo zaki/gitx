@@ -39,6 +39,7 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 - (void) updateRemoteControls;
 @end
 
+
 @implementation PBGitSidebarController
 @synthesize items;
 @synthesize sourceListControlsView;
@@ -49,6 +50,8 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 	[sourceView setDelegate:self];
 	items = [NSMutableArray array];
 	
+	thread=[[NSThread alloc] init];
+	[thread start];
 	return self;
 }
 
@@ -66,10 +69,10 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 	
 	[self menuNeedsUpdate:[actionButton menu]];
 	
-	if ([PBGitDefaults showStageView])
+	/*if ([PBGitDefaults showStageView])
 		[self selectStage];
 	else
-		[self selectCurrentBranch];
+		[self selectCurrentBranch];*/
 	
 	[sourceView setDoubleAction:@selector(outlineDoubleClicked)];
 	[sourceView setTarget:self];
@@ -92,7 +95,7 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 	if ([kObservingContextBranches isEqualToString:context]) {
 		NSInteger changeKind = [(NSNumber *)[change objectForKey:NSKeyValueChangeKindKey] intValue];
 		
-		if (changeKind == NSKeyValueChangeInsertion) {
+		if ((changeKind == NSKeyValueChangeInsertion) || (changeKind == NSKeyValueChangeSetting)) {
 			NSArray *newRevSpecs = [change objectForKey:NSKeyValueChangeNewKey];
 			for (PBGitRevSpecifier *rev in newRevSpecs) {
 				[self addRevSpec:rev];
@@ -105,63 +108,68 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 			for (PBGitRevSpecifier *rev in removedRevSpecs)
 				[self removeRevSpec:rev];
 		}
+		[self performSelectorOnMainThread:@selector(refreshBabges) withObject:nil waitUntilDone:NO];
 	} else if ([kObservingContextStashes isEqualToString:context]) {		// isEqualToString: is not needed here
 		[stashes.children removeAllObjects];
 		NSArray *newStashes = [change objectForKey:NSKeyValueChangeNewKey];
-		
-		PBGitMenuItem *lastItem = nil;
-		for (PBGitStash *stash in newStashes) {
-			PBGitMenuItem *item = [[PBGitMenuItem alloc] initWithSourceObject:stash];
-			[stashes addChild:item];
-			[item release];
-			lastItem = item;
-		}
-		if (lastItem) {
-			[sourceView PBExpandItem:lastItem expandParents:YES];
-		}
+		[self addStashes:newStashes];
 		[sourceView reloadData];
 	} else if ([kObservingContextSubmodules isEqualToString:context]) {
 		[submodules.children removeAllObjects];
 		NSArray *newSubmodules = [change objectForKey:NSKeyValueChangeNewKey];
-		
-		for (PBGitSubmodule *submodule in newSubmodules) {
-			PBGitMenuItem *item = [[PBGitMenuItem alloc] initWithSourceObject:submodule];
-			
-			BOOL added = NO;
-			for (PBGitMenuItem *addedItems in [submodules children]) {
-				if ([[submodule path] hasPrefix:[(id)[addedItems sourceObject] path]]) {
-					[addedItems addChild:item];
-					added = YES;
-				}
-			}
-			if (!added) {
-				[submodules addChild:item];
-			}
-			[sourceView PBExpandItem:item expandParents:YES];
-		}
+		[self addSubmodules:newSubmodules];
 		[sourceView reloadData];
 	}else if ([kObservingContextRefs isEqualToString:context]) {
 		for(PBGitSVRemoteItem* remote in [remotes children]){
-			NSLog(@"remote.title=%@",[remote title]);
 			[remote setAlert:[self remoteNeedFetch:[remote title]]];
-		}
-				
+		}				
 	}else{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 	
-	[self refreshBabges];
+}
+
+-(void)addStashes:(NSArray *)newStashes
+{
+	for (PBGitStash *stash in newStashes) {
+		PBGitMenuItem *item = [[PBGitMenuItem alloc] initWithSourceObject:stash];
+		[stashes addChild:item];
+		[item release];
+	}
+}
+
+-(void)addSubmodules:(NSArray *)newSubmodules
+{
+	for (PBGitSubmodule *submodule in newSubmodules) {
+		PBGitMenuItem *item = [[PBGitMenuItem alloc] initWithSourceObject:submodule];
+		
+		BOOL added = NO;
+		for (PBGitMenuItem *addedItems in [submodules children]) {
+			if ([[submodule path] hasPrefix:[(id)[addedItems sourceObject] path]]) {
+				[addedItems addChild:item];
+				added = YES;
+			}
+		}
+		if (!added) {
+			[submodules addChild:item];
+		}
+		[sourceView PBExpandItem:item expandParents:YES];
+	}
+	
 }
 
 #pragma mark Badges Methods
 -(void)refreshBabges
 {
+	DLog(@"start");
 	for(PBGitSVBranchItem* branch in [branches children]){
 		NSString *bName=[branch title];
 		[branch setAhead:[self countCommintsOf:[NSString stringWithFormat:@"origin/%@..%@",bName,bName]]];
 		[branch setBehind:[self countCommintsOf:[NSString stringWithFormat:@"%@..origin/%@",bName,bName]]];
 		[branch setIsCheckedOut:[branch.revSpecifier isEqual:[repository headRef]]];
 	}	
+	[sourceView reloadData];
+	DLog(@"end");
 }
 
 -(NSNumber *)countCommintsOf:(NSString *)range
@@ -306,9 +314,12 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 	stashes = [PBSourceViewItem groupItemWithTitle:@"Stashes"];
 	submodules = [PBSourceViewItem groupItemWithTitle:@"Submodules"];
 	
-	for (PBGitRevSpecifier *rev in repository.branches)
+	for (PBGitRevSpecifier *rev in repository.branches) 
 		[self addRevSpec:rev];
 	
+	[self addSubmodules:[[repository submoduleController] submodules]];
+	[self addStashes:[[repository stashController] stashes]];
+
 	[items addObject:project];
 	[items addObject:branches];
 	[items addObject:remotes];
@@ -319,11 +330,10 @@ static NSString * const kObservingContextRefs = @"updateRefs";
 	
 	[sourceView reloadData];
 	[sourceView expandItem:project];
-	[sourceView expandItem:branches expandChildren:YES];
+	[sourceView expandItem:branches];
 	[sourceView expandItem:remotes];
-	//[sourceView expandItem:submodules expandChildren:YES];
-	
-	[self refreshBabges];
+	[sourceView expandItem:stashes];
+	[sourceView expandItem:submodules];
 	
 	[sourceView reloadItem:nil reloadChildren:YES];
 }
