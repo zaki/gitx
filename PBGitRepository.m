@@ -166,7 +166,50 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 	resetController = [[PBGitResetController alloc] initWithRepository:self];
 	stashController = [[PBStashController alloc] initWithRepository:self];
 	submoduleController = [[PBSubmoduleController alloc] initWithRepository:self];
+	[self initializeEventStream];
 }
+
+#pragma mark -
+#pragma mark file system controller
+
+- (void) initializeEventStream
+{
+    NSString *myPath = [[self fileURL] path];
+    NSArray *pathsToWatch = [NSArray arrayWithObject:myPath];
+    void *appPointer = (void *)self;
+    FSEventStreamContext context = {0, appPointer, NULL, NULL, NULL};
+    NSTimeInterval latency = 3.0;
+	FSEventStreamRef stream;
+    stream = FSEventStreamCreate(NULL,
+                                 &fsevents_callback,
+                                 &context,
+                                 (CFArrayRef) pathsToWatch,
+                                 kFSEventStreamEventIdSinceNow,
+                                 (CFAbsoluteTime) latency,
+                                 kFSEventStreamCreateFlagUseCFTypes
+								 );
+	
+    FSEventStreamScheduleWithRunLoop(stream,
+                                     CFRunLoopGetCurrent(),
+                                     kCFRunLoopDefaultMode);
+    FSEventStreamStart(stream);
+}
+
+void fsevents_callback(ConstFSEventStreamRef streamRef,
+                       void *userData,
+                       size_t numEvents,
+                       void *eventPaths,
+                       const FSEventStreamEventFlags eventFlags[],
+                       const FSEventStreamEventId eventIds[])
+{
+    PBGitRepository *repo = (PBGitRepository *)userData;
+	NSLog(@"---- %@",repo);
+	NSLog(@"---- %@",eventPaths);
+	[repo reloadRefs];
+}
+
+#pragma mark -
+
 
 - (void)close
 {

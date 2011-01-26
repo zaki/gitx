@@ -23,6 +23,13 @@ typedef enum branchFilterTypes {
 	kGitXSelectedBranchFilter
 } PBGitXBranchFilterType;
 
+void fsevents_callback(ConstFSEventStreamRef streamRef,
+                       void *userData,
+                       size_t numEvents,
+                       void *eventPaths,
+                       const FSEventStreamEventFlags eventFlags[],
+                       const FSEventStreamEventId eventIds[]);
+
 static NSString * PBStringFromBranchFilterType(PBGitXBranchFilterType type) {
     switch (type) {
         case kGitXAllBranchesFilter:
@@ -147,6 +154,8 @@ static NSString * PBStringFromBranchFilterType(PBGitXBranchFilterType type) {
 
 -(NSNumber *)countCommintsOf:(NSString *)branchs;
 +(bool)isLocalBranch:(NSString *)branch branchNameInto:(NSString **)name;
+
+- (void) initializeEventStream;
 
 @property (assign) BOOL hasChanged;
 @property (readonly) PBGitWindowController *windowController;
