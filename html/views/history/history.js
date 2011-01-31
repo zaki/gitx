@@ -217,7 +217,7 @@ var loadCommit = function(commitObject, currentRef) {
 
 }
 
-var showDiff = function() {
+var showDiff = function(is_big) {
 
 	$("files").innerHTML = "";
 
@@ -271,7 +271,7 @@ var showDiff = function() {
 			return "Binary file differs";
 	}
 	
-	highlightDiff(commit.diff, $("diff"), { "newfile" : newfile, "binaryFile" : binaryDiff });
+	highlightDiff(commit.diff, $("diff"), is_big, { "newfile" : newfile, "binaryFile" : binaryDiff });
 }
 
 var showImage = function(element, filename)
@@ -328,9 +328,10 @@ var loadCommitDetails = function(data)
 	$("message").innerHTML = commit.message.replace(/\n/g,"<br>");
 
 	if (commit.diff.length < 200000)
-		showDiff();
+		showDiff(false); /// !!!! FALSE
 	else
-		$("diff").innerHTML = "<a class='showdiff' href='' onclick='showDiff(); return false;'>This is a large commit. Click here or press 'v' to view.</a>";
+		$("diff").innerHTML = "<a class='showdiff' href='' onclick='showDiff(true); return false;'>" +
+			"This is a large commit (" + Math.round(commit.diff.length / 1024) + " kb). Click here or press 'v' to view.</a>";
 
 	hideNotification();
 	enableFeatures();

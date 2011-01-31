@@ -5,8 +5,7 @@ if (typeof Controller == 'undefined') {
 	Controller = console;
 	Controller.log_ = console.log;
 }
-
-var highlightDiff = function(diff, element, callbacks) {
+var highlightDiff = function(diff, element, delay_build_diff_detail, callbacks) {
 	if (!diff || diff == "")
 		return;
 
@@ -23,6 +22,7 @@ var highlightDiff = function(diff, element, callbacks) {
 	var line1 = "";
 	var line2 = "";
 	var diffContent = "";
+	var diffContentLineCount = 0;
 	var finalContent = "";
 	var lines = content.split('\n');
 	var binary = false;
@@ -34,7 +34,14 @@ var highlightDiff = function(diff, element, callbacks) {
 	var hunk_start_line_2 = -1;
 
 	var header = false;
-
+	var delayedCallbacks = {};
+	if (delay_build_diff_detail) {
+		window.revealFile = function(id) {
+			document.getElementById("diff_contents_file_index_" + id).innerHTML = delayedCallbacks["" + id];
+			var link = document.getElementById("file_expand_link_" + id);
+			link.parentNode.removeChild(link);
+		}
+	}
 	var finishContent = function()
 	{
 		if (!file_index)
@@ -69,14 +76,25 @@ var highlightDiff = function(diff, element, callbacks) {
 
 		if (diffContent != "" || binary) {
 			finalContent += '<div class="file" id="file_index_' + (file_index - 1) + '">' +
-				'<div class="fileHeader">' + title + '</div>';
+				'<div class="fileHeader">' + title + " " +
+					(delay_build_diff_detail ?
+						"<a href='#' id='file_expand_link_" + (file_index - 1) + "' onclick='revealFile(" + (file_index - 1) + "); return false;'>" +
+							"Expand (" + diffContentLineCount + " lines)" +
+						"</a>"
+					: "") +
+				'</div>';
 		}
 
 		if (!binary && (diffContent != ""))  {
-			finalContent +=		'<div class="diffContent">' +
-								'<div class="lineno">' + line1 + "</div>" +
-								'<div class="lineno">' + line2 + "</div>" +
-								'<div class="lines">' + diffContent + "</div>" +
+			body = '<div class="lineno">' + line1 + "</div>" +
+					'<div class="lineno">' + line2 + "</div>" +
+					'<div class="lines">' + diffContent + "</div>";
+			if (delay_build_diff_detail) {
+				delayedCallbacks["" + (file_index - 1)] = body;
+				body = "";
+			}
+			finalContent +=		'<div id="diff_contents_file_index_' + (file_index - 1) + '" class="diffContent">' +
+								body +
 							'</div>';
 		}
 		else {
@@ -93,6 +111,7 @@ var highlightDiff = function(diff, element, callbacks) {
 
 		line1 = "";
 		line2 = "";
+		diffContentLineCount = 0;
 		diffContent = "";
 		file_index++;
 		startname = "";
@@ -195,10 +214,12 @@ var highlightDiff = function(diff, element, callbacks) {
 			line1 += "\n";
 			line2 += ++hunk_start_line_2 + "\n";
 			diffContent += "<div " + sindex + "class='addline'>" + l + "</div>";
+			diffContentLineCount += 1;
 		} else if (firstChar == "-") {
 			line1 += ++hunk_start_line_1 + "\n";
 			line2 += "\n";
 			diffContent += "<div " + sindex + "class='delline'>" + l + "</div>";
+			diffContentLineCount += 1;
 		} else if (firstChar == "@") {
 			if (header) {
 				header = false;
@@ -212,10 +233,12 @@ var highlightDiff = function(diff, element, callbacks) {
 			line1 += "...\n";
 			line2 += "...\n";
 			diffContent += "<div " + sindex + "class='hunkheader'>" + l + "</div>";
+			diffContentLineCount += 1;
 		} else if (firstChar == " ") {
 			line1 += ++hunk_start_line_1 + "\n";
 			line2 += ++hunk_start_line_2 + "\n";
 			diffContent += "<div " + sindex + "class='noopline'>" + l + "</div>";
+			diffContentLineCount += 1;
 		}
 		lindex++;
 	}
@@ -224,7 +247,6 @@ var highlightDiff = function(diff, element, callbacks) {
 
 	// This takes about 7ms
 	element.innerHTML = finalContent;
-
 	// TODO: Replace this with a performance pref call
 	if (false)
 		Controller.log_("Total time:" + (new Date().getTime() - start));
