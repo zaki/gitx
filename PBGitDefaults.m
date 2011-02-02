@@ -16,6 +16,7 @@
 #define kEnableGravatar @"PBEnableGravatar"
 #define kConfirmPublicGists @"PBConfirmPublicGists"
 #define kPublicGist @"PBGistPublic"
+#define kEnableTextMateLinks @"PBEnableTextMateLinks"
 #define kShowWhitespaceDifferences @"PBShowWhitespaceDifferences"
 #define kOpenCurDirOnLaunch @"PBOpenCurDirOnLaunch"
 #define kShowOpenPanelOnLaunch @"PBShowOpenPanelOnLaunch"
@@ -59,7 +60,12 @@
 	[defaultValues setObject:[NSNumber numberWithInteger:kGitXBasicSeachMode]
                       forKey:kHistorySearchMode];
 	[defaultValues setObject:[NSNumber numberWithBool:YES]
-                      forKey:kUseRepositoryWatcher];
+                    forKey:kUseRepositoryWatcher];
+	[defaultValues setObject:[NSNumber numberWithBool:YES]
+                    forKey:kUseRepositoryWatcher];
+  id textMateBundle = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"come.macromates.textmate"];
+	[defaultValues setObject:[NSNumber numberWithBool:textMateBundle != nil]
+                    forKey:kEnableTextMateLinks];
 	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
@@ -91,6 +97,11 @@
 + (BOOL) isGistPublic
 {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:kPublicGist];
+}
+
++ (BOOL) enableTextMateLinks
+{
+	return [[NSUserDefaults standardUserDefaults] boolForKey:kEnableTextMateLinks];
 }
 
 + (BOOL)showWhitespaceDifferences

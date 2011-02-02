@@ -16,7 +16,9 @@ var highlightDiff = function(diff, element, delay_build_diff_detail, callbacks) 
 	var content = diff.escapeHTML().replace(/\t/g, "    ");;
 
 	var file_index = 0;
-
+	var is_single_diff = (typeof delay_build_diff_detail == "undefined") && (!callbacks || !callbacks["newfile"]);
+	var use_textmate_links = Controller && (Controller.isFeatureEnabled_("textMateLinks") != 0);
+	var single_diff_base_url = use_textmate_links && Controller.baseRepositoryPath().replace(/\/.git\/*$/ig, "/");
 	var startname = "";
 	var endname = "";
 	var line1 = "";
@@ -86,6 +88,12 @@ var highlightDiff = function(diff, element, delay_build_diff_detail, callbacks) 
 		}
 
 		if (!binary && (diffContent != ""))  {
+			if (use_textmate_links && single_diff_base_url) {
+				line2 = line2.replace(/([0-9]+)/g, "<a href=\"" +
+				('txmt://open?url=' + escape(single_diff_base_url + endname) + '&line=$1').replace("\"", "&quot;") + "\">$1</a>")
+				if (m = l.match(/[0-9]+$/))
+					l = l.replace(/\s+$/, "<span class='whitespace'>" + m + "</span>");
+			}
 			body = '<div class="lineno">' + line1 + "</div>" +
 					'<div class="lineno">' + line2 + "</div>" +
 					'<div class="lines">' + diffContent + "</div>";

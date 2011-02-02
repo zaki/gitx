@@ -84,7 +84,6 @@
 {
 	if (!self.repository)
 		return request;
-
 	// TODO: Change this to canInitWithRequest
 	if ([[[request URL] scheme] isEqualToString:@"GitX"]) {
 		NSMutableURLRequest *newRequest = [request mutableCopy];
@@ -131,6 +130,10 @@
 	return flags > 0;
 }
 
+- (NSString *)baseRepositoryPath {
+  return [[self.repository fileURL] absoluteString];
+}
+
 - (BOOL) isFeatureEnabled:(NSString *)feature
 {
 	if([feature isEqualToString:@"gravatar"])
@@ -141,6 +144,8 @@
 		return [PBGitDefaults confirmPublicGists];
 	else if([feature isEqualToString:@"publicGist"])
 		return [PBGitDefaults isGistPublic];
+	else if([feature isEqualToString:@"textMateLinks"])
+		return [PBGitDefaults enableTextMateLinks];
 	else
 		return YES;
 }
