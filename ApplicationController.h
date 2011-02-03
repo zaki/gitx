@@ -29,7 +29,7 @@
 
 - (IBAction)openPreferencesWindow:(id)sender;
 - (IBAction)showAboutPanel:(id)sender;
-
+- (IBAction)showOpenRecentDialog:(id)sender;
 - (IBAction)installCliTool:(id)sender;
 
 - (IBAction)saveAction:sender;

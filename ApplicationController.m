@@ -161,6 +161,10 @@
 	[NSApp orderFrontStandardAboutPanelWithOptions:dict];
 }
 
+- (IBAction)showOpenRecentDialog:(id)sender {
+	[OpenRecentController run];
+}
+
 - (IBAction) showCloneRepository:(id)sender
 {
 	if (!cloneRepositoryPanel)
