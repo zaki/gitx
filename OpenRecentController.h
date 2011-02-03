@@ -10,19 +10,22 @@
 
 
 @interface OpenRecentController :NSObject {
-	IBOutlet NSSearchField* searchField;
-	IBOutlet NSWindow* searchWindow;
+	NSSearchField* searchField;
+	NSWindow* searchWindow;
 	NSMutableArray* currentResults;
 	NSMutableArray* possibleResults;
 	NSURL* selectedResult;
-	IBOutlet NSTableView* resultViewer;	
+	NSTableView* resultViewer;
 }
 
-+ (bool)run;
 + (void)openUrl:(NSURL*)url;
++ (OpenRecentController*)sharedOpenRecentController;
+-(BOOL)showWindow;
 - (IBAction)doSearch: sender;
 - (IBAction)changeSelection: sender;
 - (void) tableDoubleClick:(id)sender;
 
-
+@property (retain, nonatomic) IBOutlet NSSearchField* searchField;
+@property (retain, nonatomic) IBOutlet NSWindow* searchWindow;
+@property (retain, nonatomic) IBOutlet NSTableView* resultViewer;
 @end

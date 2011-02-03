@@ -73,9 +73,7 @@
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
 {
-	if([OpenRecentController run])
-		return YES;
-	return NO;
+	return [[OpenRecentController sharedOpenRecentController] showWindow];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
@@ -162,7 +160,7 @@
 }
 
 - (IBAction)showOpenRecentDialog:(id)sender {
-	[OpenRecentController run];
+	[[OpenRecentController sharedOpenRecentController] showWindow];
 }
 
 - (IBAction) showCloneRepository:(id)sender

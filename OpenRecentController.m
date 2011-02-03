@@ -13,25 +13,73 @@
 
 @implementation OpenRecentController
 
+@synthesize searchField, searchWindow, resultViewer;
 
-+ (bool)run 
+- (id) init
 {
-	OpenRecentController* new = [[OpenRecentController alloc] init];
-	new->currentResults = [NSMutableArray array];
-	[new->currentResults retain]; //FIXME: why ???
-	new->possibleResults = [NSMutableArray array];
-	[new->possibleResults retain]; //FIXME: why ???
-
-	for (NSURL *url in [[NSDocumentController sharedDocumentController] recentDocumentURLs]) {
-		[new->possibleResults addObject: url];
-	}
-
-	[NSBundle loadNibNamed: @"OpenRecentPopup" owner: new ];
-	
-	return [new->possibleResults count] > 0;
+  self = [super init];
+  if (self != nil) {
+    [NSBundle loadNibNamed: @"OpenRecentPopup" owner:self];
+    currentResults = [NSMutableArray new];
+    possibleResults = [NSMutableArray new];
+  }
+  return self;
 }
 
-+ (void)openUrl:(NSURL*)url 
+static OpenRecentController *sharedOpenRecentController = nil;
+
++ (OpenRecentController*)sharedOpenRecentController {
+    @synchronized(self) {
+        if (sharedOpenRecentController == nil) {
+            [[self alloc] init]; // assignment not done here
+        }
+    }
+    return sharedOpenRecentController;
+}
+
++ (id)allocWithZone:(NSZone *)zone {
+    @synchronized(self) {
+        if (sharedOpenRecentController == nil) {
+            sharedOpenRecentController = [super allocWithZone:zone];
+            return sharedOpenRecentController;  // assignment and return on first allocation
+        }
+    }
+    return nil; //on subsequent allocation attempts return nil
+}
+
+- (id)copyWithZone:(NSZone *)zone {
+    return self;
+}
+
+- (id)retain {
+    return self;
+}
+
+- (NSUInteger)retainCount {
+    return UINT_MAX;  //denotes an object that cannot be released
+}
+
+- (void)release {
+    //do nothing
+}
+
+- (id)autorelease {
+    return self;
+}
+
+-(BOOL)showWindow {
+  [currentResults removeAllObjects];
+  [possibleResults removeAllObjects];
+  for (NSURL *url in [[NSDocumentController sharedDocumentController] recentDocumentURLs]) {
+		[possibleResults addObject: url];
+	}
+	[searchField setStringValue:@""];
+	[self doSearch: nil];
+	[searchWindow makeKeyAndOrderFront:nil];
+	return [possibleResults count] > 0;
+}
+
++ (void)openUrl:(NSURL*)url
 {
 	NSError *error = nil;
 	[[PBRepositoryDocumentController sharedDocumentController] openDocumentWithContentsOfURL:url display:YES error:&error];
@@ -65,9 +113,6 @@
 {
     [resultViewer setTarget:self];
     [resultViewer setDoubleAction:@selector(tableDoubleClick:)];
-
-	[searchWindow makeKeyAndOrderFront: nil];
-	[self doSearch: nil];
 }
 
 
