@@ -74,6 +74,10 @@
 	[PBGitDefaults resetAllDialogWarnings];
 }
 
+- (NSArray *)editorLinkSchemes {
+  return [PBGitDefaults diffLineNumberLinkEditors];
+}
+
 #pragma mark -
 #pragma mark Git Path open panel actions
 

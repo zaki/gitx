@@ -133,6 +133,9 @@
 - (NSString *)baseRepositoryPath {
   return [[self.repository fileURL] absoluteString];
 }
+- (NSString *)linkEditorScheme {
+  return [PBGitDefaults diffLineNumberLinkEditorScheme];
+}
 
 - (BOOL) isFeatureEnabled:(NSString *)feature
 {
@@ -144,8 +147,6 @@
 		return [PBGitDefaults confirmPublicGists];
 	else if([feature isEqualToString:@"publicGist"])
 		return [PBGitDefaults isGistPublic];
-	else if([feature isEqualToString:@"textMateLinks"])
-		return [PBGitDefaults enableTextMateLinks];
 	else
 		return YES;
 }

@@ -17,7 +17,8 @@
 + (BOOL) isGravatarEnabled;
 + (BOOL) confirmPublicGists;
 + (BOOL) isGistPublic;
-+ (BOOL) enableTextMateLinks;
++ (NSString*) diffLineNumberLinkEditorScheme;
++ (NSArray*) diffLineNumberLinkEditors;
 + (BOOL)showWhitespaceDifferences;
 + (BOOL)openCurDirOnLaunch;
 + (BOOL)showOpenPanelOnLaunch;

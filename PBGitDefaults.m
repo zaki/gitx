@@ -16,7 +16,10 @@
 #define kEnableGravatar @"PBEnableGravatar"
 #define kConfirmPublicGists @"PBConfirmPublicGists"
 #define kPublicGist @"PBGistPublic"
-#define kEnableTextMateLinks @"PBEnableTextMateLinks"
+#define kDiffLineNumberLinksEnabled @"PBDiffLineNumberLinksEnabled"
+#define kDiffLineNumberLinksEditor @"PBDiffLineNumberLinksEditor"
+#define kDiffLineNumberLinksEditorBundle @"Bundle"
+#define kDiffLineNumberLinksEditorScheme @"Scheme"
 #define kShowWhitespaceDifferences @"PBShowWhitespaceDifferences"
 #define kOpenCurDirOnLaunch @"PBOpenCurDirOnLaunch"
 #define kShowOpenPanelOnLaunch @"PBShowOpenPanelOnLaunch"
@@ -63,10 +66,20 @@
                     forKey:kUseRepositoryWatcher];
 	[defaultValues setObject:[NSNumber numberWithBool:YES]
                     forKey:kUseRepositoryWatcher];
-  id textMateBundle = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"come.macromates.textmate"];
-	[defaultValues setObject:[NSNumber numberWithBool:textMateBundle != nil]
-                    forKey:kEnableTextMateLinks];
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+  id defaultEditor = nil;
+  id lastEditor = nil;
+  NSDictionary *editors = [[[NSBundle mainBundle] infoDictionary] objectForKey:kDiffLineNumberLinksEditor];
+  for (id editorName in editors) {
+    lastEditor = editorName;
+  	NSString *bundle = [[editors objectForKey:editorName] objectForKey:kDiffLineNumberLinksEditorBundle];
+    if (bundle && [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundle]) {
+      defaultEditor = editorName;
+      break;
+    }
+  }
+  [defaultValues setObject:defaultEditor ?: lastEditor forKey:kDiffLineNumberLinksEditor];
+  [defaultValues setObject:[NSNumber numberWithBool:defaultEditor != nil] forKey:kDiffLineNumberLinksEnabled];
+  [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
 + (int) commitMessageViewVerticalLineLength
@@ -99,9 +112,19 @@
 	return [[NSUserDefaults standardUserDefaults] boolForKey:kPublicGist];
 }
 
-+ (BOOL) enableTextMateLinks
++ (NSArray*) diffLineNumberLinkEditors {
+  return [[[[NSBundle mainBundle] infoDictionary] objectForKey:kDiffLineNumberLinksEditor] allKeys];
+}
+
++ (NSString*) diffLineNumberLinkEditorScheme
 {
-	return [[NSUserDefaults standardUserDefaults] boolForKey:kEnableTextMateLinks];
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:kDiffLineNumberLinksEnabled])
+    return nil;
+
+  NSDictionary *schemes = [[[NSBundle mainBundle] infoDictionary] objectForKey:kDiffLineNumberLinksEditor];
+  NSString *editorName = [[NSUserDefaults standardUserDefaults] stringForKey:kDiffLineNumberLinksEditor];
+  NSString *result = [[schemes objectForKey:editorName] objectForKey:kDiffLineNumberLinksEditorScheme];
+  return result;
 }
 
 + (BOOL)showWhitespaceDifferences
