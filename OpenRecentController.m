@@ -45,7 +45,7 @@
 	while( [currentResults count] > 0 ) [currentResults removeLastObject];
 	
     for(NSURL* url in possibleResults){
-		NSString* label = [url lastPathComponent];
+		NSString* label = [[url path] lastPathComponent];
 		if([searchString length] > 0) {
 			NSRange aRange = [label rangeOfString: searchString options: NSCaseInsensitiveSearch];
 			if (aRange.location == NSNotFound) continue;
@@ -117,26 +117,24 @@
     return result;
 }
 
-- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {	
     id theValue;
     NSParameterAssert(rowIndex >= 0 && rowIndex < [currentResults count]);
 	
     NSURL* row = [currentResults objectAtIndex:rowIndex];
 	if( [[aTableColumn identifier] isEqualToString: @"icon"] ) {
-		id icon;
-		NSError* error;
-		[row getResourceValue:&icon forKey:NSURLEffectiveIconKey error:&error];
+		id icon = nil;
+		if ([row isFileURL])
+			icon = [[NSWorkspace sharedWorkspace] iconForFile:[row path]];
 		return icon;
 	} else if( [[aTableColumn identifier] isEqualToString: @"label"] ) {
-		return [row lastPathComponent];
+		return [[row path] lastPathComponent];
 	}
     return theValue;
 	
 }
-
-- (int)numberOfRowsInTableView:(NSTableView *)aTableView
-
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView
 {
 	
     return [currentResults count];
