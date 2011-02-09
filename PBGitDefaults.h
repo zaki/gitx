@@ -17,6 +17,8 @@
 + (BOOL) isGravatarEnabled;
 + (BOOL) confirmPublicGists;
 + (BOOL) isGistPublic;
++ (NSString*) diffLineNumberLinkEditorScheme;
++ (NSArray*) diffLineNumberLinkEditors;
 + (BOOL)showWhitespaceDifferences;
 + (BOOL)refreshAutomatically;
 + (BOOL)openCurDirOnLaunch;
@@ -35,6 +37,7 @@
 + (void) setBranchFilter:(NSInteger)state;
 + (NSInteger)historySearchMode;
 + (void)setHistorySearchMode:(NSInteger)mode;
++ (BOOL)useRepositoryWatcher;
 
 
 // Suppressed Dialog Warnings

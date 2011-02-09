@@ -16,6 +16,10 @@
 #define kEnableGravatar @"PBEnableGravatar"
 #define kConfirmPublicGists @"PBConfirmPublicGists"
 #define kPublicGist @"PBGistPublic"
+#define kDiffLineNumberLinksEnabled @"PBDiffLineNumberLinksEnabled"
+#define kDiffLineNumberLinksEditor @"PBDiffLineNumberLinksEditor"
+#define kDiffLineNumberLinksEditorBundle @"Bundle"
+#define kDiffLineNumberLinksEditorScheme @"Scheme"
 #define kShowWhitespaceDifferences @"PBShowWhitespaceDifferences"
 #define kRefreshAutomatically @"PBRefreshAutomatically"
 #define kOpenCurDirOnLaunch @"PBOpenCurDirOnLaunch"
@@ -28,6 +32,7 @@
 #define kBranchFilterState @"PBBranchFilter"
 #define kHistorySearchMode @"PBHistorySearchMode"
 #define kSuppressedDialogWarnings @"Suppressed Dialog Warnings"
+#define kUseRepositoryWatcher @"PBUseRepositoryWatcher"
 
 
 @implementation PBGitDefaults
@@ -61,7 +66,24 @@
                       forKey:kOpenPreviousDocumentsOnLaunch];
 	[defaultValues setObject:[NSNumber numberWithInteger:kGitXBasicSeachMode]
                       forKey:kHistorySearchMode];
-	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
+	[defaultValues setObject:[NSNumber numberWithBool:YES]
+                    forKey:kUseRepositoryWatcher];
+	[defaultValues setObject:[NSNumber numberWithBool:YES]
+                    forKey:kUseRepositoryWatcher];
+  id defaultEditor = nil;
+  id lastEditor = nil;
+  NSDictionary *editors = [[[NSBundle mainBundle] infoDictionary] objectForKey:kDiffLineNumberLinksEditor];
+  for (id editorName in editors) {
+    lastEditor = editorName;
+  	NSString *bundle = [[editors objectForKey:editorName] objectForKey:kDiffLineNumberLinksEditorBundle];
+    if (bundle && [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:bundle]) {
+      defaultEditor = editorName;
+      break;
+    }
+  }
+  [defaultValues setObject:defaultEditor ?: lastEditor forKey:kDiffLineNumberLinksEditor];
+  [defaultValues setObject:[NSNumber numberWithBool:defaultEditor != nil] forKey:kDiffLineNumberLinksEnabled];
+  [[NSUserDefaults standardUserDefaults] registerDefaults:defaultValues];
 }
 
 + (int) commitMessageViewVerticalLineLength
@@ -94,7 +116,22 @@
 	return [[NSUserDefaults standardUserDefaults] boolForKey:kPublicGist];
 }
 
-+ (BOOL) showWhitespaceDifferences
++ (NSArray*) diffLineNumberLinkEditors {
+  return [[[[NSBundle mainBundle] infoDictionary] objectForKey:kDiffLineNumberLinksEditor] allKeys];
+}
+
++ (NSString*) diffLineNumberLinkEditorScheme
+{
+	if (![[NSUserDefaults standardUserDefaults] boolForKey:kDiffLineNumberLinksEnabled])
+    return nil;
+
+  NSDictionary *schemes = [[[NSBundle mainBundle] infoDictionary] objectForKey:kDiffLineNumberLinksEditor];
+  NSString *editorName = [[NSUserDefaults standardUserDefaults] stringForKey:kDiffLineNumberLinksEditor];
+  NSString *result = [[schemes objectForKey:editorName] objectForKey:kDiffLineNumberLinksEditorScheme];
+  return result;
+}
+
++ (BOOL)showWhitespaceDifferences
 {
 	return [[NSUserDefaults standardUserDefaults] boolForKey:kShowWhitespaceDifferences];
 }
@@ -217,5 +254,10 @@
 	[[NSUserDefaults standardUserDefaults] synchronize];
 }
 
+
++ (BOOL) useRepositoryWatcher
+{
+	return [[NSUserDefaults standardUserDefaults] boolForKey:kUseRepositoryWatcher];
+}
 
 @end

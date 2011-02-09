@@ -3,15 +3,24 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10J567</string>
+<<<<<<< HEAD
 		<string key="IBDocument.InterfaceBuilderVersion">851</string>
+=======
+		<string key="IBDocument.InterfaceBuilderVersion">823</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 		<string key="IBDocument.AppKitVersion">1038.35</string>
 		<string key="IBDocument.HIToolboxVersion">462.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
+<<<<<<< HEAD
 			<string key="NS.object.0">851</string>
+=======
+			<string key="NS.object.0">823</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="62"/>
 			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
@@ -43,6 +52,7 @@
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+<<<<<<< HEAD
 					<object class="NSButton" id="604563603">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
@@ -75,11 +85,98 @@
 						</object>
 					</object>
 					<object class="NSTextField" id="63761450">
+=======
+					<object class="NSPopUpButton" id="571707303">
+>>>>>>> refs/remotes/ddlsmurf/development
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 22}, {166, 17}}</string>
+						<string key="NSFrame">{{177, 217}, {120, 25}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
+<<<<<<< HEAD
+=======
+						<object class="NSPopUpButtonCell" key="NSCell" id="884114120">
+							<int key="NSCellFlags">-2076049856</int>
+							<int key="NSCellFlags2">134219776</int>
+							<object class="NSFont" key="NSSupport" id="734450335">
+								<string key="NSName">LucidaGrande</string>
+								<double key="NSSize">13</double>
+								<int key="NSfFlags">1044</int>
+							</object>
+							<reference key="NSControlView" ref="571707303"/>
+							<int key="NSButtonFlags">-2035269377</int>
+							<int key="NSButtonFlags2">35</int>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"/>
+							<int key="NSPeriodicDelay">400</int>
+							<int key="NSPeriodicInterval">75</int>
+							<object class="NSMenuItem" key="NSMenuItem" id="860811117">
+								<reference key="NSMenu" ref="1124"/>
+								<string key="NSTitle">Uninitialised</string>
+								<string key="NSKeyEquiv"/>
+								<int key="NSKeyEquivModMask">1048576</int>
+								<int key="NSMnemonicLoc">2147483647</int>
+								<int key="NSState">1</int>
+								<object class="NSCustomResource" key="NSOnImage" id="849610014">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSMenuCheckmark</string>
+								</object>
+								<object class="NSCustomResource" key="NSMixedImage" id="745784493">
+									<string key="NSClassName">NSImage</string>
+									<string key="NSResourceName">NSMenuMixedState</string>
+								</object>
+								<string key="NSAction">_popUpItemAction:</string>
+								<reference key="NSTarget" ref="884114120"/>
+							</object>
+							<bool key="NSMenuItemRespectAlignment">YES</bool>
+							<object class="NSMenu" key="NSMenu" id="1124">
+								<string key="NSTitle">OtherViews</string>
+								<object class="NSMutableArray" key="NSMenuItems">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<reference ref="860811117"/>
+								</object>
+								<reference key="NSMenuFont" ref="734450335"/>
+							</object>
+							<int key="NSPreferredEdge">1</int>
+							<bool key="NSUsesItemFromMenu">YES</bool>
+							<bool key="NSAltersState">YES</bool>
+							<int key="NSArrowPosition">2</int>
+						</object>
+					</object>
+					<object class="NSButton" id="798340339">
+						<reference key="NSNextResponder" ref="1005"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{18, 221}, {164, 18}}</string>
+						<reference key="NSSuperview" ref="1005"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="901864335">
+							<int key="NSCellFlags">-2080244224</int>
+							<int key="NSCellFlags2">0</int>
+							<string key="NSContents">Show links in diff for</string>
+							<reference key="NSSupport" ref="734450335"/>
+							<reference key="NSControlView" ref="798340339"/>
+							<int key="NSButtonFlags">1211912703</int>
+							<int key="NSButtonFlags2">2</int>
+							<object class="NSCustomResource" key="NSNormalImage" id="572153555">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSSwitch</string>
+							</object>
+							<object class="NSButtonImageSource" key="NSAlternateImage" id="690089052">
+								<string key="NSImageName">NSSwitch</string>
+							</object>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"/>
+							<int key="NSPeriodicDelay">200</int>
+							<int key="NSPeriodicInterval">25</int>
+						</object>
+					</object>
+					<object class="NSTextField" id="63761450">
+						<reference key="NSNextResponder" ref="1005"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{17, 78}, {166, 17}}</string>
+						<reference key="NSSuperview" ref="1005"/>
+						<bool key="NSEnabled">YES</bool>
+>>>>>>> refs/remotes/ddlsmurf/development
 						<object class="NSTextFieldCell" key="NSCell" id="467740597">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272630784</int>
@@ -109,7 +206,7 @@
 					<object class="NSButton" id="83909567">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{182, 12}, {137, 32}}</string>
+						<string key="NSFrame">{{182, 68}, {137, 32}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="265220935">
@@ -130,7 +227,7 @@
 					<object class="NSTextField" id="25030403">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{248, 118}, {41, 22}}</string>
+						<string key="NSFrame">{{248, 174}, {41, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1045854608">
@@ -160,7 +257,7 @@
 					<object class="NSTextField" id="258144035">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{121, 120}, {122, 17}}</string>
+						<string key="NSFrame">{{121, 176}, {122, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1031567029">
@@ -176,7 +273,7 @@
 					<object class="NSButton" id="968361983">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 143}, {273, 18}}</string>
+						<string key="NSFrame">{{18, 199}, {273, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="782438225">
@@ -187,7 +284,11 @@
 							<reference key="NSControlView" ref="968361983"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -198,7 +299,7 @@
 					<object class="NSTextField" id="441589300">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{17, 92}, {99, 17}}</string>
+						<string key="NSFrame">{{17, 148}, {99, 17}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="31526941">
@@ -222,7 +323,7 @@
 								<string>NSFilenamesPboardType</string>
 							</object>
 						</object>
-						<string key="NSFrame">{{121, 88}, {179, 22}}</string>
+						<string key="NSFrame">{{121, 144}, {179, 22}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPathCell" key="NSCell" id="331807888">
@@ -244,7 +345,7 @@
 					<object class="NSTextField" id="617839596">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{118, 52}, {192, 28}}</string>
+						<string key="NSFrame">{{118, 108}, {192, 28}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="453728129">
@@ -260,7 +361,7 @@
 					<object class="NSButton" id="1032928366">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{306, 92}, {54, 14}}</string>
+						<string key="NSFrame">{{306, 148}, {54, 14}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="806993456">
@@ -285,7 +386,7 @@
 					<object class="NSButton" id="910887184">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{18, 168}, {203, 18}}</string>
+						<string key="NSFrame">{{18, 243}, {203, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="709654045">
@@ -296,7 +397,33 @@
 							<reference key="NSControlView" ref="910887184"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+							<reference key="NSAlternateImage" ref="690089052"/>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"/>
+							<int key="NSPeriodicDelay">200</int>
+							<int key="NSPeriodicInterval">25</int>
+						</object>
+					</object>
+					<object class="NSButton" id="170094602">
+						<reference key="NSNextResponder" ref="1005"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{18, 265}, {295, 18}}</string>
+						<reference key="NSSuperview" ref="1005"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="341963380">
+							<int key="NSCellFlags">-2080244224</int>
+							<int key="NSCellFlags2">0</int>
+							<string key="NSContents">Automatically refresh repository on change</string>
+							<reference key="NSSupport" ref="734450335"/>
+							<reference key="NSControlView" ref="170094602"/>
+							<int key="NSButtonFlags">1211912703</int>
+							<int key="NSButtonFlags2">2</int>
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -307,7 +434,11 @@
 					<object class="NSButton" id="160081910">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
+<<<<<<< HEAD
 						<string key="NSFrame">{{18, 218}, {279, 18}}</string>
+=======
+						<string key="NSFrame">{{18, 287}, {279, 18}}</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="876763316">
@@ -318,7 +449,11 @@
 							<reference key="NSControlView" ref="160081910"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -329,7 +464,11 @@
 					<object class="NSButton" id="68472633">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
+<<<<<<< HEAD
 						<string key="NSFrame">{{18, 243}, {207, 18}}</string>
+=======
+						<string key="NSFrame">{{18, 309}, {207, 18}}</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="456188813">
@@ -340,7 +479,11 @@
 							<reference key="NSControlView" ref="68472633"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -349,7 +492,11 @@
 						</object>
 					</object>
 				</object>
+<<<<<<< HEAD
 				<string key="NSFrameSize">{401, 279}</string>
+=======
+				<string key="NSFrameSize">{363, 345}</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -388,7 +535,11 @@
 							<reference key="NSControlView" ref="250497668"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -420,14 +571,8 @@
 								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
-								<object class="NSCustomResource" key="NSOnImage" id="841139400">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">NSMenuCheckmark</string>
-								</object>
-								<object class="NSCustomResource" key="NSMixedImage" id="53951027">
-									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">NSMenuMixedState</string>
-								</object>
+								<reference key="NSOnImage" ref="849610014"/>
+								<reference key="NSMixedImage" ref="745784493"/>
 								<string key="NSAction">_popUpItemAction:</string>
 								<int key="NSTag">2629800</int>
 								<reference key="NSTarget" ref="646744412"/>
@@ -443,8 +588,8 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="841139400"/>
-										<reference key="NSMixedImage" ref="53951027"/>
+										<reference key="NSOnImage" ref="849610014"/>
+										<reference key="NSMixedImage" ref="745784493"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">3600</int>
 										<reference key="NSTarget" ref="646744412"/>
@@ -455,8 +600,8 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="841139400"/>
-										<reference key="NSMixedImage" ref="53951027"/>
+										<reference key="NSOnImage" ref="849610014"/>
+										<reference key="NSMixedImage" ref="745784493"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">86400</int>
 										<reference key="NSTarget" ref="646744412"/>
@@ -467,8 +612,8 @@
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="841139400"/>
-										<reference key="NSMixedImage" ref="53951027"/>
+										<reference key="NSOnImage" ref="849610014"/>
+										<reference key="NSMixedImage" ref="745784493"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">604800</int>
 										<reference key="NSTarget" ref="646744412"/>
@@ -528,7 +673,11 @@
 										<integer value="2"/>
 									</object>
 								</object>
+<<<<<<< HEAD
 								<string key="NS.format">EEEE, dd MMMM, yyyy HH:mm:ss </string>
+=======
+								<string key="NS.format">EEEE, d MMMM yyyy HH:mm:ss</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 								<bool key="NS.natural">NO</bool>
 							</object>
 							<reference key="NSControlView" ref="1045127964"/>
@@ -561,7 +710,7 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomView" id="351117501">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -579,7 +728,11 @@
 							<reference key="NSControlView" ref="890810109"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -589,6 +742,7 @@
 					</object>
 				</object>
 				<string key="NSFrameSize">{239, 54}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSCustomObject" id="844257713">
@@ -597,7 +751,12 @@
 			<object class="NSUserDefaultsController" id="557723770">
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+<<<<<<< HEAD
 					<string>PBRefreshAutomatically</string>
+=======
+					<string>kDiffLineNumberLinksEnabled</string>
+					<string>PBDiffLineNumberLinksEnabled</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
@@ -620,7 +779,11 @@
 							<reference key="NSControlView" ref="237556568"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -642,7 +805,11 @@
 							<reference key="NSControlView" ref="485413225"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -664,7 +831,11 @@
 							<reference key="NSControlView" ref="933582906"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -686,7 +857,11 @@
 							<reference key="NSControlView" ref="766070942"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
+<<<<<<< HEAD
 							<reference key="NSNormalImage" ref="136676346"/>
+=======
+							<reference key="NSNormalImage" ref="572153555"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<reference key="NSAlternateImage" ref="690089052"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -1107,6 +1282,7 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
+<<<<<<< HEAD
 						<string key="label">value: values.PBRefreshAutomatically</string>
 						<reference key="source" ref="604563603"/>
 						<reference key="destination" ref="557723770"/>
@@ -1116,11 +1292,94 @@
 							<string key="NSLabel">value: values.PBRefreshAutomatically</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">values.PBRefreshAutomatically</string>
+=======
+						<string key="label">value: values.PBUseRepositoryWatcher</string>
+						<reference key="source" ref="170094602"/>
+						<reference key="destination" ref="557723770"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="170094602"/>
+							<reference key="NSDestination" ref="557723770"/>
+							<string key="NSLabel">value: values.PBUseRepositoryWatcher</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.PBUseRepositoryWatcher</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
 					<int key="connectionID">144</int>
 				</object>
+<<<<<<< HEAD
+=======
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: values.PBDiffLineNumberLinksEnabled</string>
+						<reference key="source" ref="571707303"/>
+						<reference key="destination" ref="557723770"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="571707303"/>
+							<reference key="NSDestination" ref="557723770"/>
+							<string key="NSLabel">enabled: values.PBDiffLineNumberLinksEnabled</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">values.PBDiffLineNumberLinksEnabled</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">160</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentValues: editorLinkSchemes</string>
+						<reference key="source" ref="571707303"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector" id="157485993">
+							<reference key="NSSource" ref="571707303"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">contentValues: editorLinkSchemes</string>
+							<string key="NSBinding">contentValues</string>
+							<string key="NSKeyPath">editorLinkSchemes</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">163</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedValue: values.PBDiffLineNumberLinksEditor</string>
+						<reference key="source" ref="571707303"/>
+						<reference key="destination" ref="557723770"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="571707303"/>
+							<reference key="NSDestination" ref="557723770"/>
+							<string key="NSLabel">selectedValue: values.PBDiffLineNumberLinksEditor</string>
+							<string key="NSBinding">selectedValue</string>
+							<string key="NSKeyPath">values.PBDiffLineNumberLinksEditor</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValidatesImmediately</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<reference key="NSPreviousConnector" ref="157485993"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">164</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: values.PBDiffLineNumberLinksEnabled</string>
+						<reference key="source" ref="798340339"/>
+						<reference key="destination" ref="557723770"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="798340339"/>
+							<reference key="NSDestination" ref="557723770"/>
+							<string key="NSLabel">value: values.PBDiffLineNumberLinksEnabled</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">values.PBDiffLineNumberLinksEnabled</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">166</int>
+				</object>
+>>>>>>> refs/remotes/ddlsmurf/development
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1154,19 +1413,25 @@
 						<reference key="object" ref="1005"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="910887184"/>
-							<reference ref="441589300"/>
-							<reference ref="525163949"/>
-							<reference ref="617839596"/>
-							<reference ref="1032928366"/>
 							<reference ref="68472633"/>
 							<reference ref="160081910"/>
+							<reference ref="170094602"/>
+							<reference ref="910887184"/>
+							<reference ref="798340339"/>
+							<reference ref="1032928366"/>
+							<reference ref="617839596"/>
+							<reference ref="525163949"/>
+							<reference ref="441589300"/>
 							<reference ref="968361983"/>
 							<reference ref="258144035"/>
 							<reference ref="25030403"/>
 							<reference ref="83909567"/>
 							<reference ref="63761450"/>
+<<<<<<< HEAD
 							<reference ref="604563603"/>
+=======
+							<reference ref="571707303"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">General</string>
@@ -1588,17 +1853,75 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">141</int>
+<<<<<<< HEAD
 						<reference key="object" ref="604563603"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="254305730"/>
+=======
+						<reference key="object" ref="170094602"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="341963380"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">142</int>
+<<<<<<< HEAD
 						<reference key="object" ref="254305730"/>
 						<reference key="parent" ref="604563603"/>
+=======
+						<reference key="object" ref="341963380"/>
+						<reference key="parent" ref="170094602"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">145</int>
+						<reference key="object" ref="798340339"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="901864335"/>
+						</object>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">146</int>
+						<reference key="object" ref="901864335"/>
+						<reference key="parent" ref="798340339"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">153</int>
+						<reference key="object" ref="571707303"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="884114120"/>
+						</object>
+						<reference key="parent" ref="1005"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">154</int>
+						<reference key="object" ref="884114120"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="1124"/>
+						</object>
+						<reference key="parent" ref="571707303"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">155</int>
+						<reference key="object" ref="1124"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="860811117"/>
+						</object>
+						<reference key="parent" ref="884114120"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">156</int>
+						<reference key="object" ref="860811117"/>
+						<reference key="parent" ref="1124"/>
+>>>>>>> refs/remotes/ddlsmurf/development
 					</object>
 				</object>
 			</object>
@@ -1617,18 +1940,23 @@
 					<string>109.IBPluginDependency</string>
 					<string>11.IBPluginDependency</string>
 					<string>114.IBPluginDependency</string>
+					<string>114.IBViewBoundsToFrameTransform</string>
 					<string>115.IBPluginDependency</string>
 					<string>118.IBPluginDependency</string>
 					<string>119.IBPluginDependency</string>
 					<string>12.IBPluginDependency</string>
 					<string>122.IBPluginDependency</string>
+					<string>122.IBViewBoundsToFrameTransform</string>
 					<string>123.IBPluginDependency</string>
 					<string>126.IBPluginDependency</string>
+					<string>126.IBViewBoundsToFrameTransform</string>
 					<string>127.IBPluginDependency</string>
 					<string>128.IBPluginDependency</string>
+					<string>128.IBViewBoundsToFrameTransform</string>
 					<string>129.IBPluginDependency</string>
 					<string>13.IBPluginDependency</string>
 					<string>130.IBPluginDependency</string>
+					<string>130.IBViewBoundsToFrameTransform</string>
 					<string>131.IBPluginDependency</string>
 					<string>136.IBAttributePlaceholdersKey</string>
 					<string>136.IBPluginDependency</string>
@@ -1641,8 +1969,20 @@
 					<string>141.IBPluginDependency</string>
 					<string>141.IBViewBoundsToFrameTransform</string>
 					<string>142.IBPluginDependency</string>
+<<<<<<< HEAD
+=======
+					<string>145.IBPluginDependency</string>
+					<string>145.IBViewBoundsToFrameTransform</string>
+					<string>146.IBPluginDependency</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 					<string>15.IBEditorWindowLastContentRect</string>
 					<string>15.IBPluginDependency</string>
+					<string>153.IBPluginDependency</string>
+					<string>153.IBViewBoundsToFrameTransform</string>
+					<string>154.IBPluginDependency</string>
+					<string>155.IBEditorWindowLastContentRect</string>
+					<string>155.IBPluginDependency</string>
+					<string>156.IBPluginDependency</string>
 					<string>16.IBPluginDependency</string>
 					<string>17.IBPluginDependency</string>
 					<string>18.IBPluginDependency</string>
@@ -1659,16 +1999,20 @@
 					<string>4.IBUserGuides</string>
 					<string>42.IBPluginDependency</string>
 					<string>43.IBPluginDependency</string>
+					<string>43.IBViewBoundsToFrameTransform</string>
 					<string>44.IBPluginDependency</string>
 					<string>45.IBPluginDependency</string>
+					<string>45.IBViewBoundsToFrameTransform</string>
 					<string>46.IBPluginDependency</string>
 					<string>47.IBPluginDependency</string>
+					<string>47.IBViewBoundsToFrameTransform</string>
 					<string>48.IBPluginDependency</string>
 					<string>62.IBEditorWindowLastContentRect</string>
 					<string>62.IBPluginDependency</string>
 					<string>63.IBPluginDependency</string>
 					<string>64.IBPluginDependency</string>
 					<string>77.IBPluginDependency</string>
+					<string>77.IBViewBoundsToFrameTransform</string>
 					<string>78.IBPluginDependency</string>
 					<string>87.IBEditorWindowLastContentRect</string>
 					<string>87.IBPluginDependency</string>
@@ -1683,7 +2027,11 @@
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+<<<<<<< HEAD
 					<string>{{511, 548}, {401, 279}}</string>
+=======
+					<string>{{642, 445}, {363, 345}}</string>
+>>>>>>> refs/remotes/ddlsmurf/development
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1700,18 +2048,33 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAw4KAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAw3gAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAw1cAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABC8gAAwz8AAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDeAAAw0IAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSMutableDictionary">
 						<string key="NS.key.0">ToolTip</string>
@@ -1723,21 +2086,38 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABDXwAAwggAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABDNgAAwsQAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
-						<bytes key="NSTransformStruct">P4AAAL+AAABCaAAAwegAAA</bytes>
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwroAAA</bytes>
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<object class="NSAffineTransform">
+<<<<<<< HEAD
 						<bytes key="NSTransformStruct">P4AAAL+AAADBcAAAw3QAAA</bytes>
+=======
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAw2IAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBkAAAw28AAA</bytes>
+>>>>>>> refs/remotes/ddlsmurf/development
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{443, 712}, {103, 71}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDIAAAwmAAAA</bytes>
+					</object>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{808, 664}, {150, 23}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1762,16 +2142,28 @@
 					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABBiAAAwyMAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABC8gAAwyQAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABC7AAAwwYAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{474, 394}, {239, 54}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<object class="NSAffineTransform">
+						<bytes key="NSTransformStruct">P4AAAL+AAABDmQAAwyAAAA</bytes>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{{474, 352}, {400, 116}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1800,7 +2192,11 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
+<<<<<<< HEAD
 			<int key="maxID">144</int>
+=======
+			<int key="maxID">166</int>
+>>>>>>> refs/remotes/ddlsmurf/development
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2383,6 +2779,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">QuartzCore.framework/Headers/CIImageProvider.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">ScriptingBridge.framework/Headers/SBApplication.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

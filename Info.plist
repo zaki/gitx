@@ -93,5 +93,22 @@
 	<true/>
 	<key>OSAScriptingDefinition</key>
 	<string>GitX.sdef</string>
+	<key>PBDiffLineNumberLinksEditor</key>
+	<dict>
+    <key>TextMate</key>
+    <dict>
+	    <key>Scheme</key>
+    	<string>txmt://open?url=%u&amp;line=%l</string>
+	    <key>Bundle</key>
+      <string>com.macromates.textmate</string>
+    </dict>
+    <key>MacVim</key>
+    <dict>
+	    <key>Scheme</key>
+      <string>mvim://open?url=%u&amp;line=%l</string>
+	    <key>Bundle</key>
+      <string>org.vim.MacVim</string>
+    </dict>
+	</dict>
 </dict>
 </plist>

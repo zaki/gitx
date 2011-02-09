@@ -80,6 +80,7 @@
 	if (!finishedLoading)
 		return;
 
+	self.repository = controller.repository;
 	id script = [view windowScriptObject];
 	[script callWebScriptMethod:@"showFileChanges"
 		      withArguments:[NSArray arrayWithObjects:selectedFile ?: (id)[NSNull null],

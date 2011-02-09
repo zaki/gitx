@@ -20,6 +20,7 @@
 #import "PBGitDefaults.h"
 #import "GitXScriptingConstants.h"
 #import "PBHistorySearchController.h"
+#import "PBGitRepositoryWatcher.h"
 
 #import "PBGitStash.h"
 #import "PBGitSubmodule.h"
@@ -152,6 +153,7 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 
 	[self setFileURL:gitDirURL];
 	[self setup];
+  watcher = [[PBGitRepositoryWatcher alloc] initWithRepository:self];
 	return YES;
 }
 
@@ -197,6 +199,8 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 
 	[self showWindows];
 
+  // Setup the FSEvents watcher to fire notifications when things change
+  watcher = [[PBGitRepositoryWatcher alloc] initWithRepository:self];
 	return self;
 }
 
@@ -671,7 +675,7 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 
 	NSString *description = [NSString stringWithFormat:@"Pulling all tracking branches from %@", remoteName];
 	NSString *title = @"Pulling from remote";
-	[PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
+	[PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self hideSuccessScreen:true];
 }
 
 - (void) beginPushRef:(PBGitRef *)ref toRemote:(PBGitRef *)remoteRef
@@ -707,7 +711,7 @@ NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 
 	NSString *description = [NSString stringWithFormat:@"Pushing %@ to %@", branchName, remoteName];
 	NSString *title = @"Pushing to remote";
-	[PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
+	[PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self hideSuccessScreen:true];
 }
 
 - (BOOL) checkoutRefish:(id <PBGitRefish>)ref

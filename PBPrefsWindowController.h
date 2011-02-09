@@ -21,6 +21,7 @@
 	IBOutlet NSView *gitPathOpenAccessory;
 	NSOpenPanel *gitPathOpenPanel;
 
+	NSArray *editorLinkSchemes;
 }
 
 - (IBAction) checkGitValidity: sender;
@@ -29,4 +30,5 @@
 - (IBAction) resetGitPath: sender;
 - (IBAction)resetAllDialogWarnings:(id)sender;
 
+@property (readonly, nonatomic) NSArray *editorLinkSchemes;
 @end

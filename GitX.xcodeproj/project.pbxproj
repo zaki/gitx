@@ -54,6 +54,9 @@
 		217FF0BB12A1CB3300785A65 /* PBGitResetController.m in Sources */ = {isa = PBXBuildFile; fileRef = 217FF0B712A1CB3300785A65 /* PBGitResetController.m */; };
 		217FF0BE12A1CB3E00785A65 /* PBRevealWithFinderCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 217FF0BC12A1CB3E00785A65 /* PBRevealWithFinderCommand.m */; };
 		21CF0B24129C7ED90065B37C /* TrackableOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 21CF0B23129C7ED90065B37C /* TrackableOutlineView.m */; };
+		0A6858C711F7EA8A00AC2BE4 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A6858C611F7EA8A00AC2BE4 /* CoreServices.framework */; };
+		0A6858CF11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6858CC11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.m */; };
+		0A6858D011F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A6858CE11F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.m */; };
 		310DC1D81240599E0017A0F7 /* GLFileView.m in Sources */ = {isa = PBXBuildFile; fileRef = 310DC1D71240599E0017A0F7 /* GLFileView.m */; };
 		31460CD2124185BA00B90AED /* MGRecessedPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 31460CA7124185BA00B90AED /* MGRecessedPopUpButtonCell.m */; };
 		31460CD3124185BA00B90AED /* MGScopeBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 31460CA9124185BA00B90AED /* MGScopeBar.m */; };
@@ -82,6 +85,8 @@
 		91B103CC0E898EC300C84364 /* PBIconAndTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 91B103CB0E898EC300C84364 /* PBIconAndTextCell.m */; };
 		93CB42C20EAB7B2200530609 /* PBGitDefaults.m in Sources */ = {isa = PBXBuildFile; fileRef = 93CB42C10EAB7B2200530609 /* PBGitDefaults.m */; };
 		93F7857F0EA3ABF100C1F443 /* PBCommitMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 93F7857E0EA3ABF100C1F443 /* PBCommitMessageView.m */; };
+		C4514A87125E35A8009D9F42 /* OpenRecentController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4514A86125E35A8009D9F42 /* OpenRecentController.m */; };
+		C4514AAB125E38C5009D9F42 /* OpenRecentPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4514AAA125E38C5009D9F42 /* OpenRecentPopup.xib */; };
 		D26DC6450E782C9000C777B2 /* gitx.icns in Resources */ = {isa = PBXBuildFile; fileRef = D26DC6440E782C9000C777B2 /* gitx.icns */; };
 		D8022FE811E124A0003C21F6 /* PBGitXMessageSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = D8022FE711E124A0003C21F6 /* PBGitXMessageSheet.xib */; };
 		D8022FED11E124C8003C21F6 /* PBGitXMessageSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = D8022FEC11E124C8003C21F6 /* PBGitXMessageSheet.m */; };
@@ -279,6 +284,11 @@
 		02B41A5F123E307F00DFC531 /* PBCommitHookFailedSheet.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PBCommitHookFailedSheet.xib; sourceTree = "<group>"; };
 		056438B60ED0C40B00985397 /* DetailViewTemplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = DetailViewTemplate.png; path = Images/DetailViewTemplate.png; sourceTree = "<group>"; };
 		089C165DFE840E0CC02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0A6858C611F7EA8A00AC2BE4 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		0A6858CB11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBGitRepositoryWatcher.h; sourceTree = "<group>"; };
+		0A6858CC11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBGitRepositoryWatcher.m; sourceTree = "<group>"; };
+		0A6858CD11F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBGitRepositoryWatcherEventPath.h; sourceTree = "<group>"; };
+		0A6858CE11F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBGitRepositoryWatcherEventPath.m; sourceTree = "<group>"; };
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		21025C1012947AB200D87200 /* sourceListAction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sourceListAction.png; sourceTree = "<group>"; };
 		21025C1112947AB200D87200 /* sourceListActionOver.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sourceListActionOver.png; sourceTree = "<group>"; };
@@ -375,6 +385,9 @@
 		93F7857D0EA3ABF100C1F443 /* PBCommitMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBCommitMessageView.h; sourceTree = "<group>"; };
 		93F7857E0EA3ABF100C1F443 /* PBCommitMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBCommitMessageView.m; sourceTree = "<group>"; };
 		93FCCBA80EA8AF450061B02B /* PBGitConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBGitConfig.m; sourceTree = "<group>"; };
+		C4514A85125E35A8009D9F42 /* OpenRecentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenRecentController.h; sourceTree = "<group>"; };
+		C4514A86125E35A8009D9F42 /* OpenRecentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenRecentController.m; sourceTree = "<group>"; };
+		C4514AAA125E38C5009D9F42 /* OpenRecentPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = OpenRecentPopup.xib; sourceTree = "<group>"; };
 		D26DC6440E782C9000C777B2 /* gitx.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = gitx.icns; sourceTree = "<group>"; };
 		D8022A3411DFCCA5003C21F6 /* build_libgit2.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = build_libgit2.sh; sourceTree = "<group>"; };
 		D8022FE711E124A0003C21F6 /* PBGitXMessageSheet.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PBGitXMessageSheet.xib; sourceTree = "<group>"; };
@@ -588,6 +601,7 @@
 				F5C580E50EDA250900995434 /* libgit2.a in Frameworks */,
 				D8E3B2B810DC9FB2001096A3 /* ScriptingBridge.framework in Frameworks */,
 				D87127011229A21C00012334 /* QuartzCore.framework in Frameworks */,
+				0A6858C711F7EA8A00AC2BE4 /* CoreServices.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,6 +842,7 @@
 				21230ED11285EB5A0046E5A1 /* PBArgumentPicker.xib */,
 				F58DB55F10566E3900CFDF4A /* PBGitSidebarView.xib */,
 				D8022FE711E124A0003C21F6 /* PBGitXMessageSheet.xib */,
+				C4514AAA125E38C5009D9F42 /* OpenRecentPopup.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -838,6 +853,7 @@
 				F5C580E40EDA250900995434 /* libgit2.a */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
+				0A6858C611F7EA8A00AC2BE4 /* CoreServices.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -971,6 +987,10 @@
 		F56174540E05887E001DCD79 /* Git */ = {
 			isa = PBXGroup;
 			children = (
+				0A6858CB11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.h */,
+				0A6858CC11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.m */,
+				0A6858CD11F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.h */,
+				0A6858CE11F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.m */,
 				F59F1DD2105C4FDE00115F88 /* Index */,
 				F5E927E30E883D6800056E75 /* Commit */,
 				F5E927E10E883D2E00056E75 /* History */,
@@ -1011,6 +1031,8 @@
 				47DBDB570E94EDE700671A1E /* DBPrefsWindowController.m */,
 				47DBDB650E94EE8B00671A1E /* PBPrefsWindowController.h */,
 				47DBDB660E94EE8B00671A1E /* PBPrefsWindowController.m */,
+				C4514A85125E35A8009D9F42 /* OpenRecentController.h */,
+				C4514A86125E35A8009D9F42 /* OpenRecentController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1414,6 +1436,7 @@
 				212A49AB12A31328009DAFAD /* deleted_file.png in Resources */,
 				212A49AD12A31350009DAFAD /* ignored_file.png in Resources */,
 				212A49AF12A3135C009DAFAD /* modified_file.png in Resources */,
+				C4514AAB125E38C5009D9F42 /* OpenRecentPopup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1583,6 +1606,9 @@
 				217FF0BA12A1CB3300785A65 /* PBSubmoduleController.m in Sources */,
 				217FF0BB12A1CB3300785A65 /* PBGitResetController.m in Sources */,
 				217FF0BE12A1CB3E00785A65 /* PBRevealWithFinderCommand.m in Sources */,
+				C4514A87125E35A8009D9F42 /* OpenRecentController.m in Sources */,
+				0A6858CF11F7EAA900AC2BE4 /* PBGitRepositoryWatcher.m in Sources */,
+				0A6858D011F7EAA900AC2BE4 /* PBGitRepositoryWatcherEventPath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1800,7 +1826,7 @@
 		26FC0A890875C7B200E6366F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(NATIVE_ARCH_ACTUAL)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_PREPROCESSOR_DEFINITIONS = DEBUG;
 				GCC_PREPROCESSOR_DEFINITIONS_NOT_USED_IN_PRECOMPS = DEBUG_BUILD;
@@ -1808,6 +1834,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_PREPROCESS = YES;
+				ONLY_ACTIVE_ARCH = YES;
 				PREBINDING = NO;
 				RUN_CLANG_STATIC_ANALYZER = YES;
 				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.5.sdk";
@@ -1817,11 +1844,7 @@
 		26FC0A8A0875C7B200E6366F /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					ppc,
-					i386,
-					x86_64,
-				);
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
 				GCC_ENABLE_OBJC_GC = required;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;

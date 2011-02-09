@@ -84,7 +84,6 @@
 {
 	if (!self.repository)
 		return request;
-
 	// TODO: Change this to canInitWithRequest
 	if ([[[request URL] scheme] isEqualToString:@"GitX"]) {
 		NSMutableURLRequest *newRequest = [request mutableCopy];
@@ -129,6 +128,13 @@
 		return FALSE;
 
 	return flags > 0;
+}
+
+- (NSString *)baseRepositoryPath {
+  return [[self.repository fileURL] absoluteString];
+}
+- (NSString *)linkEditorScheme {
+  return [PBGitDefaults diffLineNumberLinkEditorScheme];
 }
 
 - (BOOL) isFeatureEnabled:(NSString *)feature

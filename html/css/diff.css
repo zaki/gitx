@@ -27,6 +27,10 @@
 	text-align: right;
 }
 
+.diff .file .diffcontent .lineno a {
+  color: #6C6C6C;
+}
+
 .diff .file .diffContent .lines {
 	overflow: auto;
 }

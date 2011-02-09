@@ -17,6 +17,7 @@
 #import "PBGitDefaults.h"
 #import "PBCloneRepositoryPanel.h"
 #import "Sparkle/SUUpdater.h"
+#import "OpenRecentController.h"
 
 @implementation ApplicationController
 
@@ -39,6 +40,8 @@
 	
 	// Make sure the PBGitDefaults is initialized, by calling a random method
 	[PBGitDefaults class];
+	
+	started = NO;
 	return self;
 }
 
@@ -59,6 +62,18 @@
 		NSUpdateDynamicServices();
 		[[NSUserDefaults standardUserDefaults] setInteger:2 forKey:@"Services Version"];
 	}
+}
+
+- (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)sender
+{
+	if(!started || [[[PBRepositoryDocumentController sharedDocumentController] documents] count])
+		return NO;
+	return YES;
+}
+
+- (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
+{
+	return [[OpenRecentController sharedOpenRecentController] showWindow];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification*)notification
@@ -114,6 +129,10 @@
 	// show an open panel for the user to select a repository to view
 	if ([PBGitDefaults showOpenPanelOnLaunch] && !hasOpenedDocuments)
 		[[PBRepositoryDocumentController sharedDocumentController] openDocument:self];
+	else if(!hasOpenedDocuments) 
+		[self applicationOpenUntitledFile:nil];
+	
+	started = YES;
 }
 
 - (void) windowWillClose: sender
@@ -138,6 +157,10 @@
 	#endif
 
 	[NSApp orderFrontStandardAboutPanelWithOptions:dict];
+}
+
+- (IBAction)showOpenRecentDialog:(id)sender {
+	[[OpenRecentController sharedOpenRecentController] showWindow];
 }
 
 - (IBAction) showCloneRepository:(id)sender

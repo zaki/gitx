@@ -495,9 +495,9 @@ static NSString * const kObservingContextSubmodules = @"submodulesChanged";
 
 enum  {
 	kAddRemoteSegment = 0,
-	kFetchSegment,
-	kPullSegment,
-	kPushSegment
+	kFetchSegment = 1,
+	kPullSegment = 2,
+	kPushSegment = 3
 };
 
 - (void) updateRemoteControls
