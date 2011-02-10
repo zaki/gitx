@@ -85,9 +85,6 @@
 		char *hex = git_oid_allocfmt(&oid);
 		if (hex == NULL)
 			return nil;
-
-		git_oid_fill_hex(&oid, hex);
-		hex[40] = '\0';
 		string = [NSString stringWithUTF8String:hex];
 		free(hex);
 	}
