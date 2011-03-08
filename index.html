@@ -1,41 +1,222 @@
----
-layout: default
-title: Home
----
-<div class="nohover" id="download">
-	<div id="version">
-	<a href="http://frim.frim.nl/GitXStable.app.zip" title="Latest GitX download" id="download_link" class="nohover">
-	<span style="font-size: 125%">Download GitX</span><br>Version <%= ReleaseNotes::last_version %>
-	</a></div>
-</div>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <meta name="google-site-verification" content="SpCyQ5GDnrKMq7UkkbStnUx_CYhNcaZLb3bdwcLz1cU" />
+        <title>GitX (L)</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/text.css">
+        <link rel="stylesheet" href="css/960.css">
+        <link rel="stylesheet" href="gitx.css">
+        <link rel="stylesheet" href="css/lightbox.css" type="text/css" media="screen" />
+        <script type="text/javascript" src="js/prototype.js"></script>
+        <script type="text/javascript" src="js/scriptaculous.js?load=effects,builder"></script>
+        <script type="text/javascript" src="js/lightbox.js"></script>
+    </head>
+    <body>
+        <div id="cuerpo" class="container_12">
+            <div id="header" class="grid_9">
+                <img alt="gitx logo"  id="logo" src="/gitx_icon.png"/>
+                <h1>GitX (L)</h1>
+                <h2>Open Source Mac OS X Git client</h2>
+            </div>
+            <div  class="grid_3">
+                <div id="download">
+                    <a href="https://github.com/downloads/laullon/gitx/GitX-L_v0.8.0.zip" class="button"><span>Download GitX (L) v0.8.0</span></a>
+                </div>
+                <p id="license"><a href="https://github.com/laullon/gitx/blob/master/COPYING" class="button" ><span>License GPL v2</span></a></p>
+            </div>
 
-<h2 class="noclear">GitX</h2>
-<p>
-	GitX is a git GUI made for Mac OS X. It currently
-features a history viewer much like gitk and a commit GUI like git gui. But
-then in silky smooth OS X style!
-</p>
+            <hr/>
+            <div class="clear"></div>
+            <div id="screenshots">
+                <div class="grid_4">
+                    <a href="blame.png" title="git gitx blame" rel="lightbox[gitx]"><img src="/blame_mini.png" alt="gitx screenshot blame"></a>
+                </div>
+                <div class="grid_4">
+                    <a href="commit.png" title="git gitx commit" rel="lightbox[gitx]"><img src="/commit_mini.png" alt="gitx screenshot blame"></a>
+                </div>
+                <div class="grid_4">
+                    <a href="file_view.png" title="git gitx file view source code" rel="lightbox[gitx]"><img src="/file_view_mini.png" alt="gitx screenshot blame"></a>
+                </div>
+            </div>
+            <hr/>
+            <div id="caract">
+                <div class="grid_3">
+                    <h4>Commit view</h4>
+                    <ul>
+                        <li>Commit/Parents/Tree SHA links</li>
+                        <li>File changes counts</li>
+                        <li>File Diffs</li>
+                        <li>Commit Tags and Refs</li>
+                    </ul>
+                </div>
+                <div class="grid_3">
+                    <h4>File view</h4>
+                    <ul>
+                        <li>Source Code Highlight</li>
+                        <li>Blame</li>
+                        <li>File History (log)</li>
+                        <li>Diff with local and HEAD</li>
+                    </ul>
+                </div>
+                <div class="grid_3">
+                    <h4>Sidebar</h4>
+                    <ul>
+                        <li>Branches</li>
+                        <li>Remotes</li>
+                        <li>Stashes</li>
+                        <li>Submodules</li>
+                    </ul>
+                </div>
+                <div class="grid_3">
+                    <h4>Stage view</h4>
+                    <ul>
+                        <li>Unstaged/Staged files</li>
+                        <li>Stage/Discard by lines</li>
+                        <li>Amend</li>
+                        <li>File diff</li>
+                    </ul>
+                </div>
+            </div>
+            <hr/>
+            <div class="grid_6" lang="es">
+                <h2>Espa&ntilde;ol</h2>
+                <p>Esta es mi propia versi&oacute;n de GitX y cumple con mis requisitos para el uso diario de Git en MacOSX.<p>
+                <p>GitX funciona en MacOSX 10.6, pero puede que funcione en versiones anteriores, pero no tengo forma de probarlo, si tu lo usas en otras versiones, <a href="https://github.com/inbox/new/laullon">dimelo</a>.</p>
+                <p>GitX necesita Git 1.6.0 o superior</p>
+            </div>
+            <div class="grid_6" lang="en">
+                <h2>English</h2>
+                <p>This is my own version of GitX and it meets all my requirements on my day-to-day use of Git on MacOSX.<p>
+                <p>GitX run on MacOSX 10.6, but It could work on previous version, but I can't test it, if you can, <a href="https://github.com/inbox/new/laullon">send me a message</a>.</p>
+                <p>GitX requires Git 1.6.0 or higher</p>
+            </div>
+            <div class="clear"></div>
+            <hr/>
+            <div class="grid_6">
+                <h3>by <a href="https://github.com/laullon">Germ&aacute;n Laull&oacute;n</a> &amp; others Committers</h3>
+                <p class="cent">git log --all --format='&lt;li&gt;%aN&lt;/li&gt;' | sort -u</p>
+                <ul class="line">
+                    <li>Adi Luhung Suryadi</li>
+                    <li>Anders Carling</li>
+                    <li>Andre Berg</li>
+                    <li>Andy Fowler</li>
+                    <li>Anthony Cook</li>
+                    <li>Arjen Laarhoven</li>
+                    <li>Aron Cedercrantz</li>
+                    <li>Ben Alpert</li>
+                    <li>Ben Walding</li>
+                    <li>Benjamin Kramer</li>
+                    <li>Benoit Cerrina</li>
+                    <li>Bernard Leach</li>
+                    <li>Bob Aman</li>
+                    <li>Bryce Kerley</li>
+                    <li>Charles O'Rourke</li>
+                    <li>Christian Jacobsen</li>
+                    <li>Ciaran Walsh</li>
+                    <li>Daniel Lundqvist</li>
+                    <li>Dave Grijalva</li>
+                    <li>David Grijalva</li>
+                    <li>David Parry</li>
+                    <li>Douglas Creager</li>
+                    <li>Eric Allen</li>
+                    <li>Eric Doughty-Papassideris</li>
+                    <li>Felix Holmgren</li>
+                    <li>Frederic Barthelemy</li>
+                    <li>Gautam Dey</li>
+                    <li>Gerd Knops</li>
+                    <li>German Laullon</li>
+                    <li>Hajo Nils Krabbenhoeft</li>
+                    <li>Harvey Thompson</li>
+                    <li>JD Smith</li>
+                    <li>Jan Weiss</li>
+                    <li>Jean-Paul van Oosten</li>
+                    <li>Jeff Mesnil</li>
+                    <li>Jeremy Sanderson</li>
+                    <li>Joe Fiorini</li>
+                    <li>Johannes Gilger</li>
+                    <li>Joshua Bleecher Snyder</li>
+                    <li>Kamal Fariz Mahyuddin</li>
+                    <li>Kevin Ballard</li>
+                    <li>Kevin Glowacz</li>
+                    <li>Kevin LaCoste</li>
+                    <li>Kim Does</li>
+                    <li>Marc Liyanage</li>
+                    <li>Mark Bestley</li>
+                    <li>Martin Svangren</li>
+                    <li>Matt Connolly</li>
+                    <li>Michael Dippery</li>
+                    <li>Michael Stephens</li>
+                    <li>Michiel Holtkamp</li>
+                    <li>Mike Czepiel</li>
+                    <li>Mikhail Emelchenkov</li>
+                    <li>Morgan Schweers</li>
+                    <li>Nathan Kinsinger</li>
+                    <li>Nicholas Riley</li>
+                    <li>Nick Zitzmann</li>
+                    <li>Owen Yamauchi</li>
+                    <li>Pieter de Bie</li>
+                    <li>Rick Berry</li>
+                    <li>Roddi</li>
+                    <li>Rufus Cable</li>
+                    <li>Sebastian Staudt</li>
+                    <li>Seth Raphael</li>
+                    <li>Simeon Leifer</li>
+                    <li>Stephen Bannasch</li>
+                    <li>Stephen Celis</li>
+                    <li>Steven Michalske</li>
+                    <li>Stonewall Ballard</li>
+                    <li>Till Salzer</li>
+                    <li>Tomasz Krasnyk</li>
+                    <li>Travis Cline</li>
+                    <li>Uli Kusterer</li>
+                    <li>Yoshimasa Niwa</li>
+                    <li>bkerley</li>
+                    <li>brotherbard</li>
+                    <li>dbr</li>
+                    <li>dgrijalva</li>
+                    <li>glaullon</li>
+                    <li>krt</li>
+                    <li>ngu</li>
+                    <li>vijaykiran</li>
 
-<h3 class="noclear">Features</h3>
-<ul>
-	<li>Detailed history viewer</li>
-	<li>Nice commit GUI, allowing hunk- and line-wise staging</li>
-	<li>Fast workflow</li>
-	<li>Explore tree of any revision</li>
-	<li>Nice Aqua interface</li>
-	<li>Paste commits to <a href="http://gist.github.com/">gist.github.com</a></li>
-	<li>QuickLook integration</li>
-</ul>
+                </ul>
+            </div>
+            <div class="grid_6">
+                <div id="disqus_thread"></div>
+                <script type="text/javascript">
+                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+                    var disqus_shortname = 'gitx'; // required: replace example with your forum shortname
 
-<h3>Requirements</h3>
-<p>
-	GitX runs on Mac OS X 10.5 Leopard and Mac OS X 10.6 Snow Leopard. Because it uses features like Garbage Collection, you can't compile it on earlier systems. GitX also requires a fairly recent Git -- version 1.6.0 and higher are all supported. 
-</p>
+                    // The following are highly recommended additional parameters. Remove the slashes in front to use.
+                    // var disqus_identifier = 'unique_dynamic_id_1234';
+                    // var disqus_url = 'http://example.com/permalink-to-page.html';
 
-<h3>Download</h3>
-<p>
-	The newest version of GitX is <%= ReleaseNotes::last_version %>. This version can be downloaded from <a href="http://frim.frim.nl/GitXStable.app.zip">here</a>. To see what has changed, read the <a href="release_history.html">Release History</a>.
-</p>
-<p>
-	After starting GitX, you can install the command-line tool through the menu (GitX-&gt;Enable Terminal Usage…). This will install a “gitx” binary in /usr/local/bin.
-</p>
+                    /* * * DON'T EDIT BELOW THIS LINE * * */
+                    (function() {
+                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+                        dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+                    })();
+                </script>
+                <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                <a href="http://disqus.com" class="dsq-brlink">Comments powered by <span class="logo-disqus">Disqus</span></a>
+            </div>
+        </div>
+        <a href="http://github.com/laullon/gitx"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://assets1.github.com/img/edc6dae7a1079163caf7f17c60495bbb6d027c93?url=http%3A%2F%2Fs3.amazonaws.com%2Fgithub%2Fribbons%2Fforkme_left_green_007200.png" alt="Fork me on GitHub"></a>
+        <script type="text/javascript">
+
+            var _gaq = _gaq || [];
+            _gaq.push(['_setAccount', 'UA-1251193-13']);
+            _gaq.push(['_trackPageview']);
+
+            (function() {
+                var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+                ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+                var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+            })();
+
+        </script>
+    </body>
+</html>
