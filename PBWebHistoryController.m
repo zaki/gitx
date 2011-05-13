@@ -83,8 +83,7 @@
 	
 	if (!details)
 		return;
-	
-	
+		
 	NSMutableString *refs=[NSMutableString string];
 	NSArray *refsA=[historyController.webCommit refs];
 	NSString *currentRef=[[[historyController repository] headRef] simpleRef];

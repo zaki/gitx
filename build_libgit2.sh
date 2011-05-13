@@ -21,7 +21,7 @@ buildAction () {
 		git submodule update
 		cd libgit2
 		rm -f libgit2.a
-		make CFLAGS="-arch i386 -arch ppc"
+		make CFLAGS="-arch i386"
 		ranlib libgit2.a
 	else
 		echo "error: Not a git repository."

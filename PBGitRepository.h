@@ -86,19 +86,18 @@ static NSString * PBStringFromBranchFilterType(PBGitXBranchFilterType type) {
 - (BOOL) svnRebase:(NSString*)remoteName;
 - (BOOL) svnDcommit:(NSString*)commitURL;
 
-- (NSFileHandle*) handleForCommand:(NSString*) cmd;
-- (NSFileHandle*) handleForArguments:(NSArray*) args;
-- (NSFileHandle *) handleInWorkDirForArguments:(NSArray *)args;
-- (NSString*) outputForCommand:(NSString*) cmd;
-- (NSString *)outputForCommand:(NSString *)str retValue:(int *)ret;
-- (NSString *)outputForArguments:(NSArray *)arguments inputString:(NSString *)input retValue:(int *)ret;
-- (NSString *)outputForArguments:(NSArray *)arguments inputString:(NSString *)input byExtendingEnvironment:(NSDictionary *)dict retValue:(int *)ret;
+- (NSFileHandle *)handleForCommand:(NSString*) cmd DEPRECATED_ATTRIBUTE;
+- (NSFileHandle *)handleForArguments:(NSArray*) args DEPRECATED_ATTRIBUTE;
+- (NSFileHandle *)handleInWorkDirForArguments:(NSArray *)args DEPRECATED_ATTRIBUTE;
+- (NSString *)outputForCommand:(NSString*) cmd DEPRECATED_ATTRIBUTE;
+- (NSString *)outputForCommand:(NSString *)str retValue:(int *)ret DEPRECATED_ATTRIBUTE;
+- (NSString *)outputForArguments:(NSArray *)arguments inputString:(NSString *)input retValue:(int *)ret DEPRECATED_ATTRIBUTE;
+- (NSString *)outputForArguments:(NSArray *)arguments inputString:(NSString *)input byExtendingEnvironment:(NSDictionary *)dict retValue:(int *)ret DEPRECATED_ATTRIBUTE;
+- (NSString *)outputForArguments:(NSArray*) args;
+- (NSString *)outputForArguments:(NSArray*) args retValue:(int *)ret;
+- (NSString *)outputInWorkdirForArguments:(NSArray*) arguments DEPRECATED_ATTRIBUTE;
+- (NSString *)outputInWorkdirForArguments:(NSArray*) arguments retValue:(int *)ret DEPRECATED_ATTRIBUTE;
 
-
-- (NSString*) outputForArguments:(NSArray*) args;
-- (NSString*) outputForArguments:(NSArray*) args retValue:(int *)ret;
-- (NSString *)outputInWorkdirForArguments:(NSArray*) arguments;
-- (NSString *)outputInWorkdirForArguments:(NSArray*) arguments retValue:(int *)ret;
 - (BOOL)executeHook:(NSString *)name output:(NSString **)output;
 - (BOOL)executeHook:(NSString *)name withArgs:(NSArray*) arguments output:(NSString **)output;
 
