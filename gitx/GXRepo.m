@@ -10,14 +10,21 @@
 
 @implementation GXRepo
 
-- (id)init
+- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-    self = [super init];
+    DLog(@"absoluteURL:%@",absoluteURL);
+    absoluteURL=[absoluteURL URLByDeletingPathExtension];
+    DLog(@"absoluteURL:%@",absoluteURL);
+    self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError];
     if (self) {
         // Add your subclass-specific initialization here.
         // If an error occurs here, return nil.
     }
     return self;
+}
+
+- (BOOL)loadFileWrapperRepresentation:(NSFileWrapper *)wrapper ofType:(NSString *)type {
+    return YES;
 }
 
 - (NSString *)windowNibName

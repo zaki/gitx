@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3126FBE513B3F951001EA0AB /* GXRepoDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3126FBE413B3F951001EA0AB /* GXRepoDocumentController.m */; };
 		317D1FB713B3EE8800DDB666 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 317D1FB613B3EE8800DDB666 /* Cocoa.framework */; };
 		317D1FC113B3EE8800DDB666 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 317D1FBF13B3EE8800DDB666 /* InfoPlist.strings */; };
 		317D1FC313B3EE8800DDB666 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 317D1FC213B3EE8800DDB666 /* main.m */; };
@@ -32,6 +33,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3126FBE313B3F951001EA0AB /* GXRepoDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GXRepoDocumentController.h; sourceTree = "<group>"; };
+		3126FBE413B3F951001EA0AB /* GXRepoDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GXRepoDocumentController.m; sourceTree = "<group>"; };
 		317D1FB213B3EE8800DDB666 /* gitx.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = gitx.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		317D1FB613B3EE8800DDB666 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		317D1FB913B3EE8800DDB666 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -120,6 +123,8 @@
 				317D1FC813B3EE8800DDB666 /* GXRepo.h */,
 				317D1FC913B3EE8900DDB666 /* GXRepo.m */,
 				317D1FCB13B3EE8900DDB666 /* GXRepo.xib */,
+				3126FBE313B3F951001EA0AB /* GXRepoDocumentController.h */,
+				3126FBE413B3F951001EA0AB /* GXRepoDocumentController.m */,
 				317D1FCE13B3EE8900DDB666 /* MainMenu.xib */,
 				317D1FBD13B3EE8800DDB666 /* Supporting Files */,
 			);
@@ -265,6 +270,7 @@
 			files = (
 				317D1FC313B3EE8800DDB666 /* main.m in Sources */,
 				317D1FCA13B3EE8900DDB666 /* GXRepo.m in Sources */,
+				3126FBE513B3F951001EA0AB /* GXRepoDocumentController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -444,6 +450,7 @@
 				317D1FEA13B3EE8900DDB666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		317D1FEB13B3EE8900DDB666 /* Build configuration list for PBXNativeTarget "gitxTests" */ = {
 			isa = XCConfigurationList;
@@ -452,6 +459,7 @@
 				317D1FED13B3EE8900DDB666 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
