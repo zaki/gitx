@@ -25,6 +25,11 @@
 
 @implementation PBRefController
 
+-(void)dealloc
+{
+    dropInfo=nil;
+}
+
 - (void)awakeFromNib
 {
 	[commitList registerForDraggedTypes:[NSArray arrayWithObject:@"PBGitRef"]];
@@ -359,7 +364,7 @@
 	return NSDragOperationNone;
 }
 
-- (void) dropRef:(NSDictionary *)dropInfo
+- (void) dropRef
 {
 	PBGitRef *ref = [dropInfo objectForKey:@"dragRef"];
 	PBGitCommit *oldCommit = [dropInfo objectForKey:@"oldCommit"];
@@ -401,14 +406,14 @@
 
 	PBGitCommit *dropCommit = [[commitController arrangedObjects] objectAtIndex:row];
 
-	NSDictionary *dropInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-							  ref, @"dragRef",
-							  oldCommit, @"oldCommit",
-							  dropCommit, @"dropCommit",
-							  nil];
+	dropInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                ref, @"dragRef",
+                oldCommit, @"oldCommit",
+                dropCommit, @"dropCommit",
+                nil];
 
 	if ([PBGitDefaults isDialogWarningSuppressedForDialog:kDialogAcceptDroppedRef]) {
-		[self dropRef:dropInfo];
+		[self dropRef];
 		return YES;
 	}
 
@@ -427,7 +432,7 @@
 	[alert beginSheetModalForWindow:[historyController.repository.windowController window]
 					  modalDelegate:self
 					 didEndSelector:@selector(acceptDropInfoAlertDidEnd:returnCode:contextInfo:)
-						contextInfo:(__bridge void *)dropInfo];
+						contextInfo:Nil];
 
 	return YES;
 }
@@ -437,7 +442,7 @@
     [[alert window] orderOut:nil];
 
 	if (returnCode == NSAlertDefaultReturn)
-		[self dropRef:(__bridge NSDictionary *)contextInfo];
+		[self dropRef];
 
 	if ([[alert suppressionButton] state] == NSOnState)
         [PBGitDefaults suppressDialogWarningForDialog:kDialogAcceptDroppedRef];
