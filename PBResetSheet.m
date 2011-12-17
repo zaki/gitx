@@ -21,6 +21,8 @@ static const char* StringFromResetType(PBResetType type) {
 
 @implementation PBResetSheet
 
+static PBResetSheet* sheet;
+
 - (void) beginResetSheetForRepository:(PBGitRepository*) repo refish:(id<PBGitRefish>)refish andType:(PBResetType)type {
     defaultType = type;
     targetRefish = refish;
@@ -33,7 +35,9 @@ static const char* StringFromResetType(PBResetType type) {
 }
 
 + (void) beginResetSheetForRepository:(PBGitRepository*) repo refish:(id<PBGitRefish>)refish andType:(PBResetType)type {
-    PBResetSheet* sheet = [[self alloc] initWithWindowNibName: @"PBResetSheet"];
+    if (!sheet) {
+        sheet = [[self alloc] initWithWindowNibName: @"PBResetSheet"];
+    }
     [sheet beginResetSheetForRepository: repo refish: refish andType: type];
 }
 

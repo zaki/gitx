@@ -27,14 +27,16 @@
 @synthesize tagMessageText;
 @synthesize errorMessageField;
 
-
+static PBCreateTagSheet *sheet;
 
 #pragma mark -
 #pragma mark PBCreateTagSheet
 
 + (void) beginCreateTagSheetAtRefish:(id <PBGitRefish>)refish inRepository:(PBGitRepository *)repo
 {
-	PBCreateTagSheet *sheet = [[self alloc] initWithWindowNibName:@"PBCreateTagSheet"];
+    if (!sheet) {
+        sheet = [[self alloc] initWithWindowNibName:@"PBCreateTagSheet"];
+    }
 	[sheet beginCreateTagSheetAtRefish:refish inRepository:repo];
 }
 

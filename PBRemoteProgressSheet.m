@@ -48,13 +48,16 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 @synthesize progressIndicator;
 
 
+static PBRemoteProgressSheet *sheet;
 
 #pragma mark -
 #pragma mark PBRemoteProgressSheet
 
 + (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController
 {
-	PBRemoteProgressSheet *sheet = [[self alloc] initWithWindowNibName:@"PBRemoteProgressSheet"];
+    if(!sheet) {
+        sheet = [[self alloc] initWithWindowNibName:@"PBRemoteProgressSheet"];
+    }
 	[sheet beginRemoteProgressSheetForArguments:args title:theTitle description:theDescription inDir:dir windowController:windowController];
 }
 

@@ -29,20 +29,25 @@
 @synthesize infoView;
 @synthesize scrollView;
 
+static PBGitXMessageSheet *sheet;
 
 #pragma mark -
 #pragma mark PBGitXMessageSheet
 
 + (void)beginMessageSheetForWindow:(NSWindow *)parentWindow withMessageText:(NSString *)message infoText:(NSString *)info
 {
-	PBGitXMessageSheet *sheet = [[self alloc] initWithWindowNibName:@"PBGitXMessageSheet"];
+    if(!sheet){
+        sheet = [[self alloc] initWithWindowNibName:@"PBGitXMessageSheet"];
+    }
 	[sheet beginMessageSheetForWindow:parentWindow withMessageText:message infoText:info];
 }
 
 
 + (void)beginMessageSheetForWindow:(NSWindow *)parentWindow withError:(NSError *)error
 {
-	PBGitXMessageSheet *sheet = [[self alloc] initWithWindowNibName:@"PBGitXMessageSheet"];
+    if(!sheet){
+        sheet = [[self alloc] initWithWindowNibName:@"PBGitXMessageSheet"];
+    }
 	[sheet beginMessageSheetForWindow:parentWindow withMessageText:[error localizedDescription] infoText:[error localizedRecoverySuggestion]];
 }
 

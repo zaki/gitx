@@ -35,7 +35,7 @@
     NSMutableArray *splitViewsSize;
 }
 
-@property (assign) PBGitRepository *repository;
+@property (strong) PBGitRepository *repository;
 
 - (id)initWithRepository:(PBGitRepository*)theRepository displayDefault:(BOOL)display;
 

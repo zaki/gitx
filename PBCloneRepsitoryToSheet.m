@@ -25,13 +25,16 @@
 @synthesize message;
 @synthesize cloneToAccessoryView;
 
+static PBCloneRepsitoryToSheet *sheet;
 
 #pragma mark -
 #pragma mark PBCloneRepsitoryToSheet
 
 + (void) beginCloneRepsitoryToSheetForRepository:(PBGitRepository *)repo
 {
-	PBCloneRepsitoryToSheet *sheet = [[self alloc] initWithWindowNibName:@"PBCloneRepsitoryToSheet"];
+    if (!sheet) {
+        sheet = [[self alloc] initWithWindowNibName:@"PBCloneRepsitoryToSheet"];
+    }
 	[sheet beginCloneRepsitoryToSheetForRepository:repo];
 }
 

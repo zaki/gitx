@@ -32,14 +32,16 @@
 @synthesize browseSheet;
 @synthesize browseAccessoryView;
 
-
+static PBAddRemoteSheet *sheet;
 
 #pragma mark -
 #pragma mark PBAddRemoteSheet
 
 + (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo
 {
-	PBAddRemoteSheet *sheet = [[self alloc] initWithWindowNibName:@"PBAddRemoteSheet"];
+    if(!sheet){
+        sheet = [[self alloc] initWithWindowNibName:@"PBAddRemoteSheet"];
+    }
 	[sheet beginAddRemoteSheetForRepository:repo];
 }
 
