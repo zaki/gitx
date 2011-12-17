@@ -63,11 +63,10 @@ OSStatus			StorePasswordKeychain (const char *url, UInt32 urlLength, void* passw
     [alert setAlertStyle:NSWarningAlertStyle];
     NSInteger result = [alert runModal];
 
-    Boolean yes=NO;
+    BOOL yes=NO;
     if ( result == NSAlertFirstButtonReturn ) {
         yes=YES;
     }
-    [alert release];
     printf("%s",yes?"yes":"no");
 }
 
@@ -106,7 +105,6 @@ OSStatus			StorePasswordKeychain (const char *url, UInt32 urlLength, void* passw
         }
     }
     
-    [alert release];
 }
 
 @end

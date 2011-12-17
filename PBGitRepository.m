@@ -649,7 +649,7 @@ dispatch_queue_t PBGetWorkQueue() {
 {
 	if(!workingDirectory) {
 		if ([self.fileURL.path hasSuffix:@"/.git"])
-			workingDirectory = [[self.fileURL.path substringToIndex:[self.fileURL.path length] - 5] retain];
+			workingDirectory = [self.fileURL.path substringToIndex:[self.fileURL.path length] - 5];
 		else if ([[self outputForCommand:@"rev-parse --is-inside-work-tree"] isEqualToString:@"true"])
 			workingDirectory = [PBGitBinary path];
 	}
@@ -1134,7 +1134,7 @@ dispatch_queue_t PBGetWorkQueue() {
 
 #pragma mark GitX Scripting
 
-- (void)handleRevListArguments:(NSArray *)arguments inWorkingDirectory:(NSURL *)workingDirectory
+- (void)handleRevListArguments:(NSArray *)arguments inWorkingDirectory:(NSURL *)wd
 {
 	if (![arguments count])
 		return;
@@ -1146,13 +1146,13 @@ dispatch_queue_t PBGetWorkQueue() {
 		PBGitRef *refArgument = [self refForName:[arguments lastObject]];
 		if (refArgument) {
 			revListSpecifier = [[PBGitRevSpecifier alloc] initWithRef:refArgument];
-			revListSpecifier.workingDirectory = workingDirectory;
+			revListSpecifier.workingDirectory = wd;
 		}
 	}
 
 	if (!revListSpecifier) {
 		revListSpecifier = [[PBGitRevSpecifier alloc] initWithParameters:arguments];
-		revListSpecifier.workingDirectory = workingDirectory;
+		revListSpecifier.workingDirectory = wd;
 	}
 
 	self.currentBranch = [self addBranch:revListSpecifier];
@@ -1160,7 +1160,7 @@ dispatch_queue_t PBGetWorkQueue() {
 	[self.windowController showHistoryView:self];
 }
 
-- (void)handleBranchFilterEventForFilter:(PBGitXBranchFilterType)filter additionalArguments:(NSMutableArray *)arguments inWorkingDirectory:(NSURL *)workingDirectory
+- (void)handleBranchFilterEventForFilter:(PBGitXBranchFilterType)filter additionalArguments:(NSMutableArray *)arguments inWorkingDirectory:(NSURL *)wd
 {
 	self.currentBranchFilter = filter;
 	[PBGitDefaults setShowStageView:NO];
@@ -1169,11 +1169,11 @@ dispatch_queue_t PBGetWorkQueue() {
 	// treat any additional arguments as a rev-list specifier
 	if ([arguments count] > 1) {
 		[arguments removeObjectAtIndex:0];
-		[self handleRevListArguments:arguments inWorkingDirectory:workingDirectory];
+		[self handleRevListArguments:arguments inWorkingDirectory:wd];
 	}
 }
 
-- (void)handleGitXScriptingArguments:(NSAppleEventDescriptor *)argumentsList inWorkingDirectory:(NSURL *)workingDirectory
+- (void)handleGitXScriptingArguments:(NSAppleEventDescriptor *)argumentsList inWorkingDirectory:(NSURL *)wd
 {
 	NSMutableArray *arguments = [NSMutableArray array];
 	uint argumentsIndex = 1; // AppleEvent list descriptor's are one based
@@ -1197,22 +1197,22 @@ dispatch_queue_t PBGetWorkQueue() {
 	}
 
 	if ([firstArgument isEqualToString:@"--all"]) {
-		[self handleBranchFilterEventForFilter:kGitXAllBranchesFilter additionalArguments:arguments inWorkingDirectory:workingDirectory];
+		[self handleBranchFilterEventForFilter:kGitXAllBranchesFilter additionalArguments:arguments inWorkingDirectory:wd];
 		return;
 	}
 
 	if ([firstArgument isEqualToString:@"--local"]) {
-		[self handleBranchFilterEventForFilter:kGitXLocalRemoteBranchesFilter additionalArguments:arguments inWorkingDirectory:workingDirectory];
+		[self handleBranchFilterEventForFilter:kGitXLocalRemoteBranchesFilter additionalArguments:arguments inWorkingDirectory:wd];
 		return;
 	}
 
 	if ([firstArgument isEqualToString:@"--branch"]) {
-		[self handleBranchFilterEventForFilter:kGitXSelectedBranchFilter additionalArguments:arguments inWorkingDirectory:workingDirectory];
+		[self handleBranchFilterEventForFilter:kGitXSelectedBranchFilter additionalArguments:arguments inWorkingDirectory:wd];
 		return;
 	}
 
 	// if the argument is not a known command then treat it as a rev-list specifier
-	[self handleRevListArguments:arguments inWorkingDirectory:workingDirectory];
+	[self handleRevListArguments:arguments inWorkingDirectory:wd];
 }
 
 // see if the current appleEvent has the command line arguments from the gitx cli
@@ -1229,10 +1229,10 @@ dispatch_queue_t PBGetWorkQueue() {
 		// on app launch there may be many repositories opening, so double check that this is the right repo
 		NSString *path = [[eventRecord paramDescriptorForKeyword:typeFileURL] stringValue];
 		if (path) {
-			NSURL *workingDirectory = [NSURL URLWithString:path];
-			if ([[PBGitRepository gitDirForURL:workingDirectory] isEqual:[self fileURL]]) {
+			NSURL *wd = [NSURL URLWithString:path];
+			if ([[PBGitRepository gitDirForURL:wd] isEqual:[self fileURL]]) {
 				NSAppleEventDescriptor *argumentsList = [eventRecord paramDescriptorForKeyword:kGitXAEKeyArgumentsList];
-				[self handleGitXScriptingArguments:argumentsList inWorkingDirectory:workingDirectory];
+				[self handleGitXScriptingArguments:argumentsList inWorkingDirectory:wd];
 
 				// showWindows may be called more than once during app launch so remove the CLI data after we handle the event
 				[currentAppleEvent removeDescriptorWithKeyword:keyAEPropData];

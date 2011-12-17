@@ -49,8 +49,6 @@ dispatch_queue_t PBGetWorkQueue();
 	PBGitConfig *config;
 
 	BOOL hasChanged;
-	NSMutableArray *branches;
-	PBGitRevSpecifier *currentBranch;
 	NSInteger currentBranchFilter;
 	NSMutableDictionary *refs;
 
@@ -65,9 +63,9 @@ dispatch_queue_t PBGetWorkQueue();
 	BOOL bareRepository;
 	NSString* workingDirectory;
 }
-@property (nonatomic, retain, readonly) PBStashController *stashController;
-@property (nonatomic, retain, readonly) PBSubmoduleController *submoduleController;
-@property (nonatomic, retain, readonly) PBGitResetController *resetController;
+@property (nonatomic, strong, readonly) PBStashController *stashController;
+@property (nonatomic, strong, readonly) PBSubmoduleController *submoduleController;
+@property (nonatomic, strong, readonly) PBGitResetController *resetController;
 
 - (void) cloneRepositoryToPath:(NSString *)path bare:(BOOL)isBare;
 - (void) beginAddRemote:(NSString *)remoteName forURL:(NSString *)remoteURL;
@@ -157,9 +155,9 @@ dispatch_queue_t PBGetWorkQueue();
 @property (assign) BOOL hasChanged;
 @property (readonly) PBGitWindowController *windowController;
 @property (readonly) PBGitConfig *config;
-@property (retain) PBGitHistoryList *revisionList;
-@property (assign) NSMutableArray* branches;
-@property (assign) PBGitRevSpecifier *currentBranch;
+@property (strong) PBGitHistoryList *revisionList;
+@property (strong) NSMutableArray* branches;
+@property (strong) PBGitRevSpecifier *currentBranch;
 @property (assign) NSInteger currentBranchFilter;
-@property (retain) NSMutableDictionary* refs;
+@property (strong) NSMutableDictionary* refs;
 @end

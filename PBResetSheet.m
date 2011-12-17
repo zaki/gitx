@@ -10,6 +10,7 @@
 #import "PBGitRefish.h"
 #import "PBCommand.h"
 #import "PBGitRepository.h"
+#import "PBGitWindowController.h"
 
 static const char* StringFromResetType(PBResetType type) {
     static const char* resetTypes[] = {

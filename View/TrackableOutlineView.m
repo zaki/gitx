@@ -75,10 +75,6 @@
     return self;
 }
 
-- (void)dealloc {
-    [iMouseCell release];
-    [super dealloc];
-}
 
 // Tracking rect support
 
@@ -120,7 +116,7 @@
 
 - (void)mouseEntered:(NSEvent *)event {
     // Delegate this to the appropriate cell. In order to allow the cell to maintain state, we copy it and use the copy until the mouse is moved outside of the cell.
-    NSDictionary *userInfo = [event userData];
+    NSDictionary *userInfo = (NSDictionary *)[event userData];
     NSNumber *row = [userInfo valueForKey:@"Row"];
     NSNumber *col = [userInfo valueForKey:@"Col"];
     if (row && col) {
@@ -129,7 +125,6 @@
         NSCell *cell = [self preparedCellAtColumn:colVal row:rowVal];
         // Only set the mouseCell properties AFTER calling preparedCellAtColumn:row:.
         if (iMouseCell != cell) {
-            [iMouseCell release];
             // Store off the col/row
             iMouseCol = colVal;
             iMouseRow = rowVal;
@@ -144,7 +139,7 @@
 }
 
 - (void)mouseExited:(NSEvent *)event {
-    NSDictionary *userInfo = [event userData];
+    NSDictionary *userInfo = (NSDictionary *)[event userData];
     NSNumber *row = [userInfo valueForKey:@"Row"];
     NSNumber *col = [userInfo valueForKey:@"Col"];
     if (row && col) {
@@ -154,7 +149,6 @@
 			[cell mouseExited:event];
 		}
         // We are now done with the copied cell
-        [iMouseCell release];
         iMouseCell = nil;
         iMouseCol = -1;
         iMouseRow = -1;

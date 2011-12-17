@@ -28,10 +28,6 @@
 	return self;
 }
 
-- (void) dealloc {
-	[command release];
-	[super dealloc];
-}
 
 
 @end

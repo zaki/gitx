@@ -12,7 +12,7 @@
 @interface PBCommandMenuItem : NSMenuItem {
 	PBCommand *command;
 }
-@property (nonatomic, retain, readonly) PBCommand *command;
+@property (nonatomic, strong, readonly) PBCommand *command;
 
 - initWithCommand:(PBCommand *) aCommand;
 

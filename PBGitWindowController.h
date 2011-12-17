@@ -16,7 +16,6 @@
 
 // Controls the main repository window from RepositoryWindow.xib
 @interface PBGitWindowController : NSWindowController PROTOCOL_10_6(NSWindowDelegate){
-	__weak PBGitRepository* repository;
 
 	PBViewController *contentController;
 
@@ -36,7 +35,7 @@
     NSMutableArray *splitViewsSize;
 }
 
-@property (assign) __weak PBGitRepository *repository;
+@property (assign) PBGitRepository *repository;
 
 - (id)initWithRepository:(PBGitRepository*)theRepository displayDefault:(BOOL)display;
 

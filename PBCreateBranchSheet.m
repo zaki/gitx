@@ -11,10 +11,13 @@
 #import "PBGitDefaults.h"
 #import "PBGitCommit.h"
 #import "PBGitRef.h"
+#import "PBGitWindowController.h"
 
 @interface PBCreateBranchSheet ()
 
 - (void) beginCreateBranchSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo;
+@property (strong) PBGitRepository *repository;
+@property (strong) id <PBGitRefish> startRefish;
 
 @end
 
@@ -35,9 +38,14 @@
 #pragma mark -
 #pragma mark PBCreateBranchSheet
 
+static PBCreateBranchSheet *sheet;
+
+
 + (void) beginCreateBranchSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo
 {
-	PBCreateBranchSheet *sheet = [[self alloc] initWithWindowNibName:@"PBCreateBranchSheet"];
+    if(!sheet){
+        sheet = [[self alloc] initWithWindowNibName:@"PBCreateBranchSheet"];
+    }
 	[sheet beginCreateBranchSheetAtRefish:ref inRepository:repo];
 }
 

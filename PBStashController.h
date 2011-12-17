@@ -16,7 +16,7 @@
 @private
     PBGitRepository *repository;
 }
-@property (nonatomic, retain, readonly) NSArray *stashes;
+@property (nonatomic, strong, readonly) NSArray *stashes;
 
 - (id) initWithRepository:(PBGitRepository *) repo;
 
