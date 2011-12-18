@@ -82,6 +82,8 @@
 		65D58BC7132D48C2003F7290 /* PBResetSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D58BC6132D48C0003F7290 /* PBResetSheet.m */; };
 		770B37ED0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 770B37EC0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel */; };
 		77C8280E06725ACE000B614F /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* ApplicationController.m */; };
+		8166B9CF149E1BC0007C8619 /* PBRenameSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */; };
+		81840633149E1AA00014646A /* PBRenameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81840631149E1AA00014646A /* PBRenameSheet.xib */; };
 		89087CA613A3E46B00911503 /* PBWebCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89087CA513A3E46B00911503 /* PBWebCommitController.m */; };
 		8998B1C613A55B3500121729 /* PBWebStashController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8998B1C513A55B3500121729 /* PBWebStashController.m */; };
 		8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C165CFE840E0CC02AAC07 /* InfoPlist.strings */; };
@@ -340,6 +342,9 @@
 		77C82804067257F0000B614F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		77C8280B06725ACE000B614F /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
 		77C8280C06725ACE000B614F /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
+		8166B9CD149E1BC0007C8619 /* PBRenameSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBRenameSheet.h; sourceTree = "<group>"; };
+		8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBRenameSheet.m; sourceTree = "<group>"; };
+		81840632149E1AA00014646A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PBRenameSheet.xib; sourceTree = "<group>"; };
 		89087CA413A3E46500911503 /* PBWebCommitController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBWebCommitController.h; sourceTree = "<group>"; };
 		89087CA513A3E46B00911503 /* PBWebCommitController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBWebCommitController.m; sourceTree = "<group>"; };
 		8998B1AC13A55AC100121729 /* PBWebStashController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBWebStashController.h; sourceTree = "<group>"; };
@@ -781,6 +786,7 @@
 				F59116E50E843BB50072CCB1 /* PBGitCommitView.xib */,
 				DDB8FEC313999C24001A9EE2 /* PBStashContentView.xib */,
 				D85B939210E3D8B4007F3C28 /* PBCreateBranchSheet.xib */,
+				81840631149E1AA00014646A /* PBRenameSheet.xib */,
 				D889EB3010E6BCBB00F08413 /* PBCreateTagSheet.xib */,
 				D8C1B77110E875CF009B7F8B /* PBRemoteProgressSheet.xib */,
 				D8083C45111F136400337480 /* PBAddRemoteSheet.xib */,
@@ -881,6 +887,8 @@
 				02B41A5D123E307200DFC531 /* PBCommitHookFailedSheet.m */,
 				D854948410D5C01B0083B917 /* PBCreateBranchSheet.h */,
 				D854948510D5C01B0083B917 /* PBCreateBranchSheet.m */,
+				8166B9CD149E1BC0007C8619 /* PBRenameSheet.h */,
+				8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */,
 				D8E3B34B10DCA958001096A3 /* PBCreateTagSheet.h */,
 				D8E3B34C10DCA958001096A3 /* PBCreateTagSheet.m */,
 				D8083A2D111E045300337480 /* PBRemoteProgressSheet.h */,
@@ -1320,6 +1328,7 @@
 				316E7203131EE9C600AFBB36 /* sidebar_Template.png in Resources */,
 				65D58BC4132D27A8003F7290 /* PBResetSheet.xib in Resources */,
 				DDB8FEC413999C24001A9EE2 /* PBStashContentView.xib in Resources */,
+				81840633149E1AA00014646A /* PBRenameSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1485,6 +1494,7 @@
 				89087CA613A3E46B00911503 /* PBWebCommitController.m in Sources */,
 				8998B1C613A55B3500121729 /* PBWebStashController.m in Sources */,
 				2CC9B39713E86B35002EA416 /* AIURLAdditions.m in Sources */,
+				8166B9CF149E1BC0007C8619 /* PBRenameSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1533,6 +1543,14 @@
 				47DBDB690E94EF6500671A1E /* English */,
 			);
 			name = Preferences.xib;
+			sourceTree = "<group>";
+		};
+		81840631149E1AA00014646A /* PBRenameSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				81840632149E1AA00014646A /* English */,
+			);
+			name = PBRenameSheet.xib;
 			sourceTree = "<group>";
 		};
 		911111E00E58BD5A00BF76B4 /* RepositoryWindow.xib */ = {

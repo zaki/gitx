@@ -141,11 +141,16 @@
 	NSString *deleteTitle = [NSString stringWithFormat:@"Delete %@…", targetRefName];
 	[items addObject:[PBRefMenuItem itemWithTitle:deleteTitle action:@selector(showDeleteRefSheet:) enabled:!isDetachedHead]];
 	
+    // rename ref
+    [items addObject:[PBRefMenuItem separatorItem]];
+	NSString *renameTitle = [NSString stringWithFormat:@"Rename %@…", targetRefName];
+	[items addObject:[PBRefMenuItem itemWithTitle:renameTitle action:@selector(showRenameSheet:) enabled:!isDetachedHead]];
+    
 	for (PBRefMenuItem *item in items) {
 		[item setTarget:target];
 		[item setRefish:ref];
 	}
-
+    
 	return items;
 }
 
