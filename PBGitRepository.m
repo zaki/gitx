@@ -1028,7 +1028,7 @@ dispatch_queue_t PBGetWorkQueue() {
         }
         
         // check ref out to create a new local branch to push it later on the remote
-        arguments = [NSArray arrayWithObjects:@"checkout", [NSString stringWithFormat:@"%@/%@",remoteName,branchName], nil];
+        arguments = [NSArray arrayWithObjects:@"checkout", [NSString stringWithFormat:@"%@/%@",remoteName, branchName], nil];
         output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
         if (gitRetValue) {
             NSString *message = [NSString stringWithFormat:@"There was an error checking out branch '%@/%@'.",remoteName,branchName];
@@ -1157,13 +1157,41 @@ dispatch_queue_t PBGetWorkQueue() {
 	return YES;
 }
 
+- (BOOL) deleteRemoteBranch:(PBGitRef *)ref
+{
+    BOOL retVal = YES;
+    NSString *branchName = (NSString *)[[[ref refishName] componentsSeparatedByString:@"/"] objectAtIndex:3];
+    
+	if (ref && ([ref refishType] == kGitXRemoteBranchType))
+    {
+        int gitRetValue = 1;
+        NSArray *arguments = [NSArray arrayWithObjects:@"push", [ref remoteName], [NSString stringWithFormat:@":%@",branchName], nil];
+        NSString * output = [self outputForArguments:arguments retValue:&gitRetValue];
+        if (gitRetValue) {
+            NSString *message = [NSString stringWithFormat:@"There was an error deleting the remotebranch: %@/%@\n\n", [ref remoteName],branchName];
+            [self.windowController showErrorSheetTitle:@"Delete remote failed!" message:message arguments:arguments output:output];
+            retVal = NO;
+        }
+    }
+    
+	[self reloadRefs];
+	return retVal;
+}
+
+
 - (BOOL) deleteRef:(PBGitRef *)ref
 {
 	if (!ref)
 		return NO;
 
 	if ([ref refishType] == kGitXRemoteType)
+    {
 		return [self deleteRemote:ref];
+    }
+    else if ([ref refishType] == kGitXRemoteBranchType)
+    {
+		[self deleteRemoteBranch:ref];
+    }
 
 	int retValue = 1;
 	NSArray *arguments = [NSArray arrayWithObjects:@"update-ref", @"-d", [ref ref], nil];

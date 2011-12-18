@@ -81,6 +81,7 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL) createBranch:(NSString *)branchName atRefish:(id <PBGitRefish>)ref;
 - (BOOL) createTag:(NSString *)tagName message:(NSString *)message atRefish:(id <PBGitRefish>)commitSHA;
 - (BOOL) deleteRemote:(PBGitRef *)ref;
+- (BOOL) deleteRemoteBranch:(PBGitRef *)ref;
 - (BOOL) deleteRef:(PBGitRef *)ref;
 
 - (BOOL) hasSvnRemote;
