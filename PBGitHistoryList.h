@@ -47,5 +47,6 @@
 @property (strong) NSMutableArray *commits;
 @property (readonly) NSArray *projectCommits;
 @property (assign) BOOL isUpdating;
+@property (assign) BOOL reloadAll;
 
 @end

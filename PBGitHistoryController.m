@@ -501,6 +501,12 @@
 	[super closeView];
 }
 
+- (IBAction)loadAllCommits:(id)sender {
+    repository.revisionList.reloadAll = ((NSButton *)sender).state;
+    [self refresh:sender];
+}
+
+
 #pragma mark Table Column Methods
 - (NSMenu *)tableColumnMenu
 {

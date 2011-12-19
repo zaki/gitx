@@ -31,7 +31,7 @@
 
 @implementation PBGitHistoryList
 
-
+@synthesize reloadAll;
 @synthesize projectRevList;
 @synthesize commits;
 @synthesize isUpdating;
@@ -319,7 +319,7 @@
 		lastRemoteRef = nil;
 		lastSHA = nil;
 		self.commits = [NSMutableArray array];
-		[projectRevList loadRevisons];
+		[projectRevList loadRevisons:reloadAll];
 		return;
 	}
 
@@ -338,7 +338,7 @@
 	lastSHA = nil;
 	self.commits = [NSMutableArray array];
 
-	[otherRevListParser loadRevisons];
+	[otherRevListParser loadRevisons:reloadAll];
 }
 
 

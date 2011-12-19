@@ -108,4 +108,5 @@
 - (BOOL)splitView:(NSSplitView *)sender canCollapseSubview:(NSView *)subview;
 - (BOOL)splitView:(NSSplitView *)splitView shouldCollapseSubview:(NSView *)subview forDoubleClickOnDividerAtIndex:(NSInteger)dividerIndex;
 
+- (IBAction)loadAllCommits:(id)sender;
 @end
