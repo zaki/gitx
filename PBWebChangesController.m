@@ -105,7 +105,7 @@
     [[alert window] orderOut:nil];
 
 	if (returnCode == NSAlertDefaultReturn)
-		[self discardHunk:(__bridge NSString *)contextInfo];
+		[self discardHunk:actHunk];
 }
 
 - (void)discardHunk:(NSString *)hunk altKey:(BOOL)altKey
@@ -116,10 +116,13 @@
                                        alternateButton:@"Cancel"
                                            otherButton:nil
                              informativeTextWithFormat:@"Are you sure you wish to discard the changes in this hunk?\n\nYou cannot undo this operation."];
-		[alert beginSheetModalForWindow:[[controller view] window]
+		
+        [alert beginSheetModalForWindow:[[controller view] window]
                           modalDelegate:self
                          didEndSelector:@selector(discardHunkAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo:(__bridge void *)hunk];
+                            contextInfo:Nil];
+        actHunk = hunk;
+        
 	} else {
         [self discardHunk:hunk];
     }
