@@ -11,7 +11,6 @@
 #import "PBGitTree.h"
 #import "PBViewController.h"
 
-@class PBGitSidebarController;
 @class PBWebHistoryController;
 @class PBGitGradientBarView;
 @class PBRefController;

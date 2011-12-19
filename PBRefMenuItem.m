@@ -9,7 +9,6 @@
 #import "PBRefMenuItem.h"
 
 #import "PBStashCommandFactory.h"
-#import "PBCommandMenuItem.h"
 
 
 @implementation PBRefMenuItem

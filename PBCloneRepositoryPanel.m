@@ -137,11 +137,18 @@
 
 - (IBAction) browseRepository:(id)sender
 {
-    [browseRepositoryPanel beginSheetForDirectory:nil file:nil types:nil
-								   modalForWindow:[self window]
-									modalDelegate:self
-								   didEndSelector:@selector(browseRepositorySheetDidEnd:returnCode:contextInfo:)
-									  contextInfo:NULL];
+    [browseRepositoryPanel beginSheetModalForWindow:[self window]
+                        completionHandler:
+     ^(NSInteger result) 
+     {
+         [browseRepositoryPanel orderOut:self];
+         
+         if (result == NSFileHandlingPanelOKButton) 
+         {
+             [self.repositoryURL setStringValue:[[browseRepositoryPanel URL] path]];
+         }
+     }
+     ];
 }
 
 
@@ -155,38 +162,23 @@
 
 - (IBAction) browseDestination:(id)sender
 {
-    [browseDestinationPanel beginSheetForDirectory:nil file:nil types:nil
-									modalForWindow:[self window]
-									 modalDelegate:self
-									didEndSelector:@selector(browseDestinationSheetDidEnd:returnCode:contextInfo:)
-									   contextInfo:NULL];
+    [browseDestinationPanel beginSheetModalForWindow:[self window]
+                                  completionHandler:
+     ^(NSInteger result) 
+     {
+         [browseDestinationPanel orderOut:self];
+         
+         if (result == NSFileHandlingPanelOKButton) 
+         {
+             [self.destinationPath setStringValue:[[browseDestinationPanel URL] path]];
+         }
+     }
+     ];
 }
 
 
 
 #pragma mark Callbacks
-
-- (void) browseRepositorySheetDidEnd:(NSOpenPanel *)sheet returnCode:(NSInteger)code contextInfo:(void *)info
-{
-    [sheet orderOut:self];
-	
-    if (code == NSOKButton) {
-		NSURL *url = [[sheet URLs] lastObject];
-		[self.repositoryURL setStringValue:[url path]];
-	}
-}
-
-
-- (void) browseDestinationSheetDidEnd:(NSOpenPanel *)sheet returnCode:(NSInteger)code contextInfo:(void *)info
-{
-    [sheet orderOut:self];
-	
-    if (code == NSOKButton) {
-		NSURL *url = [[sheet URLs] lastObject];
-		[self.destinationPath setStringValue:[url path]];
-	}
-}
-
 
 - (void) messageSheetDidEnd:(NSOpenPanel *)sheet returnCode:(NSInteger)code contextInfo:(void *)info
 {

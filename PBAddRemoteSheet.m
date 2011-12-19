@@ -63,18 +63,6 @@ static PBAddRemoteSheet *sheet;
 }
 
 
-- (void) browseSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)code contextInfo:(void *)info
-{
-    [sheet orderOut:self];
-
-    if (code == NSOKButton)
-		[self.remoteURL setStringValue:[(NSOpenPanel *)sheet filename]];
-
-	[self openAddRemoteSheet];
-}
-
-
-
 #pragma mark IBActions
 
 - (IBAction) browseFolders:(id)sender
@@ -91,11 +79,20 @@ static PBAddRemoteSheet *sheet;
     [browseSheet setCanCreateDirectories:NO];
 	[browseSheet setAccessoryView:browseAccessoryView];
 
-    [browseSheet beginSheetForDirectory:nil file:nil types:nil
-						 modalForWindow:[self.repository.windowController window]
-						  modalDelegate:self
-						 didEndSelector:@selector(browseSheetDidEnd:returnCode:contextInfo:)
-							contextInfo:NULL];
+    [browseSheet beginSheetModalForWindow:[self.repository.windowController window]
+                         completionHandler:
+     ^(NSInteger result) 
+     {
+         [browseSheet orderOut:self];
+         
+         if (result == NSFileHandlingPanelOKButton) 
+         {
+             [self.remoteURL setStringValue:[[browseSheet URL] path]];      
+         }
+         
+        [self openAddRemoteSheet];
+     }
+     ];
 }
 
 
