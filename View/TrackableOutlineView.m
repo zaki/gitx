@@ -53,7 +53,6 @@
 
 #import <AppKit/NSTrackingArea.h>
 #import "CellTrackingRect.h" 
-#import "PBGitSidebarController.h"
 
 @implementation TrackableOutlineView
 

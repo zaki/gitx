@@ -854,6 +854,10 @@ dispatch_queue_t PBGetWorkQueue() {
 	return YES;
 }
 
+
+
+
+
 - (BOOL) checkoutFiles:(NSArray *)files fromRefish:(id <PBGitRefish>)ref
 {
 	if (!files || ([files count] == 0))
@@ -963,6 +967,133 @@ dispatch_queue_t PBGetWorkQueue() {
 	return YES;
 }
 
+- (BOOL) renameRefAtRefish:(id <PBGitRefish>)ref withNewName:(NSString *)newName;
+{
+	if (!ref)
+		return NO;
+    
+    NSString *actCommit;
+    BOOL checkoutActCommit = NO;
+    BOOL retValue = YES;
+    
+	int gitRetValue = 1;
+    NSArray *arguments;
+    NSString *output;
+    
+    if ([ref refishType] == kGitXRemoteType)
+    {
+        arguments = [NSArray arrayWithObjects:@"remote", @"rename", [ref shortName], newName, nil];
+    }
+    else if ([ref refishType] == kGitXBranchType)
+    {
+        // -M move/rename a branch, even if target exists
+        arguments = [NSArray arrayWithObjects:@"branch", @"-M", [ref shortName], newName, nil];
+    }
+    else if ([ref refishType] == kGitXTagType)
+    {
+        arguments = [NSArray arrayWithObjects:@"tag", newName, [ref shortName],  nil];
+        output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+        if (gitRetValue) {
+            NSString *message = [NSString stringWithFormat:@"There was an error renaming '%@ %@' to '%@'.", [ref refishType], [ref shortName], newName];
+            [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+            retValue = NO;
+        }
+        arguments = [NSArray arrayWithObjects:@"tag", @"-d", [ref shortName],  nil];
+    }
+    else if ([ref refishType] == kGitXRemoteBranchType)
+    {
+        NSString *remoteName = (NSString *)[[[ref refishName] componentsSeparatedByString:@"/"] objectAtIndex:2];
+        NSString *branchName = (NSString *)[[[ref refishName] componentsSeparatedByString:@"/"] objectAtIndex:3];
+        NSCharacterSet *cSet;
+        NSArray *commitInfo;
+        
+        // Remember current Commit git status -b -s
+        arguments = [NSArray arrayWithObjects:@"status", @"-b", @"-s", nil];
+        output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+        cSet = [NSCharacterSet characterSetWithCharactersInString:@" "];
+        commitInfo = [output componentsSeparatedByCharactersInSet:cSet];
+        actCommit = [commitInfo objectAtIndex:1];
+
+        // Check if the branch Name exists in the repository, if not no branch is checked out only commit with commitID
+        PBGitRef *ref = [PBGitRef refFromString:[kGitXBranchRefPrefix stringByAppendingString:actCommit]];
+        if (![self refExists:ref]) 
+        {
+            // No Branch is checked out -> Remember act CommitID to return after renaming
+            arguments = [NSArray arrayWithObjects:@"log", @"--pretty=format:%H", nil];
+            output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+            
+            cSet = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
+            commitInfo = [output componentsSeparatedByCharactersInSet:cSet];
+            actCommit = [commitInfo objectAtIndex:0];
+        }
+        
+        // check ref out to create a new local branch to push it later on the remote
+        arguments = [NSArray arrayWithObjects:@"checkout", [NSString stringWithFormat:@"%@/%@",remoteName, branchName], nil];
+        output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+        if (gitRetValue) {
+            NSString *message = [NSString stringWithFormat:@"There was an error checking out branch '%@/%@'.",remoteName,branchName];
+            [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+            retValue = NO;
+        }
+        else
+        {
+            checkoutActCommit = YES;
+        }
+        
+        if (retValue)
+        {
+            // Create newName-Branch in the local repository
+            arguments = [NSArray arrayWithObjects:@"branch", newName, nil];
+            output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+            if (gitRetValue) {
+                NSString *message = [NSString stringWithFormat:@"There was an error creating local branch '%@'.", newName];
+                [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+                retValue = NO;
+            }
+        }
+        
+        if (retValue)
+        {
+            // Delete the oldName-Branch in the remote
+            arguments = [NSArray arrayWithObjects:@"push", remoteName, [NSString stringWithFormat:@":%@",branchName], nil];
+            output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+            if (gitRetValue) {
+                NSString *message = [NSString stringWithFormat:@"There was an error deleting branch '%@' on remote '%@'.", branchName, remoteName];
+                [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+                [self reloadRefs];
+                retValue = NO;
+            }
+        }
+
+        // Push the newName-Branch to the remote
+        arguments = [NSArray arrayWithObjects:@"push", remoteName, newName, nil];
+    }
+    
+	if (retValue)
+    {
+        output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+        if (gitRetValue) {
+            NSString *message = [NSString stringWithFormat:@"There was an error renaming '%@' to '%@'.", [ref refishName], newName];
+            [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+            retValue = NO;
+        }
+    }
+    
+    if (checkoutActCommit)
+    {
+        arguments = [NSArray arrayWithObjects:@"checkout", actCommit, nil];
+        output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+        if (gitRetValue) {
+            NSString *message = [NSString stringWithFormat:@"There was an error checkout the origin commitID '%@'.",actCommit];
+            [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+            retValue = NO;
+        }
+    }
+
+    [self reloadRefs];
+    return retValue;
+}
+
 - (BOOL) createTag:(NSString *)tagName message:(NSString *)message atRefish:(id <PBGitRefish>)target
 {
 	if (!tagName)
@@ -1026,13 +1157,41 @@ dispatch_queue_t PBGetWorkQueue() {
 	return YES;
 }
 
+- (BOOL) deleteRemoteBranch:(PBGitRef *)ref
+{
+    BOOL retVal = YES;
+    NSString *branchName = (NSString *)[[[ref refishName] componentsSeparatedByString:@"/"] objectAtIndex:3];
+    
+	if (ref && ([ref refishType] == kGitXRemoteBranchType))
+    {
+        int gitRetValue = 1;
+        NSArray *arguments = [NSArray arrayWithObjects:@"push", [ref remoteName], [NSString stringWithFormat:@":%@",branchName], nil];
+        NSString * output = [self outputForArguments:arguments retValue:&gitRetValue];
+        if (gitRetValue) {
+            NSString *message = [NSString stringWithFormat:@"There was an error deleting the remotebranch: %@/%@\n\n", [ref remoteName],branchName];
+            [self.windowController showErrorSheetTitle:@"Delete remote failed!" message:message arguments:arguments output:output];
+            retVal = NO;
+        }
+    }
+    
+	[self reloadRefs];
+	return retVal;
+}
+
+
 - (BOOL) deleteRef:(PBGitRef *)ref
 {
 	if (!ref)
 		return NO;
 
 	if ([ref refishType] == kGitXRemoteType)
+    {
 		return [self deleteRemote:ref];
+    }
+    else if ([ref refishType] == kGitXRemoteBranchType)
+    {
+		[self deleteRemoteBranch:ref];
+    }
 
 	int retValue = 1;
 	NSArray *arguments = [NSArray arrayWithObjects:@"update-ref", @"-d", [ref ref], nil];

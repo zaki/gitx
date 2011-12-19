@@ -14,13 +14,13 @@
 #import "PBGitDefaults.h"
 #import "PBDiffWindowController.h"
 #import "PBGitResetController.h"
-
+#import "PBRenameSheet.h"
 #import "PBArgumentPickerController.h"
 
 #define kDialogAcceptDroppedRef @"Accept Dropped Ref"
 #define kDialogConfirmPush @"Confirm Push"
 #define kDialogDeleteRef @"Delete Ref"
-
+#define kDialogRenameRef @"Rename Ref"
 
 
 @implementation PBRefController
@@ -279,6 +279,21 @@
 						contextInfo:(__bridge void *)ref];
 }
 
+
+- (void)showRenameSheet:(PBRefMenuItem *)sender
+{
+//    if([(PBGitRef *)[sender refish] refishType] != kGitXRemoteBranchType)
+//    {
+        [PBRenameSheet showRenameSheetAtRefish:(PBGitRef *)[sender refish] inRepository:historyController.repository];
+//    }
+//    else
+//    {
+//        NSString *message = [NSString stringWithFormat:@"Please rename remote branches from the git Terminal."];
+//        [historyController.repository.windowController showErrorSheetTitle:@"Rename" message:message arguments:nil output:nil];
+//    }
+}
+
+
 - (void)deleteRefSheetDidEnd:(NSAlert *)sheet returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {
     [[sheet window] orderOut:nil];
@@ -291,7 +306,6 @@
 		[historyController.repository deleteRef:ref];
 	}
 }
-
 
 
 #pragma mark Contextual menus

@@ -49,7 +49,7 @@ static PBCloneRepsitoryToSheet *sheet;
 - (void) awakeFromNib
 {
     NSOpenPanel *cloneToSheet = [NSOpenPanel openPanel];
-
+    
 	[cloneToSheet setTitle:@"Clone Repository To"];
 	[cloneToSheet setPrompt:@"Clone"];
     [self.message setStringValue:[NSString stringWithFormat:@"Select a folder to clone %@ into", [self.repository projectName]]];
@@ -60,24 +60,19 @@ static PBCloneRepsitoryToSheet *sheet;
     [cloneToSheet setCanCreateDirectories:YES];
 	[cloneToSheet setAccessoryView:cloneToAccessoryView];
 
-    [cloneToSheet beginSheetForDirectory:nil file:nil types:nil
-						  modalForWindow:[self.repository.windowController window]
-						   modalDelegate:self
-						  didEndSelector:@selector(cloneToSheetDidEnd:returnCode:contextInfo:)
-							 contextInfo:NULL];
+	[cloneToSheet beginSheetModalForWindow:[self.repository.windowController window]
+                         completionHandler:
+     ^(NSInteger result) 
+     {
+         [cloneToSheet orderOut:self];
+         
+         if (result == NSFileHandlingPanelOKButton) 
+         {
+             NSString *clonePath = [[cloneToSheet URL] path];
+             DLog(@"clone path = %@", clonePath);
+             [self.repository cloneRepositoryToPath:clonePath bare:self.isBare];
+         }
+     }
+     ];
 }
-	
-
-- (void) cloneToSheetDidEnd:(NSWindow *)sheet returnCode:(NSInteger)code contextInfo:(void *)info
-{
-    [sheet orderOut:self];
-
-    if (code == NSOKButton) {
-		NSString *clonePath = [(NSOpenPanel *)sheet filename];
-		DLog(@"clone path = %@", clonePath);
-		[self.repository cloneRepositoryToPath:clonePath bare:self.isBare];
-	}
-}
-
-
 @end
