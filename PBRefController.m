@@ -27,7 +27,8 @@
 
 -(void)dealloc
 {
-    dropInfo=nil;
+    actDropInfo = Nil;
+    actRef = Nil;
 }
 
 - (void)awakeFromNib
@@ -276,21 +277,14 @@
 	[alert beginSheetModalForWindow:[historyController.repository.windowController window]
 					  modalDelegate:self
 					 didEndSelector:@selector(deleteRefSheetDidEnd:returnCode:contextInfo:)
-						contextInfo:(__bridge void *)ref];
+						contextInfo:Nil];
+    actRef = ref;
 }
 
 
 - (void)showRenameSheet:(PBRefMenuItem *)sender
 {
-//    if([(PBGitRef *)[sender refish] refishType] != kGitXRemoteBranchType)
-//    {
-        [PBRenameSheet showRenameSheetAtRefish:(PBGitRef *)[sender refish] inRepository:historyController.repository];
-//    }
-//    else
-//    {
-//        NSString *message = [NSString stringWithFormat:@"Please rename remote branches from the git Terminal."];
-//        [historyController.repository.windowController showErrorSheetTitle:@"Rename" message:message arguments:nil output:nil];
-//    }
+    [PBRenameSheet showRenameSheetAtRefish:(PBGitRef *)[sender refish] inRepository:historyController.repository];
 }
 
 
@@ -302,8 +296,7 @@
         [PBGitDefaults suppressDialogWarningForDialog:kDialogDeleteRef];
 
 	if (returnCode == NSAlertDefaultReturn) {
-		PBGitRef *ref = (__bridge PBGitRef *)contextInfo;
-		[historyController.repository deleteRef:ref];
+		[historyController.repository deleteRef:actRef];
 	}
 }
 
@@ -378,7 +371,7 @@
 	return NSDragOperationNone;
 }
 
-- (void) dropRef
+- (void) dropRef:(NSDictionary*)dropInfo
 {
 	PBGitRef *ref = [dropInfo objectForKey:@"dragRef"];
 	PBGitCommit *oldCommit = [dropInfo objectForKey:@"oldCommit"];
@@ -420,14 +413,14 @@
 
 	PBGitCommit *dropCommit = [[commitController arrangedObjects] objectAtIndex:row];
 
-	dropInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                ref, @"dragRef",
-                oldCommit, @"oldCommit",
-                dropCommit, @"dropCommit",
-                nil];
+	NSDictionary *dropInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              ref, @"dragRef",
+                              oldCommit, @"oldCommit",
+                              dropCommit, @"dropCommit",
+                              nil];
 
 	if ([PBGitDefaults isDialogWarningSuppressedForDialog:kDialogAcceptDroppedRef]) {
-		[self dropRef];
+		[self dropRef:dropInfo];
 		return YES;
 	}
 
@@ -447,6 +440,7 @@
 					  modalDelegate:self
 					 didEndSelector:@selector(acceptDropInfoAlertDidEnd:returnCode:contextInfo:)
 						contextInfo:Nil];
+    actDropInfo = dropInfo;
 
 	return YES;
 }
@@ -456,7 +450,7 @@
     [[alert window] orderOut:nil];
 
 	if (returnCode == NSAlertDefaultReturn)
-		[self dropRef];
+		[self dropRef:actDropInfo];
 
 	if ([[alert suppressionButton] state] == NSOnState)
         [PBGitDefaults suppressDialogWarningForDialog:kDialogAcceptDroppedRef];

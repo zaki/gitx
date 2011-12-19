@@ -18,6 +18,11 @@
 @end
 
 @implementation PBGitIndexController
+- (void)dealloc
+{
+    actFiles = Nil;
+}
+
 
 - (void)awakeFromNib
 {
@@ -224,7 +229,7 @@
     [[alert window] orderOut:nil];
 
 	if (returnCode == NSAlertDefaultReturn) {
-        [commitController.index discardChangesForFiles:(__bridge NSArray *)contextInfo];
+        [commitController.index discardChangesForFiles:actFiles];
 	}
 }
 
@@ -239,7 +244,8 @@
         [alert beginSheetModalForWindow:[[commitController view] window]
                           modalDelegate:self
                          didEndSelector:@selector(discardChangesForFilesAlertDidEnd:returnCode:contextInfo:)
-                            contextInfo:(__bridge void *)files];
+                            contextInfo:Nil];
+        actFiles = files;
 	} else {
         [commitController.index discardChangesForFiles:files];
     }

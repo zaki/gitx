@@ -11,6 +11,11 @@
 #import "PBGitIndex.h"
 
 @implementation PBWebChangesController
+- (void) dealloc
+{
+	selectedFile = Nil;
+    actHunk = Nil;
+}
 
 - (void) awakeFromNib
 {
