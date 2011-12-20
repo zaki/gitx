@@ -1019,12 +1019,8 @@ dispatch_queue_t PBGetWorkQueue() {
         if (![self refExists:ref]) 
         {
             // No Branch is checked out -> Remember act CommitID to return after renaming
-            arguments = [NSArray arrayWithObjects:@"log", @"--pretty=format:%H", nil];
-            output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
-            
-            cSet = [NSCharacterSet characterSetWithCharactersInString:@"\n"];
-            commitInfo = [output componentsSeparatedByCharactersInSet:cSet];
-            actCommit = [commitInfo objectAtIndex:0];
+            arguments = [NSArray arrayWithObjects:@"log", @"-n1",@"--pretty=format:%H", nil];
+            actCommit = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
         }
         
         // check ref out to create a new local branch to push it later on the remote
