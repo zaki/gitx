@@ -82,7 +82,6 @@
 		65D58BC7132D48C2003F7290 /* PBResetSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D58BC6132D48C0003F7290 /* PBResetSheet.m */; };
 		770B37ED0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 770B37EC0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel */; };
 		77C8280E06725ACE000B614F /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* ApplicationController.m */; };
-		812F400914ACF14E0032373A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		8166B9CF149E1BC0007C8619 /* PBRenameSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */; };
 		81840633149E1AA00014646A /* PBRenameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81840631149E1AA00014646A /* PBRenameSheet.xib */; };
 		89087CA613A3E46B00911503 /* PBWebCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89087CA513A3E46B00911503 /* PBWebCommitController.m */; };
@@ -555,7 +554,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				812F400914ACF14E0032373A /* AppKit.framework in Frameworks */,
 				311D4F561370C9A50061CFD3 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
