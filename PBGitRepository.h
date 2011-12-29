@@ -154,6 +154,10 @@ dispatch_queue_t PBGetWorkQueue();
 - (NSMenu *) menu;
 +(bool)isLocalBranch:(NSString *)branch branchNameInto:(NSString **)name;
 
+- (NSString*) remoteUrl:(NSString*)remoteName;
+- (void) changeRemote:(NSString*)remoteName toURL:(NSURL*)newUrl;
+
+
 @property (assign) BOOL hasChanged;
 @property (readonly) PBGitWindowController *windowController;
 @property (readonly) PBGitConfig *config;

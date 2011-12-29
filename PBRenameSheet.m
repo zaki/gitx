@@ -7,10 +7,6 @@
 //
 
 #import "PBRenameSheet.h"
-#import "PBGitRepository.h"
-//#import "PBGitDefaults.h"
-//#import "PBGitCommit.h"
-//#import "PBGitRef.h"
 #import "PBGitWindowController.h"
 
 @interface PBRenameSheet ()

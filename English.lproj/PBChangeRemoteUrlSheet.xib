@@ -31,7 +31,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">PBCloneRepositoryPanel</string>
+				<string key="NSClassName">PBChangeRemoteUrlSheet</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -42,7 +42,7 @@
 			<object class="NSWindowTemplate" id="1005">
 				<int key="NSWindowStyleMask">15</int>
 				<int key="NSWindowBacking">2</int>
-				<string key="NSWindowRect">{{63, 1353}, {495, 148}}</string>
+				<string key="NSWindowRect">{{63, 1353}, {764, 148}}</string>
 				<int key="NSWTFlags">544735232</int>
 				<string key="NSWindowTitle">Change Remote URL</string>
 				<string key="NSWindowClass">NSWindow</string>
@@ -58,7 +58,7 @@
 						<object class="NSTextField" id="413349220">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{133, 81}, {342, 22}}</string>
+							<string key="NSFrame">{{128, 81}, {616, 22}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="343020519"/>
@@ -98,15 +98,15 @@
 						<object class="NSTextField" id="759934228">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 83}, {113, 17}}</string>
+							<string key="NSFrame">{{17, 83}, {117, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="413349220"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="673727363">
 								<int key="NSCellFlags">68288064</int>
-								<int key="NSCellFlags2">71304192</int>
-								<string key="NSContents">Fetch [Push] URL:</string>
+								<int key="NSCellFlags2">4195328</int>
+								<string key="NSContents">Fetch/Push URL:</string>
 								<reference key="NSSupport" ref="342284850"/>
 								<reference key="NSControlView" ref="759934228"/>
 								<object class="NSColor" key="NSBackgroundColor" id="525562610">
@@ -129,7 +129,7 @@
 						<object class="NSTextField" id="974899897">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{17, 111}, {175, 17}}</string>
+							<string key="NSFrame">{{17, 111}, {730, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="759934228"/>
@@ -147,10 +147,9 @@
 						<object class="NSButton" id="852371847">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{385, 12}, {96, 32}}</string>
+							<string key="NSFrame">{{654, 12}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
-							<reference key="NSNextKeyView"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="38086624">
 								<int key="NSCellFlags">67239424</int>
@@ -169,7 +168,7 @@
 						<object class="NSButton" id="1003391168">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{289, 12}, {96, 32}}</string>
+							<string key="NSFrame">{{558, 12}, {96, 32}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="852371847"/>
@@ -212,7 +211,7 @@
 						<object class="NSButton" id="343020519">
 							<reference key="NSNextResponder" ref="1006"/>
 							<int key="NSvFlags">265</int>
-							<string key="NSFrame">{{399, 56}, {76, 17}}</string>
+							<string key="NSFrame">{{668, 56}, {76, 17}}</string>
 							<reference key="NSSuperview" ref="1006"/>
 							<reference key="NSWindow"/>
 							<reference key="NSNextKeyView" ref="676731389"/>
@@ -236,12 +235,12 @@
 							</object>
 						</object>
 					</object>
-					<string key="NSFrameSize">{495, 148}</string>
+					<string key="NSFrameSize">{764, 148}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
 					<reference key="NSNextKeyView" ref="974899897"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1280, 778}}</string>
+				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
 				<string key="NSMinSize">{488, 207}</string>
 				<string key="NSMaxSize">{2000, 207}</string>
 				<string key="NSFrameAutosaveName">PBChangeRemoteUrlSheet</string>
@@ -258,6 +257,54 @@
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">37</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">RemoteNameTextField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="974899897"/>
+					</object>
+					<int key="connectionID">47</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">RemoteUrlTextField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="413349220"/>
+					</object>
+					<int key="connectionID">48</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">errorMessageTextField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="676731389"/>
+					</object>
+					<int key="connectionID">49</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">browseRepository:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="343020519"/>
+					</object>
+					<int key="connectionID">50</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">cancelOperation:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="1003391168"/>
+					</object>
+					<int key="connectionID">51</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">changeOperation:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="852371847"/>
+					</object>
+					<int key="connectionID">52</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -303,12 +350,12 @@
 						<reference key="object" ref="1006"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="413349220"/>
-							<reference ref="759934228"/>
 							<reference ref="343020519"/>
 							<reference ref="852371847"/>
 							<reference ref="1003391168"/>
 							<reference ref="974899897"/>
+							<reference ref="413349220"/>
+							<reference ref="759934228"/>
 							<reference ref="676731389"/>
 						</object>
 						<reference key="parent" ref="1005"/>
@@ -487,28 +534,24 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">46</int>
+			<int key="maxID">52</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">PBCloneRepositoryPanel</string>
+					<string key="className">PBChangeRemoteUrlSheet</string>
 					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>browseDestination:</string>
 							<string>browseRepository:</string>
-							<string>clone:</string>
-							<string>closeCloneRepositoryPanel:</string>
-							<string>showHideHiddenFiles:</string>
+							<string>cancelOperation:</string>
+							<string>changeOperation:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -518,32 +561,22 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>browseDestination:</string>
 							<string>browseRepository:</string>
-							<string>clone:</string>
-							<string>closeCloneRepositoryPanel:</string>
-							<string>showHideHiddenFiles:</string>
+							<string>cancelOperation:</string>
+							<string>changeOperation:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<object class="IBActionInfo">
-								<string key="name">browseDestination:</string>
-								<string key="candidateClassName">id</string>
-							</object>
 							<object class="IBActionInfo">
 								<string key="name">browseRepository:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">clone:</string>
+								<string key="name">cancelOperation:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 							<object class="IBActionInfo">
-								<string key="name">closeCloneRepositoryPanel:</string>
-								<string key="candidateClassName">id</string>
-							</object>
-							<object class="IBActionInfo">
-								<string key="name">showHideHiddenFiles:</string>
+								<string key="name">changeOperation:</string>
 								<string key="candidateClassName">id</string>
 							</object>
 						</object>
@@ -552,16 +585,14 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>destinationPath</string>
-							<string>errorMessage</string>
-							<string>repositoryAccessoryView</string>
-							<string>repositoryURL</string>
+							<string>RemoteNameTextField</string>
+							<string>RemoteUrlTextField</string>
+							<string>errorMessageTextField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
-							<string>NSView</string>
 							<string>NSTextField</string>
 						</object>
 					</object>
@@ -569,34 +600,29 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>destinationPath</string>
-							<string>errorMessage</string>
-							<string>repositoryAccessoryView</string>
-							<string>repositoryURL</string>
+							<string>RemoteNameTextField</string>
+							<string>RemoteUrlTextField</string>
+							<string>errorMessageTextField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="IBToOneOutletInfo">
-								<string key="name">destinationPath</string>
+								<string key="name">RemoteNameTextField</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">errorMessage</string>
+								<string key="name">RemoteUrlTextField</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 							<object class="IBToOneOutletInfo">
-								<string key="name">repositoryAccessoryView</string>
-								<string key="candidateClassName">NSView</string>
-							</object>
-							<object class="IBToOneOutletInfo">
-								<string key="name">repositoryURL</string>
+								<string key="name">errorMessageTextField</string>
 								<string key="candidateClassName">NSTextField</string>
 							</object>
 						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/PBCloneRepositoryPanel.h</string>
+						<string key="minorKey">./Classes/PBChangeRemoteUrlSheet.h</string>
 					</object>
 				</object>
 			</object>

@@ -16,6 +16,7 @@
 #import "PBGitResetController.h"
 #import "PBRenameSheet.h"
 #import "PBArgumentPickerController.h"
+#import "PBChangeRemoteUrlSheet.h"
 
 #define kDialogAcceptDroppedRef @"Accept Dropped Ref"
 #define kDialogConfirmPush @"Confirm Push"
@@ -287,6 +288,11 @@
     [PBRenameSheet showRenameSheetAtRefish:(PBGitRef *)[sender refish] inRepository:historyController.repository];
 }
 
+
+- (void)showChangeRemoteUrlSheet:(PBRefMenuItem *)sender
+{
+    [PBChangeRemoteUrlSheet showChangeRemoteUrlSheetAtRefish:(PBGitRef *)[sender refish] inRepository:historyController.repository];
+}
 
 - (void)deleteRefSheetDidEnd:(NSAlert *)sheet returnCode:(int)returnCode contextInfo:(void  *)contextInfo
 {

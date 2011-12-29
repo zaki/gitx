@@ -7,7 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "PBGitRefish.h"
+#import "PBGitRepository.h"
 
 @interface PBChangeRemoteUrlSheet : NSWindowController 
 {
@@ -18,16 +19,10 @@
 	NSString    *remoteUrl;
 }
 
-+ (id) panel;
-+ (void)showChangeRemoteUrlSheet:(NSString *)repository toURL:(NSURL *)targetURL isBare:(BOOL)bare;
++ (void)showChangeRemoteUrlSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo;
 
-- (void)showMessageSheet:(NSString *)messageText infoText:(NSString *)infoText;
-- (void)showErrorSheet:(NSError *)error;
-
-- (IBAction) closeCloneRepositoryPanel:(id)sender;
-- (IBAction) clone:(id)sender;
+- (IBAction) cancelOperation:(id)sender;
+- (IBAction) changeOperation:(id)sender;
 - (IBAction) browseRepository:(id)sender;
-- (IBAction) showHideHiddenFiles:(id)sender;
-- (IBAction) browseDestination:(id)sender;
 
 @end

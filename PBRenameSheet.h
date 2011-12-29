@@ -8,8 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "PBGitRefish.h"
-
-@class PBGitRepository;
+#import "PBGitRepository.h"
 
 @interface PBRenameSheet : NSWindowController
 {

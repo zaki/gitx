@@ -82,6 +82,9 @@
 		65D58BC7132D48C2003F7290 /* PBResetSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D58BC6132D48C0003F7290 /* PBResetSheet.m */; };
 		770B37ED0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 770B37EC0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel */; };
 		77C8280E06725ACE000B614F /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* ApplicationController.m */; };
+		812F400914ACF14E0032373A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
+		812BDD8B14AA0B110072748D /* PBChangeRemoteUrlSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812BDD8914AA0B110072748D /* PBChangeRemoteUrlSheet.xib */; };
+		812BDD8F14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 812BDD8E14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m */; };
 		8166B9CF149E1BC0007C8619 /* PBRenameSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */; };
 		81840633149E1AA00014646A /* PBRenameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81840631149E1AA00014646A /* PBRenameSheet.xib */; };
 		89087CA613A3E46B00911503 /* PBWebCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89087CA513A3E46B00911503 /* PBWebCommitController.m */; };
@@ -342,6 +345,9 @@
 		77C82804067257F0000B614F /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		77C8280B06725ACE000B614F /* ApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ApplicationController.h; sourceTree = "<group>"; };
 		77C8280C06725ACE000B614F /* ApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ApplicationController.m; sourceTree = "<group>"; };
+		812BDD8A14AA0B110072748D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PBChangeRemoteUrlSheet.xib; sourceTree = "<group>"; };
+		812BDD8D14AA0E9C0072748D /* PBChangeRemoteUrlSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBChangeRemoteUrlSheet.h; sourceTree = "<group>"; };
+		812BDD8E14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBChangeRemoteUrlSheet.m; sourceTree = "<group>"; };
 		8166B9CD149E1BC0007C8619 /* PBRenameSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBRenameSheet.h; sourceTree = "<group>"; };
 		8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBRenameSheet.m; sourceTree = "<group>"; };
 		81840632149E1AA00014646A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PBRenameSheet.xib; sourceTree = "<group>"; };
@@ -554,6 +560,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				812F400914ACF14E0032373A /* AppKit.framework in Frameworks */,
 				311D4F561370C9A50061CFD3 /* Security.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -792,6 +799,7 @@
 				D8083C45111F136400337480 /* PBAddRemoteSheet.xib */,
 				D8083DCB111F918900337480 /* PBCloneRepsitoryToSheet.xib */,
 				D8FDD9F511432A12005647F6 /* PBCloneRepositoryPanel.xib */,
+				812BDD8914AA0B110072748D /* PBChangeRemoteUrlSheet.xib */,
 				47DBDB680E94EF6500671A1E /* Preferences.xib */,
 				F569AE920F2CBD7C00C2FFA7 /* Credits.html */,
 				21230ED11285EB5A0046E5A1 /* PBArgumentPicker.xib */,
@@ -895,6 +903,8 @@
 				D8083A42111E045D00337480 /* PBRemoteProgressSheet.m */,
 				D8083C42111F106800337480 /* PBAddRemoteSheet.h */,
 				D8083C43111F106800337480 /* PBAddRemoteSheet.m */,
+				812BDD8D14AA0E9C0072748D /* PBChangeRemoteUrlSheet.h */,
+				812BDD8E14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m */,
 				D8083DC2111F90F300337480 /* PBCloneRepsitoryToSheet.h */,
 				D8083DC3111F90F300337480 /* PBCloneRepsitoryToSheet.m */,
 				D8083E01111FA33700337480 /* PBCloneRepositoryPanel.h */,
@@ -1329,6 +1339,7 @@
 				65D58BC4132D27A8003F7290 /* PBResetSheet.xib in Resources */,
 				DDB8FEC413999C24001A9EE2 /* PBStashContentView.xib in Resources */,
 				81840633149E1AA00014646A /* PBRenameSheet.xib in Resources */,
+				812BDD8B14AA0B110072748D /* PBChangeRemoteUrlSheet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1495,6 +1506,7 @@
 				8998B1C613A55B3500121729 /* PBWebStashController.m in Sources */,
 				2CC9B39713E86B35002EA416 /* AIURLAdditions.m in Sources */,
 				8166B9CF149E1BC0007C8619 /* PBRenameSheet.m in Sources */,
+				812BDD8F14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1543,6 +1555,14 @@
 				47DBDB690E94EF6500671A1E /* English */,
 			);
 			name = Preferences.xib;
+			sourceTree = "<group>";
+		};
+		812BDD8914AA0B110072748D /* PBChangeRemoteUrlSheet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				812BDD8A14AA0B110072748D /* English */,
+			);
+			name = PBChangeRemoteUrlSheet.xib;
 			sourceTree = "<group>";
 		};
 		81840631149E1AA00014646A /* PBRenameSheet.xib */ = {
