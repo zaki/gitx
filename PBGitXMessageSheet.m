@@ -56,6 +56,7 @@ static PBGitXMessageSheet *sheet;
 {
 	[NSApp endSheet:[self window]];
 	[[self window] orderOut:self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ErrorMessageDidEnd" object:self];
 }
 
 
@@ -70,8 +71,19 @@ static PBGitXMessageSheet *sheet;
 	[self setInfoString:info];
 	[self resizeWindow];
 	
-	[NSApp beginSheet:[self window] modalForWindow:parentWindow modalDelegate:self didEndSelector:nil contextInfo:NULL];
+	[NSApp beginSheet:[self window] 
+       modalForWindow:parentWindow 
+        modalDelegate:self 
+       didEndSelector:@selector(messageSheetForWindowDidEnd:returnCode:contextInfo:) 
+          contextInfo:Nil];
 }
+
+
+- (void)messageSheetForWindowDidEnd:(NSWindow*)window returnCode:(NSInteger)code contextInfo:(void *)info
+{
+	[window orderOut:Nil];
+}
+
 
 
 - (void)setInfoString:(NSString *)info

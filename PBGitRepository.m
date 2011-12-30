@@ -1199,6 +1199,27 @@ dispatch_queue_t PBGetWorkQueue() {
 	return YES;
 }
 
+
+- (BOOL) deleteRemoteWithName:(NSString *)remoteName
+{
+    if (!remoteName)
+		return NO;
+
+	int retValue = 1;
+	NSArray *arguments = [NSArray arrayWithObjects:@"remote", @"rm", remoteName, nil];
+	NSString * output = [self outputForArguments:arguments retValue:&retValue];
+    if (retValue) {
+		NSString *message = [NSString stringWithFormat:@"There was an error deleting the remote: %@\n\n", remoteName];
+		[self.windowController showErrorSheetTitle:@"Delete remote failed!" message:message arguments:arguments output:output];
+		return NO;
+	}
+
+    [self reloadRefs];
+	return YES;
+}
+
+
+
 - (BOOL) deleteRemoteBranch:(PBGitRef *)ref
 {
     BOOL retVal = YES;

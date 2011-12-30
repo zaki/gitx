@@ -49,6 +49,7 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 
 
 static PBRemoteProgressSheet *sheet;
+static PBGitRepository *repository;
 
 #pragma mark -
 #pragma mark PBRemoteProgressSheet
@@ -64,7 +65,9 @@ static PBRemoteProgressSheet *sheet;
 
 + (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription  inRepository:(PBGitRepository *)repo
 {
-	[PBRemoteProgressSheet beginRemoteProgressSheetForArguments:args title:theTitle description:theDescription inDir:[repo workingDirectory] windowController:repo.windowController];
+	repository = repo;
+    
+    [PBRemoteProgressSheet beginRemoteProgressSheetForArguments:args title:theTitle description:theDescription inDir:[repo workingDirectory] windowController:repo.windowController];
 }
 
 
@@ -96,6 +99,15 @@ static PBRemoteProgressSheet *sheet;
 
 	gitTask = [PBEasyPipe taskForCommand:[PBGitBinary path] withArgs:arguments inDir:dir];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskCompleted:) name:NSTaskDidTerminateNotification object:gitTask];
+    
+    NSMutableDictionary *argDict = [NSMutableDictionary new];
+    [argDict setValue:repository forKey:[NSString stringWithFormat:@"Repository"]];
+    
+    for (int i=0; i<[arguments count]; i++)
+    {
+        [argDict setValue:[arguments objectAtIndex:i] forKey:[NSString stringWithFormat:@"Arg%d",i]];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"GitCommandSent" object:self userInfo:argDict];
 
 	// having intermittent problem with long running git tasks not sending a termination notice, so periodically check whether the task is done
 	taskTimer = [NSTimer scheduledTimerWithTimeInterval:0.2 target:self selector:@selector(checkTask:) userInfo:nil repeats:YES];

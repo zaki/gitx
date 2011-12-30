@@ -143,11 +143,23 @@
 - (void)showErrorSheet:(NSError *)error
 {
 	if ([[error domain] isEqualToString:PBGitRepositoryErrorDomain])
+    {
 		[PBGitXMessageSheet beginMessageSheetForWindow:[self window] withError:error];
+    }
 	else
-		[[NSAlert alertWithError:error] beginSheetModalForWindow:[self window] modalDelegate:self didEndSelector:nil contextInfo:nil];
+    {
+		[[NSAlert alertWithError:error] beginSheetModalForWindow:[self window] 
+                                                   modalDelegate:self 
+                                                  didEndSelector:@selector(showErrorSheetAlertDidEnd:returnCode:contextInfo:) 
+                                                     contextInfo:Nil];
+    }
 }
 
+- (void) showErrorSheetAlertDidEnd:(NSAlert *)alert returnCode:(NSInteger)code contextInfo:(void *)info
+{
+    [[alert window] orderOut:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"ErrorMessageDidEnd" object:self];
+}
 
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {

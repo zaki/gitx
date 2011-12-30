@@ -87,7 +87,7 @@
 	[alert beginSheetModalForWindow:[self window]
 					  modalDelegate:self 
 					 didEndSelector:@selector(messageSheetDidEnd:returnCode:contextInfo:)
-						contextInfo:NULL];
+						contextInfo:Nil];
 }
 
 
