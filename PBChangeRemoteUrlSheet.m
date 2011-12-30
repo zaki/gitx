@@ -48,13 +48,21 @@ static PBChangeRemoteUrlSheet *sheet;
 
 - (IBAction)changeOperation:(id)sender
 {
-    [self cancelOperation:sender];
-
-    NSString *currentPath = [RemoteUrlTextField stringValue];
-    NSURL *newUrl = [NSURL URLWithString:[currentPath stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
-    NSString *remoteName = [self.startRefish shortName];
-    
-    [self.repository changeRemote:remoteName toURL:newUrl];
+    if (![[RemoteUrlTextField stringValue] compare:@""]) 
+    {
+        [errorMessageTextField setHidden:NO];
+        [errorMessageTextField setStringValue:@"URL can't be empty."];
+    }
+    else
+    {
+        [self cancelOperation:sender];
+        
+        NSString *currentPath = [RemoteUrlTextField stringValue];
+        NSURL *newUrl = [NSURL URLWithString:[currentPath stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+        NSString *remoteName = [self.startRefish shortName];
+        
+        [self.repository changeRemote:remoteName toURL:newUrl];
+    }
 }
 
 
