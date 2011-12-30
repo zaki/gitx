@@ -176,6 +176,10 @@
      ];
 }
 
+- (IBAction) bareCheckBoxChanged:(NSButton*)sender
+{
+    isBare = sender.state;
+}
 
 
 #pragma mark Callbacks

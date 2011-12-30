@@ -33,6 +33,7 @@
 - (IBAction) browseRepository:(id)sender;
 - (IBAction) showHideHiddenFiles:(id)sender;
 - (IBAction) browseDestination:(id)sender;
+- (IBAction) bareCheckBoxChanged:(NSButton*)sender;
 
 @property (strong) IBOutlet NSTextField *repositoryURL;
 @property (strong) IBOutlet NSTextField *destinationPath;
