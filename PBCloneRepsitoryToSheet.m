@@ -43,11 +43,7 @@ static PBCloneRepsitoryToSheet *sheet;
 {
 	self.repository = repo;
 	[self window];
-}
 
-
-- (void) awakeFromNib
-{
     NSOpenPanel *cloneToSheet = [NSOpenPanel openPanel];
     
 	[cloneToSheet setTitle:@"Clone Repository To"];
@@ -59,7 +55,7 @@ static PBCloneRepsitoryToSheet *sheet;
     [cloneToSheet setAllowsMultipleSelection:NO];
     [cloneToSheet setCanCreateDirectories:YES];
 	[cloneToSheet setAccessoryView:cloneToAccessoryView];
-
+    
 	[cloneToSheet beginSheetModalForWindow:[self.repository.windowController window]
                          completionHandler:
      ^(NSInteger result) 
@@ -75,4 +71,5 @@ static PBCloneRepsitoryToSheet *sheet;
      }
      ];
 }
+
 @end
