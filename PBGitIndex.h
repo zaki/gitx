@@ -67,6 +67,7 @@ extern NSString *PBGitIndexOperationFailed;
 // Refresh the index
 - (void)refresh;
 
+- (void)commitMergeWithMessage:(NSString *)commitMessage;
 - (void)commitWithMessage:(NSString *)commitMessage andVerify:(BOOL) doVerify;
 
 // Inter-file changes:
