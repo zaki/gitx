@@ -1241,6 +1241,32 @@ dispatch_queue_t PBGetWorkQueue() {
 	return retVal;
 }
 
+- (BOOL) deleteRemoteTag:(PBGitRef *)ref
+{
+    BOOL retVal = YES;
+    
+	if (ref && ([ref refishType] == kGitXTagType) && [self hasRemotes])
+    {
+        int gitRetValue = 1;
+        
+        NSArray *remotes = [self remotes];
+        NSArray *arguments;
+        
+        for (int i=0; i<[remotes count]; i++)
+        {
+            arguments = [NSArray arrayWithObjects:@"push", [remotes objectAtIndex:i], [NSString stringWithFormat:@":%@",[ref shortName]], nil];
+            NSString * output = [self outputForArguments:arguments retValue:&gitRetValue];
+            if (gitRetValue > 1) {
+                NSString *message = [NSString stringWithFormat:@"There was an error deleting the remotetag: %@/%@\n\n", [remotes objectAtIndex:i],[ref shortName]];
+                [self.windowController showErrorSheetTitle:@"Delete tag on remote failed!" message:message arguments:arguments output:output];
+                retVal = NO;
+            }
+        }
+    }
+    
+	[self reloadRefs];
+	return retVal;
+}
 
 - (BOOL) deleteRef:(PBGitRef *)ref
 {
@@ -1254,6 +1280,10 @@ dispatch_queue_t PBGetWorkQueue() {
     else if ([ref refishType] == kGitXRemoteBranchType)
     {
 		[self deleteRemoteBranch:ref];
+    }
+    else if ([ref refishType] == kGitXTagType)
+    {
+        [self deleteRemoteTag:ref];
     }
 
 	int retValue = 1;
