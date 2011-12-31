@@ -789,7 +789,7 @@ dispatch_queue_t PBGetWorkQueue() {
 
 - (void) beginFetchFromRemoteForRef:(PBGitRef *)ref
 {
-	NSMutableArray *arguments = [NSMutableArray arrayWithObject:@"fetch"];
+	NSMutableArray *arguments = [NSMutableArray arrayWithObjects:@"fetch", @"--tags", nil];
 
 	if (![ref isRemote]) {
 		NSError *error = nil;
