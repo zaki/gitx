@@ -56,7 +56,6 @@ static PBGitXMessageSheet *sheet;
 {
 	[NSApp endSheet:[self window]];
 	[[self window] orderOut:self];
-    [[NSNotificationCenter defaultCenter] postNotificationName:@"ErrorMessageDidEnd" object:self];
 }
 
 
