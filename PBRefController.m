@@ -64,7 +64,7 @@
 - (void)showConfirmPushRefSheet:(PBGitRef *)ref remote:(PBGitRef *)remoteRef
 {
 	if ((!ref && !remoteRef)
-		|| (ref && ![ref isBranch] && ![ref isRemoteBranch])
+		|| (ref && ![ref isTag] && ![ref isBranch] && ![ref isRemoteBranch])
 		|| (remoteRef && !([remoteRef refishType] == kGitXRemoteType)))
 		return;
 
