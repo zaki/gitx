@@ -83,6 +83,13 @@ static PBChangeRemoteUrlSheet *sheet;
 }
 
 
+- (IBAction) showHideHiddenFiles:(id)sender
+{
+    [browseRemoteUrlPanel setShowsHiddenFiles:[sender state]];
+}
+
+
+
 #pragma mark - Extension methods
 - (void)showChangeRemoteUrlSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo
 {
@@ -116,6 +123,7 @@ static PBChangeRemoteUrlSheet *sheet;
     [browseRemoteUrlPanel setCanChooseDirectories:YES];
     [browseRemoteUrlPanel setAllowsMultipleSelection:NO];
 	[browseRemoteUrlPanel setCanCreateDirectories:NO];
+    [browseRemoteUrlPanel setAccessoryView:browseAccessoryView];
     
 	[NSApp beginSheet:[self window] 
        modalForWindow:[self.repository.windowController window] 

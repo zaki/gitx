@@ -16,6 +16,7 @@
 			<string>NSView</string>
 			<string>NSWindowTemplate</string>
 			<string>NSTextFieldCell</string>
+			<string>NSCustomView</string>
 			<string>NSButtonCell</string>
 			<string>NSButton</string>
 			<string>NSCustomObject</string>
@@ -246,6 +247,45 @@
 				<string key="NSFrameAutosaveName">PBChangeRemoteUrlSheet</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
+			<object class="NSCustomView" id="709791495">
+				<reference key="NSNextResponder"/>
+				<int key="NSvFlags">268</int>
+				<object class="NSMutableArray" key="NSSubviews">
+					<bool key="EncodedWithXMLCoder">YES</bool>
+					<object class="NSButton" id="34605431">
+						<reference key="NSNextResponder" ref="709791495"/>
+						<int key="NSvFlags">268</int>
+						<string key="NSFrame">{{53, 18}, {133, 18}}</string>
+						<reference key="NSSuperview" ref="709791495"/>
+						<reference key="NSWindow"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSButtonCell" key="NSCell" id="97440905">
+							<int key="NSCellFlags">67239424</int>
+							<int key="NSCellFlags2">0</int>
+							<string key="NSContents">Show hidden files</string>
+							<reference key="NSSupport" ref="342284850"/>
+							<reference key="NSControlView" ref="34605431"/>
+							<int key="NSButtonFlags">1211912703</int>
+							<int key="NSButtonFlags2">2</int>
+							<object class="NSCustomResource" key="NSNormalImage">
+								<string key="NSClassName">NSImage</string>
+								<string key="NSResourceName">NSSwitch</string>
+							</object>
+							<object class="NSButtonImageSource" key="NSAlternateImage">
+								<string key="NSImageName">NSSwitch</string>
+							</object>
+							<string key="NSAlternateContents"/>
+							<string key="NSKeyEquivalent"/>
+							<int key="NSPeriodicDelay">200</int>
+							<int key="NSPeriodicInterval">25</int>
+						</object>
+					</object>
+				</object>
+				<string key="NSFrameSize">{239, 54}</string>
+				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
+				<string key="NSClassName">NSView</string>
+			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -305,6 +345,22 @@
 						<reference key="destination" ref="852371847"/>
 					</object>
 					<int key="connectionID">52</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">browseAccessoryView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="34605431"/>
+					</object>
+					<int key="connectionID">56</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showHideHiddenFiles:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="34605431"/>
+					</object>
+					<int key="connectionID">57</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -459,6 +515,30 @@
 						<reference key="object" ref="744034760"/>
 						<reference key="parent" ref="974899897"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">53</int>
+						<reference key="object" ref="709791495"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="34605431"/>
+						</object>
+						<reference key="parent" ref="0"/>
+						<string key="objectName">Open Panel Accessory</string>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">54</int>
+						<reference key="object" ref="34605431"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="97440905"/>
+						</object>
+						<reference key="parent" ref="709791495"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">55</int>
+						<reference key="object" ref="97440905"/>
+						<reference key="parent" ref="34605431"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -483,6 +563,9 @@
 					<string>45.IBPluginDependency</string>
 					<string>46.IBPluginDependency</string>
 					<string>5.IBPluginDependency</string>
+					<string>53.IBPluginDependency</string>
+					<string>54.IBPluginDependency</string>
+					<string>55.IBPluginDependency</string>
 					<string>6.IBPluginDependency</string>
 					<string>7.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
@@ -520,6 +603,9 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -534,7 +620,7 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 				<reference key="dict.values" ref="0"/>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">57</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -549,9 +635,11 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 							<string>browseRepository:</string>
 							<string>cancelOperation:</string>
 							<string>changeOperation:</string>
+							<string>showHideHiddenFiles:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -564,6 +652,7 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 							<string>browseRepository:</string>
 							<string>cancelOperation:</string>
 							<string>changeOperation:</string>
+							<string>showHideHiddenFiles:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -579,6 +668,10 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 								<string key="name">changeOperation:</string>
 								<string key="candidateClassName">id</string>
 							</object>
+							<object class="IBActionInfo">
+								<string key="name">showHideHiddenFiles:</string>
+								<string key="candidateClassName">id</string>
+							</object>
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
@@ -587,12 +680,14 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>RemoteNameTextField</string>
 							<string>RemoteUrlTextField</string>
+							<string>browseAccessoryView</string>
 							<string>errorMessageTextField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSView</string>
 							<string>NSTextField</string>
 						</object>
 					</object>
@@ -602,6 +697,7 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>RemoteNameTextField</string>
 							<string>RemoteUrlTextField</string>
+							<string>browseAccessoryView</string>
 							<string>errorMessageTextField</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
@@ -613,6 +709,10 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 							<object class="IBToOneOutletInfo">
 								<string key="name">RemoteUrlTextField</string>
 								<string key="candidateClassName">NSTextField</string>
+							</object>
+							<object class="IBToOneOutletInfo">
+								<string key="name">browseAccessoryView</string>
+								<string key="candidateClassName">NSView</string>
 							</object>
 							<object class="IBToOneOutletInfo">
 								<string key="name">errorMessageTextField</string>
@@ -635,5 +735,9 @@ dGgvdG8vcmVwby5naXQvCnNzaDovL1t1c2VyQF1ob3N0Lnh6L3BhdGgvdG8vcmVwby5naXQvA</strin
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">NSSwitch</string>
+			<string key="NS.object.0">{15, 15}</string>
+		</object>
 	</data>
 </archive>

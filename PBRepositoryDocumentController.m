@@ -19,6 +19,7 @@
 	[openPanel setCanChooseDirectories:YES];
     [openPanel setDirectoryURL:Nil];
     [openPanel setAllowedFileTypes:[NSArray arrayWithObject: @"git"]];
+    [openPanel setShowsHiddenFiles:YES];
     return [openPanel runModal];    
 }
 
@@ -67,6 +68,7 @@
 	[op setCanChooseFiles:NO];
 	[op setCanChooseDirectories:YES];
 	[op setAllowsMultipleSelection:NO];
+    [op setShowsHiddenFiles:YES];
 	[op setMessage:@"Initialize a repository here:"];
 	[op setTitle:@"New Repository"];
 	if ([op runModal] == NSFileHandlingPanelOKButton)

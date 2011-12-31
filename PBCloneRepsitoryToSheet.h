@@ -16,6 +16,7 @@
 	BOOL isBare;
 	NSTextField *message;
 	NSView      *cloneToAccessoryView;
+    NSOpenPanel *cloneToSheet;
 }
 
 + (void) beginCloneRepsitoryToSheetForRepository:(PBGitRepository *)repo;
@@ -25,5 +26,7 @@
 @property BOOL isBare;
 @property(strong) IBOutlet NSTextField *message;
 @property(strong) IBOutlet NSView      *cloneToAccessoryView;
+
+- (IBAction) showHideHiddenFiles:(id)sender;
 
 @end

@@ -19,7 +19,8 @@
 @synthesize repositoryURL;
 @synthesize destinationPath;
 @synthesize errorMessage;
-@synthesize repositoryAccessoryView;
+@synthesize browseRepositoryPanelAccessoryView;
+@synthesize browseDestinationPanelAccessoryView;
 
 @synthesize isBare;
 
@@ -65,7 +66,7 @@
     [browseRepositoryPanel setCanChooseDirectories:YES];
     [browseRepositoryPanel setAllowsMultipleSelection:NO];
 	[browseRepositoryPanel setCanCreateDirectories:NO];
-	[browseRepositoryPanel setAccessoryView:repositoryAccessoryView];
+	[browseRepositoryPanel setAccessoryView:browseRepositoryPanelAccessoryView];
 	
 	browseDestinationPanel = [NSOpenPanel openPanel];
 	[browseDestinationPanel setTitle:@"Browse clone destination"];
@@ -75,6 +76,7 @@
     [browseDestinationPanel setCanChooseDirectories:YES];
     [browseDestinationPanel setAllowsMultipleSelection:NO];
 	[browseDestinationPanel setCanCreateDirectories:YES];
+	[browseDestinationPanel setAccessoryView:browseDestinationPanelAccessoryView];
 }
 
 
@@ -154,9 +156,14 @@
 
 - (IBAction) showHideHiddenFiles:(id)sender
 {
-	// This uses undocumented OpenPanel features to show hidden files (required for 10.5 support)
-	NSNumber *showHidden = [NSNumber numberWithBool:[sender state] == NSOnState];
-	[[browseRepositoryPanel valueForKey:@"_navView"] setValue:showHidden forKey:@"showsHiddenFiles"];
+    if ([sender tag] == 0)
+    {
+        [browseRepositoryPanel setShowsHiddenFiles:[sender state]];
+    }
+    else
+    {
+        [browseDestinationPanel setShowsHiddenFiles:[sender state]];
+    }
 }
 
 

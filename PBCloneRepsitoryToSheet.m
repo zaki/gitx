@@ -44,7 +44,7 @@ static PBCloneRepsitoryToSheet *sheet;
 	self.repository = repo;
 	[self window];
 
-    NSOpenPanel *cloneToSheet = [NSOpenPanel openPanel];
+    cloneToSheet = [NSOpenPanel openPanel];
     
 	[cloneToSheet setTitle:@"Clone Repository To"];
 	[cloneToSheet setPrompt:@"Clone"];
@@ -71,5 +71,12 @@ static PBCloneRepsitoryToSheet *sheet;
      }
      ];
 }
+
+#pragma mark - IBAction methods
+- (IBAction) showHideHiddenFiles:(id)sender
+{
+    [cloneToSheet setShowsHiddenFiles:[sender state]];
+}
+
 
 @end

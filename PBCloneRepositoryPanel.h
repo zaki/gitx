@@ -13,7 +13,9 @@
 	NSTextField *repositoryURL;
 	NSTextField *destinationPath;
 	NSTextField *errorMessage;
-	NSView      *repositoryAccessoryView;
+	
+    NSView      *browseRepositoryPanelAccessoryView;
+    NSView      *browseDestinationPanelAccessoryView;
 
 	NSOpenPanel *browseRepositoryPanel;
 	NSOpenPanel *browseDestinationPanel;
@@ -38,7 +40,8 @@
 @property (strong) IBOutlet NSTextField *repositoryURL;
 @property (strong) IBOutlet NSTextField *destinationPath;
 @property (strong) IBOutlet NSTextField *errorMessage;
-@property (strong) IBOutlet NSView      *repositoryAccessoryView;
+@property (strong) IBOutlet NSView      *browseRepositoryPanelAccessoryView;
+@property (strong) IBOutlet NSView      *browseDestinationPanelAccessoryView;
 
 @property (assign) BOOL isBare;
 

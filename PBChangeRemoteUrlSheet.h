@@ -15,6 +15,7 @@
 	IBOutlet NSTextField *RemoteNameTextField;
 	IBOutlet NSTextField *RemoteUrlTextField;
 	IBOutlet NSTextField *errorMessageTextField;
+	IBOutlet NSView      *browseAccessoryView;
 	NSOpenPanel *browseRemoteUrlPanel;
 	NSString    *remoteUrl;
 }
@@ -24,5 +25,6 @@
 - (IBAction) cancelOperation:(id)sender;
 - (IBAction) changeOperation:(id)sender;
 - (IBAction) browseRepository:(id)sender;
+- (IBAction) showHideHiddenFiles:(id)sender;
 
 @end
