@@ -21,7 +21,7 @@ extern NSString * const kGitXProgressErrorInfo;
 @interface PBRemoteProgressSheet : NSWindowController {
 	NSWindowController *controller;
 
-	NSArray  *arguments;
+    NSArray  *arguments;
 	NSString *title;
 	NSString *description;
 
@@ -32,6 +32,18 @@ extern NSString * const kGitXProgressErrorInfo;
 	NSProgressIndicator *progressIndicator;
 
 	NSTimer *taskTimer;
+    NSView *progressView;
+    
+    NSView *cloneProgressView;
+    NSTextField *cloneFromURLTextField;
+    NSTextField *clonetoURLTextField;
+    NSTextField *filesToCloneTextField;
+    NSTextField *filesLeftTextField;
+    NSProgressIndicator *cloneProgressIndicator;
+    NSTimer *fileStatusTimer;
+    NSURL *sourceURL;
+    NSURL *destinationURL;
+    NSNumber *sourceFilesCount;
 }
 
 + (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController;
@@ -41,6 +53,14 @@ extern NSString * const kGitXProgressErrorInfo;
 
 @property (strong) IBOutlet NSTextField         *progressDescription;
 @property (strong) IBOutlet NSProgressIndicator *progressIndicator;
+@property (strong) IBOutlet NSView *progressView;
+@property (strong) IBOutlet NSView *cloneProgressView;
+@property (strong) IBOutlet NSTextField *cloneFromURLTextField;
+@property (strong) IBOutlet NSTextField *clonetoURLTextField;
+@property (strong) IBOutlet NSTextField *filesToCloneTextField;
+@property (strong) IBOutlet NSTextField *filesLeftTextField;
+@property (strong) IBOutlet NSProgressIndicator *cloneProgressIndicator;
+
 
 
 @end

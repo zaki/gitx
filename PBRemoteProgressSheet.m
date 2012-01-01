@@ -12,7 +12,7 @@
 #import "PBGitBinary.h"
 #import "PBEasyPipe.h"
 
-
+#define WINDOW_WIDTH_ADDITION 40
 
 NSString * const kGitXProgressDescription        = @"PBGitXProgressDescription";
 NSString * const kGitXProgressSuccessDescription = @"PBGitXProgressSuccessDescription";
@@ -23,11 +23,9 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 
 
 @interface PBRemoteProgressSheet ()
-
 - (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController;
 - (void) showSuccessMessage;
 - (void) showErrorMessage;
-
 - (NSString *) progressTitle;
 - (NSString *) successTitle;
 - (NSString *) successDescription;
@@ -36,17 +34,23 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 - (NSString *) commandDescription;
 - (NSString *) standardOutputDescription;
 - (NSString *) standardErrorDescription;
-
+- (NSNumber *) filesCountAtURL:(NSURL *)url;
+- (void) updateFileStatus;
 @end
 
 
 
 @implementation PBRemoteProgressSheet
 
-
 @synthesize progressDescription;
 @synthesize progressIndicator;
-
+@synthesize progressView;
+@synthesize cloneProgressView;
+@synthesize cloneFromURLTextField;
+@synthesize clonetoURLTextField;
+@synthesize filesToCloneTextField;
+@synthesize filesLeftTextField;
+@synthesize cloneProgressIndicator;
 
 static PBRemoteProgressSheet *sheet;
 static PBGitRepository *repository;
@@ -78,24 +82,107 @@ static PBGitRepository *repository;
 	title       = theTitle;
 	description = theDescription;
 
-	[self window]; // loads the window (if it wasn't already)
+    [self window]; // loads the window (if it wasn't already)
+    self.window.contentView = Nil;
 
-	// resize window if the description is larger than the default text field
-	NSRect originalFrame = [self.progressDescription frame];
-	[self.progressDescription setStringValue:[self progressTitle]];
-	NSAttributedString *attributedTitle = [self.progressDescription attributedStringValue];
-	NSSize boundingSize = originalFrame.size;
-	boundingSize.height = 0.0f;
-	NSRect boundingRect = [attributedTitle boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
-	CGFloat heightDelta = boundingRect.size.height - originalFrame.size.height;
-	if (heightDelta > 0.0f) {
-		NSRect windowFrame = [[self window] frame];
-		windowFrame.size.height += heightDelta;
-		[[self window] setFrame:windowFrame display:NO];
-	}
+    if ([(NSString*)[arguments objectAtIndex:0] compare:@"clone"] != NSOrderedSame)
+    {
+        // resize window if the description is larger than the default text field
+        NSRect originalFrame = [self.progressDescription frame];
+        [self.progressDescription setStringValue:[self progressTitle]];
+        NSAttributedString *attributedTitle = [self.progressDescription attributedStringValue];
+        NSSize boundingSize = originalFrame.size;
+        boundingSize.height = 0.0f;
+        NSRect boundingRect = [attributedTitle boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
+        CGFloat heightDelta = boundingRect.size.height - originalFrame.size.height;
+        if (heightDelta > 0.0f) {
+            NSRect windowFrame = [[self window] frame];
+            windowFrame.size.height += heightDelta;
+            [[self window] setFrame:windowFrame display:NO];
+        }
+        progressView.frame = self.window.frame;
+        
+        self.window.contentView = progressView;
+        [self.progressIndicator startAnimation:nil];
+    }
+    else
+    {
+        NSSize boundingSize = {0,0};
+        NSRect frame;
+        NSRect attributedFrame;
+        NSAttributedString *attributedString;
+        float  maxWidth;
+        
+        sourceURL = [NSURL URLWithString:[[arguments objectAtIndex:[arguments count]-2] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+        if ([[sourceURL path] compare:@"."] == NSOrderedSame ) 
+        {
+            sourceURL = [NSURL URLWithString:[dir stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+        }
+        sourceURL = [sourceURL URLByResolvingSymlinksInPath];
+        
+        destinationURL = [NSURL URLWithString:[[arguments objectAtIndex:[arguments count]-1] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+        if ([[destinationURL path] compare:@"."] == NSOrderedSame ) 
+        {
+            destinationURL = [NSURL URLWithString:[dir stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+        }
+        destinationURL = [destinationURL URLByResolvingSymlinksInPath];
 
-	[self.progressIndicator startAnimation:nil];
-	[NSApp beginSheet:[self window] modalForWindow:[controller window] modalDelegate:self didEndSelector:nil contextInfo:nil];
+        [self.cloneFromURLTextField setStringValue:[sourceURL path]];
+        attributedString = [self.cloneFromURLTextField attributedStringValue];
+        attributedFrame  = [attributedString boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
+        NSRect cloneFromTextFieldFrame = self.cloneFromURLTextField.frame;
+        cloneFromTextFieldFrame.size.width = attributedFrame.size.width;
+        self.cloneFromURLTextField.frame = cloneFromTextFieldFrame;
+        
+        [self.clonetoURLTextField setStringValue:[destinationURL path]];
+        attributedString = [self.clonetoURLTextField attributedStringValue];
+        attributedFrame = [attributedString boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
+        NSRect clonetoTextFieldFrame = self.clonetoURLTextField.frame;
+        clonetoTextFieldFrame.size.width = attributedFrame.size.width;
+        self.clonetoURLTextField.frame = clonetoTextFieldFrame;
+        
+        if (cloneFromTextFieldFrame.size.width >= clonetoTextFieldFrame.size.width)
+        {
+            maxWidth = cloneFromTextFieldFrame.size.width;
+        }
+        else
+        {
+            maxWidth = clonetoTextFieldFrame.size.width;
+        }
+        
+        frame = self.window.frame;
+        frame.size.width = maxWidth + WINDOW_WIDTH_ADDITION;
+        frame.size.height = self.cloneProgressView.frame.size.height;
+        [self.window setFrame:frame display:YES];
+        
+        self.cloneProgressView.frame = frame;
+        
+        frame = self.cloneProgressIndicator.frame;
+        frame.size.width = maxWidth;
+        self.cloneProgressIndicator.frame = frame;
+
+        self.window.contentView = cloneProgressView;
+        
+        sourceFilesCount = [self filesCountAtURL:sourceURL];
+        [self.filesToCloneTextField setStringValue:[NSString stringWithFormat:@"Files to clone %@",sourceFilesCount]];
+        [self updateFileStatus];
+        
+        taskTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 
+                                                     target:self 
+                                                   selector:@selector(updateFileStatus:) 
+                                                   userInfo:nil 
+                                                    repeats:YES];
+
+        [self.cloneProgressIndicator setIndeterminate:NO];
+        [self.cloneProgressIndicator setBezeled:YES];
+        [self.cloneProgressIndicator setControlTint:NSBlueControlTint];
+        [self.cloneProgressIndicator setMinValue:0.0];
+        [self.cloneProgressIndicator setMaxValue:[sourceFilesCount doubleValue]];
+        [self.cloneProgressIndicator setDoubleValue:0.0];
+        [self.cloneProgressIndicator startAnimation:nil];
+    }
+
+    [NSApp beginSheet:[self window] modalForWindow:[controller window] modalDelegate:self didEndSelector:nil contextInfo:nil];
 
 	gitTask = [PBEasyPipe taskForCommand:[PBGitBinary path] withArgs:arguments inDir:dir];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskCompleted:) name:NSTaskDidTerminateNotification object:gitTask];
@@ -122,6 +209,7 @@ static PBGitRepository *repository;
 - (void) taskCompleted:(NSNotification *)notification
 {
 	[taskTimer invalidate];
+    [fileStatusTimer invalidate];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
 	[self.progressIndicator stopAnimation:nil];
@@ -150,7 +238,17 @@ static PBGitRepository *repository;
 	}
 }
 
+- (void) updateFileStatus:(NSTimer *)timer
+{
+    [self updateFileStatus];
+}
 
+- (void) updateFileStatus
+{
+    NSNumber *actDestinationFilesCount = [self filesCountAtURL:destinationURL];
+    [filesLeftTextField setStringValue:[NSString stringWithFormat:@"Files left %d", [sourceFilesCount intValue] - [actDestinationFilesCount intValue]]];
+    [self.cloneProgressIndicator setDoubleValue:[actDestinationFilesCount doubleValue]];
+}
 
 #pragma mark Messages
 
@@ -276,5 +374,21 @@ static PBGitRepository *repository;
 	return [NSString stringWithFormat:@"\n\n%@\nerror = %d", standardError, returnCode];
 }
 
+
+#pragma mark - Extension methods
+- (NSNumber *) filesCountAtURL:(NSURL *)url
+{
+    int filesCount = 0;
+    NSDirectoryEnumerator *dirEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:url
+                                                                includingPropertiesForKeys:Nil
+                                                                                   options:NSDirectoryEnumerationSkipsPackageDescendants                                                     
+                                                                              errorHandler:Nil];
+    for (NSURL *theURL in dirEnumerator) 
+    {
+            filesCount++;
+    }
+    
+    return [NSNumber numberWithInt:filesCount];    
+}
 
 @end
