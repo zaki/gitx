@@ -52,8 +52,9 @@
 					<string key="NSFrameSize">{400, 100}</string>
 					<reference key="NSSuperview"/>
 					<reference key="NSWindow"/>
+					<reference key="NSNextKeyView"/>
 				</object>
-				<string key="NSScreenRect">{{0, 0}, {1920, 1058}}</string>
+				<string key="NSScreenRect">{{0, 0}, {2560, 1418}}</string>
 				<string key="NSMaxSize">{10000000000000, 10000000000000}</string>
 				<bool key="NSWindowIsRestorable">YES</bool>
 			</object>
@@ -69,6 +70,7 @@
 						<string key="NSFrame">{{18, 16}, {364, 20}}</string>
 						<reference key="NSSuperview" ref="544883429"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<int key="NSpiFlags">16394</int>
 						<double key="NSMaxValue">100</double>
 					</object>
@@ -128,10 +130,10 @@
 						<string key="NSFrame">{{18, 27}, {364, 20}}</string>
 						<reference key="NSSuperview" ref="793048905"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="63270234"/>
+						<reference key="NSNextKeyView" ref="871875287"/>
 						<bool key="NSViewIsLayerTreeHost">YES</bool>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
-						<int key="NSpiFlags">16392</int>
+						<int key="NSpiFlags">16394</int>
 						<double key="NSMaxValue">100</double>
 					</object>
 					<object class="NSTextField" id="822602737">
@@ -186,9 +188,9 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4456448</int>
 							<string key="NSContents">Source:</string>
-							<object class="NSFont" key="NSSupport" id="212811439">
+							<object class="NSFont" key="NSSupport" id="24">
 								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">9</double>
+								<double key="NSSize">10</double>
 								<int key="NSfFlags">16</int>
 							</object>
 							<reference key="NSControlView" ref="780933260"/>
@@ -209,7 +211,7 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4456448</int>
 							<string key="NSContents">Destination:</string>
-							<reference key="NSSupport" ref="212811439"/>
+							<reference key="NSSupport" ref="24"/>
 							<reference key="NSControlView" ref="934254557"/>
 							<reference key="NSBackgroundColor" ref="382865483"/>
 							<reference key="NSTextColor" ref="200224228"/>
@@ -221,7 +223,7 @@
 						<string key="NSFrame">{{17, 71}, {366, 23}}</string>
 						<reference key="NSSuperview" ref="793048905"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="871875287"/>
+						<reference key="NSNextKeyView" ref="63270234"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="766929725">
@@ -237,16 +239,17 @@
 					<object class="NSTextField" id="63270234">
 						<reference key="NSNextResponder" ref="793048905"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{17, 45}, {366, 15}}</string>
+						<string key="NSFrame">{{17, 46}, {366, 15}}</string>
 						<reference key="NSSuperview" ref="793048905"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="731636958"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="1046045449">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4456448</int>
 							<string key="NSContents">Files left</string>
-							<reference key="NSSupport" ref="212811439"/>
+							<reference key="NSSupport" ref="24"/>
 							<reference key="NSControlView" ref="63270234"/>
 							<reference key="NSBackgroundColor" ref="382865483"/>
 							<reference key="NSTextColor" ref="200224228"/>
@@ -258,14 +261,14 @@
 						<string key="NSFrame">{{17, 9}, {366, 15}}</string>
 						<reference key="NSSuperview" ref="793048905"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="731636958"/>
+						<reference key="NSNextKeyView"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="293899512">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">4456448</int>
 							<string key="NSContents">Files to clone</string>
-							<reference key="NSSupport" ref="212811439"/>
+							<reference key="NSSupport" ref="24"/>
 							<reference key="NSControlView" ref="871875287"/>
 							<reference key="NSBackgroundColor" ref="382865483"/>
 							<reference key="NSTextColor" ref="200224228"/>

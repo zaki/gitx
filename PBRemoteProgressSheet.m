@@ -172,29 +172,12 @@ static PBGitRepository *repository;
 
         self.window.contentView = cloneProgressView;
         
-        sourceFilesCount = [self filesCountAtURL:sourceURL withRepeatTimer:NO];
+        [self.filesToCloneTextField setHidden:YES];
+        [self.filesLeftTextField setHidden:NO];
+        [self.filesLeftTextField setStringValue:@"Count Files at Source ..."];
+        [self performSelectorInBackground:@selector(countSourceFiles) withObject:self];
         
-        if ([sourceFilesCount intValue] > 0)
-        {
-            [self.filesToCloneTextField setHidden:NO];
-            [self.filesLeftTextField setHidden:NO];
-            
-            [self.filesToCloneTextField setStringValue:[NSString stringWithFormat:@"Files to clone %@",sourceFilesCount]];
-            [self updateFileStatus];
-            
-            [self.cloneProgressIndicator setIndeterminate:NO];
-            [self.cloneProgressIndicator setBezeled:YES];
-            [self.cloneProgressIndicator setControlTint:NSBlueControlTint];
-            [self.cloneProgressIndicator setMinValue:0.0];
-            [self.cloneProgressIndicator setMaxValue:[sourceFilesCount doubleValue]];
-            [self.cloneProgressIndicator setDoubleValue:0.0];
-        }
-        else
-        {
-            [self.filesToCloneTextField setHidden:YES];
-            [self.filesLeftTextField setHidden:YES];
-            [self.cloneProgressIndicator setIndeterminate:YES];   
-        }
+        [self.cloneProgressIndicator setIndeterminate:YES];   
         [self.cloneProgressIndicator startAnimation:self];
     }
 
@@ -218,6 +201,30 @@ static PBGitRepository *repository;
 	[gitTask launch];
 }
 
+- (void)countSourceFiles
+{
+    sourceFilesCount = [self filesCountAtURL:sourceURL withRepeatTimer:NO];
+
+    if ([sourceFilesCount intValue] > 0)
+    {
+        [self.filesToCloneTextField setHidden:NO];
+        [self.filesToCloneTextField setStringValue:[NSString stringWithFormat:@"Files to clone %@",sourceFilesCount]];
+        [self updateFileStatus];
+
+        [self.cloneProgressIndicator stopAnimation:self];
+        [self.cloneProgressIndicator setIndeterminate:NO];
+        [self.cloneProgressIndicator setBezeled:YES];
+        [self.cloneProgressIndicator setControlTint:NSBlueControlTint];
+        [self.cloneProgressIndicator setMinValue:0.0];
+        [self.cloneProgressIndicator setMaxValue:[sourceFilesCount doubleValue]];
+        [self.cloneProgressIndicator setDoubleValue:0.0];
+        [self.cloneProgressIndicator startAnimation:self];
+    }
+    else
+    {
+        [self.filesLeftTextField setHidden:YES]; 
+    }
+}
 
 
 #pragma mark Notifications
