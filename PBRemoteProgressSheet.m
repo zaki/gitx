@@ -13,6 +13,8 @@
 #import "PBEasyPipe.h"
 
 #define WINDOW_WIDTH_ADDITION 40
+#define STANDARD_MAX_WIDTH 366
+#define UPDATE_FILE_STATUS_INTERVAL 1.0
 
 NSString * const kGitXProgressDescription        = @"PBGitXProgressDescription";
 NSString * const kGitXProgressSuccessDescription = @"PBGitXProgressSuccessDescription";
@@ -34,7 +36,7 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 - (NSString *) commandDescription;
 - (NSString *) standardOutputDescription;
 - (NSString *) standardErrorDescription;
-- (NSNumber *) filesCountAtURL:(NSURL *)url;
+- (NSNumber *) filesCountAtURL:(NSURL *)url withRepeatTimer:(BOOL)repeat;
 - (void) updateFileStatus;
 @end
 
@@ -113,28 +115,30 @@ static PBGitRepository *repository;
         NSAttributedString *attributedString;
         float  maxWidth;
         
-        sourceURL = [NSURL URLWithString:[[arguments objectAtIndex:[arguments count]-2] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
-        if ([[sourceURL path] compare:@"."] == NSOrderedSame ) 
+        NSString *sourceURLString = [arguments objectAtIndex:[arguments count]-2];
+        if ([sourceURLString compare:@"."] == NSOrderedSame ) 
         {
-            sourceURL = [NSURL URLWithString:[dir stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+            sourceURLString = dir;
         }
+        sourceURL = [NSURL URLWithString:[sourceURLString stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
         sourceURL = [sourceURL URLByResolvingSymlinksInPath];
         
-        destinationURL = [NSURL URLWithString:[[arguments objectAtIndex:[arguments count]-1] stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
-        if ([[destinationURL path] compare:@"."] == NSOrderedSame ) 
+        NSString *destinationURLString = [arguments objectAtIndex:[arguments count]-1];
+        if ([destinationURLString compare:@"."] == NSOrderedSame ) 
         {
-            destinationURL = [NSURL URLWithString:[dir stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
+            destinationURLString = dir;
         }
+        destinationURL = [NSURL URLWithString:[destinationURLString stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
         destinationURL = [destinationURL URLByResolvingSymlinksInPath];
 
-        [self.cloneFromURLTextField setStringValue:[sourceURL path]];
+        [self.cloneFromURLTextField setStringValue:sourceURLString];
         attributedString = [self.cloneFromURLTextField attributedStringValue];
         attributedFrame  = [attributedString boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
         NSRect cloneFromTextFieldFrame = self.cloneFromURLTextField.frame;
         cloneFromTextFieldFrame.size.width = attributedFrame.size.width;
         self.cloneFromURLTextField.frame = cloneFromTextFieldFrame;
         
-        [self.clonetoURLTextField setStringValue:[destinationURL path]];
+        [self.clonetoURLTextField setStringValue:destinationURLString];
         attributedString = [self.clonetoURLTextField attributedStringValue];
         attributedFrame = [attributedString boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
         NSRect clonetoTextFieldFrame = self.clonetoURLTextField.frame;
@@ -150,6 +154,11 @@ static PBGitRepository *repository;
             maxWidth = clonetoTextFieldFrame.size.width;
         }
         
+        if (maxWidth < STANDARD_MAX_WIDTH)
+        {
+            maxWidth = STANDARD_MAX_WIDTH;
+        }
+        
         frame = self.window.frame;
         frame.size.width = maxWidth + WINDOW_WIDTH_ADDITION;
         frame.size.height = self.cloneProgressView.frame.size.height;
@@ -163,23 +172,30 @@ static PBGitRepository *repository;
 
         self.window.contentView = cloneProgressView;
         
-        sourceFilesCount = [self filesCountAtURL:sourceURL];
-        [self.filesToCloneTextField setStringValue:[NSString stringWithFormat:@"Files to clone %@",sourceFilesCount]];
-        [self updateFileStatus];
+        sourceFilesCount = [self filesCountAtURL:sourceURL withRepeatTimer:NO];
         
-        taskTimer = [NSTimer scheduledTimerWithTimeInterval:5.0 
-                                                     target:self 
-                                                   selector:@selector(updateFileStatus:) 
-                                                   userInfo:nil 
-                                                    repeats:YES];
-
-        [self.cloneProgressIndicator setIndeterminate:NO];
-        [self.cloneProgressIndicator setBezeled:YES];
-        [self.cloneProgressIndicator setControlTint:NSBlueControlTint];
-        [self.cloneProgressIndicator setMinValue:0.0];
-        [self.cloneProgressIndicator setMaxValue:[sourceFilesCount doubleValue]];
-        [self.cloneProgressIndicator setDoubleValue:0.0];
-        [self.cloneProgressIndicator startAnimation:nil];
+        if ([sourceFilesCount intValue] > 0)
+        {
+            [self.filesToCloneTextField setHidden:NO];
+            [self.filesLeftTextField setHidden:NO];
+            
+            [self.filesToCloneTextField setStringValue:[NSString stringWithFormat:@"Files to clone %@",sourceFilesCount]];
+            [self updateFileStatus];
+            
+            [self.cloneProgressIndicator setIndeterminate:NO];
+            [self.cloneProgressIndicator setBezeled:YES];
+            [self.cloneProgressIndicator setControlTint:NSBlueControlTint];
+            [self.cloneProgressIndicator setMinValue:0.0];
+            [self.cloneProgressIndicator setMaxValue:[sourceFilesCount doubleValue]];
+            [self.cloneProgressIndicator setDoubleValue:0.0];
+        }
+        else
+        {
+            [self.filesToCloneTextField setHidden:YES];
+            [self.filesLeftTextField setHidden:YES];
+            [self.cloneProgressIndicator setIndeterminate:YES];   
+        }
+        [self.cloneProgressIndicator startAnimation:self];
     }
 
     [NSApp beginSheet:[self window] modalForWindow:[controller window] modalDelegate:self didEndSelector:nil contextInfo:nil];
@@ -238,14 +254,14 @@ static PBGitRepository *repository;
 	}
 }
 
-- (void) updateFileStatus:(NSTimer *)timer
+- (void) updateFileStatusTimer:(NSTimer *)timer
 {
-    [self updateFileStatus];
+    [self performSelectorInBackground:@selector(updateFileStatus) withObject:self];
 }
 
 - (void) updateFileStatus
 {
-    NSNumber *actDestinationFilesCount = [self filesCountAtURL:destinationURL];
+    NSNumber *actDestinationFilesCount = [self filesCountAtURL:destinationURL withRepeatTimer:YES];
     [filesLeftTextField setStringValue:[NSString stringWithFormat:@"Files left %d", [sourceFilesCount intValue] - [actDestinationFilesCount intValue]]];
     [self.cloneProgressIndicator setDoubleValue:[actDestinationFilesCount doubleValue]];
 }
@@ -376,7 +392,7 @@ static PBGitRepository *repository;
 
 
 #pragma mark - Extension methods
-- (NSNumber *) filesCountAtURL:(NSURL *)url
+- (NSNumber *) filesCountAtURL:(NSURL *)url withRepeatTimer:(BOOL)repeat
 {
     int filesCount = 0;
     NSDirectoryEnumerator *dirEnumerator = [[NSFileManager defaultManager] enumeratorAtURL:url
@@ -388,7 +404,25 @@ static PBGitRepository *repository;
             filesCount++;
     }
     
+    if (repeat)
+    {
+        [self performSelectorOnMainThread:@selector(startFilesCountTimer) withObject:self waitUntilDone:YES];
+    }
+    
+    
     return [NSNumber numberWithInt:filesCount];    
 }
+
+
+- (void) startFilesCountTimer
+{
+    [fileStatusTimer invalidate];
+    fileStatusTimer = [NSTimer scheduledTimerWithTimeInterval:UPDATE_FILE_STATUS_INTERVAL 
+                                                 target:self 
+                                               selector:@selector(updateFileStatusTimer:) 
+                                               userInfo:nil 
+                                                repeats:NO];
+}
+
 
 @end
