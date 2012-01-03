@@ -1256,7 +1256,7 @@ dispatch_queue_t PBGetWorkQueue() {
         {
             arguments = [NSArray arrayWithObjects:@"push", [remotes objectAtIndex:i], [NSString stringWithFormat:@":%@",[ref shortName]], nil];
             NSString * output = [self outputForArguments:arguments retValue:&gitRetValue];
-            if (gitRetValue > 1) {
+            if (gitRetValue) {
                 NSString *message = [NSString stringWithFormat:@"There was an error deleting the remotetag: %@/%@\n\n", [remotes objectAtIndex:i],[ref shortName]];
                 [self.windowController showErrorSheetTitle:@"Delete tag on remote failed!" message:message arguments:arguments output:output];
                 retVal = NO;
