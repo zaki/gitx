@@ -182,6 +182,7 @@ static PBGitRepository *repository;
     }
 
     [NSApp beginSheet:[self window] modalForWindow:[controller window] modalDelegate:self didEndSelector:nil contextInfo:nil];
+    [self.window becomeKeyWindow];
 
 	gitTask = [PBEasyPipe taskForCommand:[PBGitBinary path] withArgs:arguments inDir:dir];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(taskCompleted:) name:NSTaskDidTerminateNotification object:gitTask];
