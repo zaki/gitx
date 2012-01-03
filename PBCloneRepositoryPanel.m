@@ -113,7 +113,9 @@
 
 - (IBAction) clone:(id)sender
 {
-	[self.errorMessage setStringValue:@""];
+	[self.window resignKeyWindow];
+    
+    [self.errorMessage setStringValue:@""];
 	
 	NSString *url = [self.repositoryURL stringValue];
 	if ([url isEqualToString:@""]) {

@@ -105,7 +105,7 @@ static PBGitRepository *repository;
         progressView.frame = self.window.frame;
         
         self.window.contentView = progressView;
-        [self.progressIndicator startAnimation:nil];
+        [self.progressIndicator startAnimation:Nil];
     }
     else
     {
@@ -178,7 +178,7 @@ static PBGitRepository *repository;
         [self performSelectorInBackground:@selector(countSourceFiles) withObject:self];
         
         [self.cloneProgressIndicator setIndeterminate:YES];   
-        [self.cloneProgressIndicator startAnimation:self];
+        [self.cloneProgressIndicator startAnimation:Nil];
     }
 
     [NSApp beginSheet:[self window] modalForWindow:[controller window] modalDelegate:self didEndSelector:nil contextInfo:nil];
@@ -212,14 +212,11 @@ static PBGitRepository *repository;
         [self.filesToCloneTextField setStringValue:[NSString stringWithFormat:@"Files to clone %@",sourceFilesCount]];
         [self updateFileStatus];
 
-        [self.cloneProgressIndicator stopAnimation:self];
+        [self.cloneProgressIndicator stopAnimation:Nil];
         [self.cloneProgressIndicator setIndeterminate:NO];
-        [self.cloneProgressIndicator setBezeled:YES];
-        [self.cloneProgressIndicator setControlTint:NSBlueControlTint];
         [self.cloneProgressIndicator setMinValue:0.0];
         [self.cloneProgressIndicator setMaxValue:[sourceFilesCount doubleValue]];
         [self.cloneProgressIndicator setDoubleValue:0.0];
-        [self.cloneProgressIndicator startAnimation:self];
     }
     else
     {
@@ -236,7 +233,7 @@ static PBGitRepository *repository;
     [fileStatusTimer invalidate];
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 
-	[self.progressIndicator stopAnimation:nil];
+	[self.progressIndicator stopAnimation:Nil];
 	[NSApp endSheet:[self window]];
 	[[self window] orderOut:self];
 
