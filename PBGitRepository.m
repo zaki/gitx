@@ -1227,14 +1227,10 @@ dispatch_queue_t PBGetWorkQueue() {
     
 	if (ref && ([ref refishType] == kGitXRemoteBranchType))
     {
-        int gitRetValue = 1;
         NSArray *arguments = [NSArray arrayWithObjects:@"push", [ref remoteName], [NSString stringWithFormat:@":%@",branchName], nil];
-        NSString * output = [self outputForArguments:arguments retValue:&gitRetValue];
-        if (gitRetValue) {
-            NSString *message = [NSString stringWithFormat:@"There was an error deleting the remotebranch: %@/%@\n\n", [ref remoteName],branchName];
-            [self.windowController showErrorSheetTitle:@"Delete remote failed!" message:message arguments:arguments output:output];
-            retVal = NO;
-        }
+        NSString *description = [NSString stringWithFormat:@"Deleting Remotebranch %@ from remote %@",branchName, [ref remoteName]];
+        NSString *title = @"Deleting Branch from remote";
+        [PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
     }
     
 	[self reloadRefs];
@@ -1247,20 +1243,15 @@ dispatch_queue_t PBGetWorkQueue() {
     
 	if (ref && ([ref refishType] == kGitXTagType) && [self hasRemotes])
     {
-        int gitRetValue = 1;
-        
         NSArray *remotes = [self remotes];
         NSArray *arguments;
         
         for (int i=0; i<[remotes count]; i++)
         {
             arguments = [NSArray arrayWithObjects:@"push", [remotes objectAtIndex:i], [NSString stringWithFormat:@":%@",[ref shortName]], nil];
-            NSString * output = [self outputForArguments:arguments retValue:&gitRetValue];
-            if (gitRetValue) {
-                NSString *message = [NSString stringWithFormat:@"There was an error deleting the remotetag: %@/%@\n\n", [remotes objectAtIndex:i],[ref shortName]];
-                [self.windowController showErrorSheetTitle:@"Delete tag on remote failed!" message:message arguments:arguments output:output];
-                retVal = NO;
-            }
+            NSString *description = [NSString stringWithFormat:@"Deleting Remotetag %@ from remote %@",[remotes objectAtIndex:i], [ref shortName]];
+            NSString *title = @"Deleting Tag from remote";
+            [PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
         }
     }
     
