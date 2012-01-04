@@ -1045,6 +1045,11 @@ dispatch_queue_t PBGetWorkQueue() {
             retValue = NO;
         }
         arguments = [NSArray arrayWithObjects:@"tag", @"-d", [ref shortName],  nil];
+        
+        // ToDo: 
+        // 1. Check if the Tag is on any Remotes
+        // 2. If is, ask for every Remote to rename (delete old and push new) the Tag with no more message Option
+        // 3. If Option is Yes, rename the tag on that remote
     }
     else if ([ref refishType] == kGitXRemoteBranchType)
     {
@@ -1248,10 +1253,26 @@ dispatch_queue_t PBGetWorkQueue() {
         
         for (int i=0; i<[remotes count]; i++)
         {
+        	int retValue = 1;
             arguments = [NSArray arrayWithObjects:@"push", [remotes objectAtIndex:i], [NSString stringWithFormat:@":%@",[ref shortName]], nil];
-            NSString *description = [NSString stringWithFormat:@"Deleting Remotetag %@ from remote %@",[remotes objectAtIndex:i], [ref shortName]];
-            NSString *title = @"Deleting Tag from remote";
-            [PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
+            NSString * output = [self outputForArguments:arguments retValue:&retValue];
+            if (retValue) {
+                NSString *message = [NSString stringWithFormat:@"Deleting Tag %@ on remote %@",[ref shortName], [remotes objectAtIndex:i]];
+                
+                NSMutableString *argumentsString = [@"git " mutableCopy];
+                
+                for (int i=0; i<[arguments count]; i++)
+                {
+                    [argumentsString appendString:[arguments objectAtIndex:i]];
+                    [argumentsString appendString:@" "];
+                }
+                
+                NSAlert *alert = [NSAlert alertWithMessageText:message
+                                                 defaultButton:nil alternateButton:nil otherButton:nil
+                                     informativeTextWithFormat:[NSString stringWithFormat:@"%@\n\n%@",argumentsString,output]
+                                  ];
+                [alert runModal];
+            }
         }
     }
     
