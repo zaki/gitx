@@ -10,9 +10,9 @@
 #import "PBGitWindowController.h"
 
 @interface PBRenameSheet ()
-- (void) showRenameSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo;
+- (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo;
 @property (strong) PBGitRepository *repository;
-@property (strong) id <PBGitRefish> startRefish;
+@property (strong) PBGitRef *refToRename;
 @end
 
 
@@ -20,11 +20,11 @@
 
 #pragma mark - Private Properties
 @synthesize repository;
-@synthesize startRefish;
+@synthesize refToRename;
 
 static PBRenameSheet *sheet;
 
-+ (void) showRenameSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo
++ (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo
 {
     if(!sheet){
         sheet = [[self alloc] initWithWindowNibName:@"PBRenameSheet"];
@@ -32,10 +32,10 @@ static PBRenameSheet *sheet;
 	[sheet showRenameSheetAtRefish:ref inRepository:repo];
 }
 
-- (void) showRenameSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo
+- (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo
 {
 	self.repository = repo;
-	self.startRefish = ref;
+	self.refToRename = ref;
 
 	[self window];
     
@@ -48,28 +48,54 @@ static PBRenameSheet *sheet;
 	[NSApp beginSheet:[self window] 
        modalForWindow:[self.repository.windowController window] 
         modalDelegate:self 
-       didEndSelector:nil contextInfo:NULL];
+       didEndSelector:nil 
+          contextInfo:nil];
 }
 
 #pragma mark IBActions
 
 - (IBAction)renameRef:(id)sender
 {
-	PBGitRef *ref = [PBGitRef refFromString:[kGitXBranchRefPrefix stringByAppendingString:[newRefNameTextField stringValue]]];
+    PBGitRef *refWithNewName;
     
-    if (![self.repository checkRefFormat:[ref ref]]) {
+    [errorMessageTextField setStringValue:@""];
+    [errorMessageTextField setHidden:YES];
+    
+    if ([refToRename refishType] == kGitXTagType)
+    {
+        refWithNewName = [PBGitRef refFromString:[kGitXTagRefPrefix stringByAppendingString:[newRefNameTextField stringValue]]];
+    } 
+    else if ([refToRename refishType] == kGitXBranchType)
+    {
+        refWithNewName = [PBGitRef refFromString:[kGitXBranchRefPrefix stringByAppendingString:[newRefNameTextField stringValue]]];
+    }
+    else if ([refToRename refishType] == kGitXRemoteBranchType)
+    {
+        NSMutableString *refPath = [NSMutableString new];
+        [refPath appendString:kGitXRemoteRefPrefix];
+        [refPath appendString:[refToRename remoteName]];
+        [refPath appendString:[NSString stringWithFormat:@"/%@",[newRefNameTextField stringValue]]];
+        refWithNewName = [PBGitRef refFromString:refPath];
+    }
+    else if ([refToRename refishType] == kGitXRemoteType)
+    {
+        refWithNewName = [PBGitRef refFromString:[kGitXRemoteRefPrefix stringByAppendingString:[newRefNameTextField stringValue]]];
+    }
+    
+    if (![self.repository checkRefFormat:[refWithNewName ref]]) {
 		[errorMessageTextField setStringValue:@"Invalid name"];
 		[errorMessageTextField setHidden:NO];
 		return;
 	}
     
-	if ([self.repository refExists:ref]) {
-		[errorMessageTextField setStringValue:[NSString stringWithFormat:@"%@ already exists",[newRefNameTextField stringValue]]];
+	if ([self.repository refExists:refWithNewName]) {
+		[errorMessageTextField setStringValue:[NSString stringWithFormat:@"%@ %@ already exists",[refWithNewName refishType], [refWithNewName shortName]]];
 		[errorMessageTextField setHidden:NO];
 		return;
 	}
 	[self cancelRenameSheet:self];
-	[self.repository renameRefAtRefish:self.startRefish withNewName:[newRefNameTextField stringValue]];
+    
+	[self.repository renameRef:self.refToRename withNewName:[newRefNameTextField stringValue]];
 }
 
 

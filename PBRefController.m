@@ -285,7 +285,12 @@
 
 - (void)showRenameSheet:(PBRefMenuItem *)sender
 {
-    [PBRenameSheet showRenameSheetAtRefish:(PBGitRef *)[sender refish] inRepository:historyController.repository];
+	if ([[sender refish] refishType] == kGitXCommitType)
+		return;
+    
+	PBGitRef *ref = (PBGitRef *)[sender refish];
+
+    [PBRenameSheet showRenameSheetAtRefish:ref inRepository:historyController.repository];
 }
 
 
