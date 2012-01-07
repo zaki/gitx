@@ -290,7 +290,7 @@
     
 	PBGitRef *ref = (PBGitRef *)[sender refish];
 
-    [PBRenameSheet showRenameSheetAtRefish:ref inRepository:historyController.repository];
+    [PBRenameSheet showRenameSheetAtRef:ref inRepository:historyController.repository];
 }
 
 

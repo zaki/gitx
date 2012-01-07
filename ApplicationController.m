@@ -481,7 +481,8 @@
         ([(NSString*)[notificationUserInfo valueForKey:@"Arg1"] compare:@"add"] == NSOrderedSame)
         )
     {
-        [[notificationUserInfo valueForKey:@"Repository"] deleteRemoteWithName:[notificationUserInfo valueForKey:@"Arg3"]];
+        PBGitRef *remoteRef = [PBGitRef refFromString:[NSString stringWithFormat:@"%@%@", kGitXRemoteRefPrefix,[notificationUserInfo valueForKey:@"Arg3"]]];
+        [[notificationUserInfo valueForKey:@"Repository"] deleteRemote:remoteRef];
     }
 }
 

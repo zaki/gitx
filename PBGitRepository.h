@@ -81,7 +81,7 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL) createBranch:(NSString *)branchName atRefish:(id <PBGitRefish>)ref;
 - (BOOL) createTag:(NSString *)tagName message:(NSString *)message atRefish:(id <PBGitRefish>)commitSHA;
 - (BOOL) deleteRemote:(PBGitRef *)ref;
-- (BOOL) deleteRemoteWithName:(NSString *)remoteName;
+- (BOOL) isRemoteConnected:(PBGitRef *)ref;
 - (BOOL) deleteRemoteBranch:(PBGitRef *)ref;
 - (BOOL) deleteRef:(PBGitRef *)ref;
 
@@ -126,7 +126,7 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL)isSHAOnHeadBranch:(NSString *)testSHA;
 - (BOOL)isRefOnHeadBranch:(PBGitRef *)testRef;
 - (BOOL)checkRefFormat:(NSString *)refName;
-- (BOOL)refExists:(PBGitRef *)ref;
+- (BOOL)refExists:(PBGitRef *)ref checkOnRemotes:(BOOL)remoteCheck;
 - (PBGitRef *)refForName:(NSString *)name;
 
 - (NSArray *) remotes;

@@ -59,24 +59,20 @@ static PBCreateTagSheet *sheet;
 - (IBAction) createTag:(id)sender
 {
 	NSString *tagName = [self.tagNameField stringValue];
+	PBGitRef *ref = [PBGitRef refFromString:[kGitXTagRefPrefix stringByAppendingString:tagName]];
 	[self.errorMessageField setHidden:YES];
 
-	NSString *refName = [@"refs/tags/" stringByAppendingString:tagName];
-	if (![self.repository checkRefFormat:refName]) {
-		[self.errorMessageField setStringValue:@"Invalid name"];
+	if (![self.repository checkRefFormat:[ref ref]]) {
+		[self.errorMessageField setStringValue:@"Invalid name!"];
 		[self.errorMessageField setHidden:NO];
 		return;
 	}
-
-	for (PBGitRevSpecifier *rev in self.repository.branches) {
-		NSString *name = [[rev ref] tagName];
-		if ([tagName isEqualToString:name]) {
-			[self.errorMessageField setStringValue:@"Tag already exists"];
-			[self.errorMessageField setHidden:NO];
-			return;
-		}
+    
+	if ([self.repository refExists:ref checkOnRemotes:YES]) {
+		[self.errorMessageField setStringValue:@"Refname already exists local or remote as a branch or tag!"];
+		[self.errorMessageField setHidden:NO];
+		return;
 	}
-
 	[self closeCreateTagSheet:sender];
 
 	NSString *message = [self.tagMessageText string];

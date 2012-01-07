@@ -10,7 +10,7 @@
 #import "PBGitWindowController.h"
 
 @interface PBRenameSheet ()
-- (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo;
+- (void) showRenameSheetAtRef:(PBGitRef*)ref inRepository:(PBGitRepository *)repo;
 @property (strong) PBGitRepository *repository;
 @property (strong) PBGitRef *refToRename;
 @end
@@ -24,15 +24,15 @@
 
 static PBRenameSheet *sheet;
 
-+ (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo
++ (void) showRenameSheetAtRef:(PBGitRef*)ref inRepository:(PBGitRepository *)repo
 {
     if(!sheet){
         sheet = [[self alloc] initWithWindowNibName:@"PBRenameSheet"];
     }
-	[sheet showRenameSheetAtRefish:ref inRepository:repo];
+	[sheet showRenameSheetAtRef:ref inRepository:repo];
 }
 
-- (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo
+- (void) showRenameSheetAtRef:(PBGitRef*)ref inRepository:(PBGitRepository *)repo
 {
 	self.repository = repo;
 	self.refToRename = ref;
@@ -83,13 +83,13 @@ static PBRenameSheet *sheet;
     }
     
     if (![self.repository checkRefFormat:[refWithNewName ref]]) {
-		[errorMessageTextField setStringValue:@"Invalid name"];
+		[errorMessageTextField setStringValue:@"Invalid name!"];
 		[errorMessageTextField setHidden:NO];
 		return;
 	}
     
-	if ([self.repository refExists:refWithNewName]) {
-		[errorMessageTextField setStringValue:[NSString stringWithFormat:@"%@ %@ already exists",[refWithNewName refishType], [refWithNewName shortName]]];
+	if ([self.repository refExists:refWithNewName checkOnRemotes:YES]) {
+		[errorMessageTextField setStringValue:@"Refname already exists local or remote as a branch or tag!"];
 		[errorMessageTextField setHidden:NO];
 		return;
 	}

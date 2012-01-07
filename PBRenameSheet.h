@@ -17,7 +17,7 @@
     IBOutlet NSTextField *errorMessageTextField;
 }
 
-+ (void) showRenameSheetAtRefish:(PBGitRef*)ref inRepository:(PBGitRepository *)repo;
++ (void) showRenameSheetAtRef:(PBGitRef*)ref inRepository:(PBGitRepository *)repo;
 
 - (IBAction) renameRef:(id)sender;
 - (IBAction) cancelRenameSheet:(id)sender;

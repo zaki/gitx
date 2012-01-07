@@ -82,13 +82,13 @@ static PBCreateBranchSheet *sheet;
 	PBGitRef *ref = [PBGitRef refFromString:[kGitXBranchRefPrefix stringByAppendingString:name]];
 
 	if (![self.repository checkRefFormat:[ref ref]]) {
-		[self.errorMessageField setStringValue:@"Invalid name"];
+		[self.errorMessageField setStringValue:@"Invalid name!"];
 		[self.errorMessageField setHidden:NO];
 		return;
 	}
 
-	if ([self.repository refExists:ref]) {
-		[self.errorMessageField setStringValue:@"Branch already exists"];
+	if ([self.repository refExists:ref checkOnRemotes:YES]) {
+		[self.errorMessageField setStringValue:@"Refname already exists local or remote as a branch or tag!"];
 		[self.errorMessageField setHidden:NO];
 		return;
 	}
