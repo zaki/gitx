@@ -8,8 +8,6 @@
 
 #import "PBChangeRemoteUrlSheet.h"
 #import "PBGitWindowController.h"
-//#import "PBRepositoryDocumentController.h"
-//#import "PBGitDefaults.h"
 
 @interface PBChangeRemoteUrlSheet ()
 - (void)showChangeRemoteUrlSheetAtRefish:(id <PBGitRefish>)ref inRepository:(PBGitRepository *)repo;
@@ -59,9 +57,8 @@ static PBChangeRemoteUrlSheet *sheet;
         
         NSString *currentPath = [RemoteUrlTextField stringValue];
         NSURL *newUrl = [NSURL URLWithString:[currentPath stringByAddingPercentEscapesUsingEncoding:NSStringEncodingConversionExternalRepresentation]];
-        NSString *remoteName = [self.startRefish shortName];
         
-        [self.repository changeRemote:remoteName toURL:newUrl];
+        [self.repository changeRemote:(PBGitRef*)self.startRefish toURL:newUrl];
     }
 }
 

@@ -156,7 +156,7 @@ dispatch_queue_t PBGetWorkQueue();
 +(bool)isLocalBranch:(NSString *)branch branchNameInto:(NSString **)name;
 
 - (NSString*) remoteUrl:(NSString*)remoteName;
-- (void) changeRemote:(NSString*)remoteName toURL:(NSURL*)newUrl;
+- (void) changeRemote:(PBGitRef *)ref toURL:(NSURL*)newUrl;
 
 
 @property (assign) BOOL hasChanged;

@@ -793,29 +793,34 @@ dispatch_queue_t PBGetWorkQueue() {
 }
 
 
-- (void) changeRemote:(NSString*)remoteName toURL:(NSURL*)newUrl
+- (void) changeRemote:(PBGitRef *)ref toURL:(NSURL*)newUrl;
 {
-	int gitRetValue = 1;
+	if ((!ref) || (![ref isRemote]))
+    {
+        return;
+    }
+    
+    int gitRetValue = 1;
     NSArray *arguments;
     NSString *output;
     
     // remember the current vaild remote URL to set back, if an error occurs
-    NSString *currentRemoteURL = [self remoteUrl:remoteName];
+    NSString *currentRemoteURL = [self remoteUrl:[ref remoteName]];
 
     // Change the URL of the remote
-    arguments = [NSArray arrayWithObjects:@"remote", @"set-url", remoteName, [newUrl path], nil];
+    arguments = [NSArray arrayWithObjects:@"remote", @"set-url",[ref remoteName], [newUrl path], nil];
     output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
     
     // Check if the new URL is valid with fetching it 
-    arguments = [NSArray arrayWithObjects:@"fetch", remoteName, nil];
+    arguments = [NSArray arrayWithObjects:@"fetch",[ref remoteName], nil];
     output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
     if (gitRetValue) 
     {
-        NSString *message = [NSString stringWithFormat:@"There was an error changing URL from Remote %@ to %@.",remoteName,[newUrl path]];
+        NSString *message = [NSString stringWithFormat:@"There was an error changing URL from Remote %@ to %@.",[ref remoteName],[newUrl path]];
         [self.windowController showErrorSheetTitle:@"URL was not changed!" message:message arguments:arguments output:output];
         
         // Change the URL of the remote back
-        arguments = [NSArray arrayWithObjects:@"remote", @"set-url", remoteName, currentRemoteURL, nil];
+        arguments = [NSArray arrayWithObjects:@"remote", @"set-url",[ref remoteName], currentRemoteURL, nil];
         output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
     }
 }
