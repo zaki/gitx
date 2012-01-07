@@ -88,7 +88,7 @@ static PBCreateBranchSheet *sheet;
 	}
 
 	if ([self.repository refExists:ref checkOnRemotes:YES]) {
-		[self.errorMessageField setStringValue:@"Refname already exists local or remote as a branch or tag!"];
+		[self.errorMessageField setStringValue:@"Refname already exists local as tag or branch or remote as tag!"];
 		[self.errorMessageField setHidden:NO];
 		return;
 	}

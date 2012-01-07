@@ -592,13 +592,13 @@ dispatch_queue_t PBGetWorkQueue() {
     {
         refShortName = [ref branchName];
     }
-    else if ([ref isRemote])
-    {
-        refShortName = [ref remoteName];
-    }
     else if ([ref isRemoteBranch])
     {
         refShortName = [ref remoteBranchName];
+    }
+    else if ([ref isRemote])
+    {
+        refShortName = [ref remoteName];
     }
     
     NSArray *arguments;
@@ -632,7 +632,7 @@ dispatch_queue_t PBGetWorkQueue() {
             if ([self isRemoteConnected:remoteRef])
             {
                 // Check remote refs/tags/ for ref
-                arguments = [NSArray arrayWithObjects:@"ls-remote", @"-h", @"-t",[repoRemotes objectAtIndex:i] ,refShortName, nil];
+                arguments = [NSArray arrayWithObjects:@"ls-remote", @"-t",[repoRemotes objectAtIndex:i] ,refShortName, nil];
                 output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
                 if (![output isEqualToString:@""])
                     return YES;
@@ -1132,7 +1132,8 @@ dispatch_queue_t PBGetWorkQueue() {
     }
     else if ([ref refishType] == kGitXRemoteBranchType)
     {
-        if (![self isRefOnHeadBranch:ref])
+        // check if ref is on head
+        if ([[self headSHA] compare:[self shaForRef:ref]])
         {
             // Remember current Head SHA to return after renaming the remotebranch
             actHeadSHA = [self headSHA];
@@ -1153,13 +1154,24 @@ dispatch_queue_t PBGetWorkQueue() {
         
         if (retValue)
         {
+            // Create an local newName-Branch to push later on the remote
+            arguments = [NSArray arrayWithObjects:@"branch", newName, nil];
+            output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
+            if (gitRetValue) {
+                NSString *message = [NSString stringWithFormat:@"There was an error creating the new local branch %@.", newName];
+                [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
+                retValue = NO;
+            }
+        }
+        
+        if (retValue)
+        {
             // Push the newName-Branch to the remote
             arguments = [NSArray arrayWithObjects:@"push", [ref remoteName], newName, nil];
             output = [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
             if (gitRetValue) {
                 NSString *message = [NSString stringWithFormat:@"There was an error pushing the new local branch %@ to the remote %@.", newName, [ref remoteName]];
                 [self.windowController showErrorSheetTitle:@"Rename failed!" message:message arguments:arguments output:output];
-                [self reloadRefs];
                 retValue = NO;
             }
         }
@@ -1267,8 +1279,8 @@ dispatch_queue_t PBGetWorkQueue() {
         return NO;
     }
     
-    NSArray *arguments = [NSArray arrayWithObjects:@"push", [ref remoteName], [NSString stringWithFormat:@":%@/%@",kGitXBranchRefPrefix,[ref shortName]], nil];
-    NSString *description = [NSString stringWithFormat:@"Deleting Remotebranch %@ from remote %@",[ref shortName], [ref remoteName]];
+    NSArray *arguments = [NSArray arrayWithObjects:@"push", [ref remoteName], [NSString stringWithFormat:@":%@",[ref remoteBranchName]], nil];
+    NSString *description = [NSString stringWithFormat:@"Deleting Remotebranch %@ from remote %@",[ref remoteBranchName], [ref remoteName]];
     NSString *title = @"Deleting Branch from remote";
     [PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
     
