@@ -12,8 +12,8 @@
 #import "PBGitBinary.h"
 #import "PBEasyPipe.h"
 
-#define WINDOW_WIDTH_ADDITION 40
-#define STANDARD_MAX_WIDTH 366
+#define WINDOW_WIDTH_ADDITION 40.0
+#define STANDARD_MAX_WIDTH 366.0
 #define UPDATE_FILE_STATUS_INTERVAL 1.0
 
 NSString * const kGitXProgressDescription        = @"PBGitXProgressDescription";
@@ -87,21 +87,31 @@ static PBGitRepository *repository;
     [self window]; // loads the window (if it wasn't already)
     self.window.contentView = Nil;
 
+    NSSize boundingSize = {0,0};
+    NSRect frame;
+    NSRect attributedFrame;
+    NSAttributedString *attributedString;
+
     if ([(NSString*)[arguments objectAtIndex:0] compare:@"clone"] != NSOrderedSame)
     {
         // resize window if the description is larger than the default text field
-        NSRect originalFrame = [self.progressDescription frame];
         [self.progressDescription setStringValue:[self progressTitle]];
-        NSAttributedString *attributedTitle = [self.progressDescription attributedStringValue];
-        NSSize boundingSize = originalFrame.size;
-        boundingSize.height = 0.0f;
-        NSRect boundingRect = [attributedTitle boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
-        CGFloat heightDelta = boundingRect.size.height - originalFrame.size.height;
-        if (heightDelta > 0.0f) {
-            NSRect windowFrame = [[self window] frame];
-            windowFrame.size.height += heightDelta;
-            [[self window] setFrame:windowFrame display:NO];
+        attributedString = [self.progressDescription attributedStringValue];
+        attributedFrame  = [attributedString boundingRectWithSize:boundingSize options:NSStringDrawingUsesLineFragmentOrigin];
+        NSRect progressDescriptionTextFieldFrame = self.progressDescription.frame;
+        
+        progressDescriptionTextFieldFrame.size.width = attributedFrame.size.width;
+        if (progressDescriptionTextFieldFrame.size.width < STANDARD_MAX_WIDTH)
+        {
+            progressDescriptionTextFieldFrame.size.width = STANDARD_MAX_WIDTH;
         }
+        self.progressDescription.frame = progressDescriptionTextFieldFrame;
+
+        frame = self.window.frame;
+        frame.size.width = self.progressDescription.frame.size.width + WINDOW_WIDTH_ADDITION;
+        frame.size.height = self.progressView.frame.size.height;
+        [self.window setFrame:frame display:YES];
+        
         progressView.frame = self.window.frame;
         
         self.window.contentView = progressView;
@@ -109,10 +119,6 @@ static PBGitRepository *repository;
     }
     else
     {
-        NSSize boundingSize = {0,0};
-        NSRect frame;
-        NSRect attributedFrame;
-        NSAttributedString *attributedString;
         float  maxWidth;
         
         NSString *sourceURLString = [arguments objectAtIndex:[arguments count]-2];
