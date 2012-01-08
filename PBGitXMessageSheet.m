@@ -81,6 +81,7 @@ static PBGitXMessageSheet *sheet;
 - (void)messageSheetForWindowDidEnd:(NSWindow*)window returnCode:(NSInteger)code contextInfo:(void *)info
 {
 	[window orderOut:Nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"SuccessMessageSheetDidOrderOut" object:nil];
 }
 
 

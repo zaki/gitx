@@ -575,7 +575,7 @@ enum  {
 	NSInteger selectedSegment = [sender selectedSegment];
 	
 	if (selectedSegment == kAddRemoteSegment) {
-		[PBAddRemoteSheet beginAddRemoteSheetForRepository:repository];
+		[PBAddRemoteSheet beginAddRemoteSheetForRepository:repository withRemoteURL:Nil];
 		return;
 	}
 	

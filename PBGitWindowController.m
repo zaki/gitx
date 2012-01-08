@@ -15,6 +15,7 @@
 #import "PBCommitHookFailedSheet.h"
 #import "PBGitXMessageSheet.h"
 #import "PBGitSidebarController.h"
+#import "PBAddRemoteSheet.h"
 
 #ifndef MAC_OS_X_VERSION_10_7
 #define NSApplicationPresentationAutoHideToolbar 0
@@ -32,7 +33,12 @@
 		return nil;
     
 	self.repository = theRepository;
+    addRemoteAfterCloneTo = NO;
+    remoteURL = nil;
     
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(cloneToInProgress:) name:@"CloneToOperationInProgress" object:Nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(successMessageSheetDidOrderOut:) name:@"SuccessMessageSheetDidOrderOut" object:Nil];
+     
 	return self;
 }
 
@@ -45,7 +51,10 @@
     
 	if (contentController)
 		[contentController removeObserver:self forKeyPath:@"status"];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
+
 - (NSApplicationPresentationOptions)window:(NSWindow *)window willUseFullScreenPresentationOptions:(NSApplicationPresentationOptions)proposedOptions
 {
     return NSApplicationPresentationAutoHideToolbar | NSApplicationPresentationFullScreen | NSApplicationPresentationAutoHideMenuBar | NSApplicationPresentationAutoHideDock;
@@ -372,6 +381,24 @@
     
 	[sourceView setFrame:sourceFrame];
 	[mainView setFrame:mainFrame];
+}
+
+
+#pragma mark - Observer methods
+- (void)cloneToInProgress:(NSNotification*)notification
+{
+    addRemoteAfterCloneTo = YES;
+    remoteURL = [[notification userInfo] objectForKey:@"CloneToPath"];
+}
+
+
+- (void)successMessageSheetDidOrderOut:(NSNotification*)notification
+{
+    if (addRemoteAfterCloneTo)
+    {
+        addRemoteAfterCloneTo = NO;
+        [PBAddRemoteSheet beginAddRemoteSheetForRepository:repository withRemoteURL:remoteURL];
+    }
 }
 
 @end

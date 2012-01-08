@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "GlobalProtocols.h"
 
 extern NSString * const kGitXProgressDescription;
 extern NSString * const kGitXProgressSuccessDescription;
@@ -46,7 +46,7 @@ extern NSString * const kGitXProgressErrorInfo;
     NSNumber *sourceFilesCount;
 }
 
-+ (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController;
++ (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController<Messages>*)windowController;
 
 + (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inRepository:(PBGitRepository *)repo;
 

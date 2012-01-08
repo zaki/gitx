@@ -82,9 +82,9 @@
 		65D58BC7132D48C2003F7290 /* PBResetSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 65D58BC6132D48C0003F7290 /* PBResetSheet.m */; };
 		770B37ED0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 770B37EC0679A11B001EADE2 /* GitTest_DataModel.xcdatamodel */; };
 		77C8280E06725ACE000B614F /* ApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 77C8280C06725ACE000B614F /* ApplicationController.m */; };
-		812F400914ACF14E0032373A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		812BDD8B14AA0B110072748D /* PBChangeRemoteUrlSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 812BDD8914AA0B110072748D /* PBChangeRemoteUrlSheet.xib */; };
 		812BDD8F14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 812BDD8E14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m */; };
+		812F400914ACF14E0032373A /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29B97324FDCFA39411CA2CEA /* AppKit.framework */; };
 		8166B9CF149E1BC0007C8619 /* PBRenameSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = 8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */; };
 		81840633149E1AA00014646A /* PBRenameSheet.xib in Resources */ = {isa = PBXBuildFile; fileRef = 81840631149E1AA00014646A /* PBRenameSheet.xib */; };
 		89087CA613A3E46B00911503 /* PBWebCommitController.m in Sources */ = {isa = PBXBuildFile; fileRef = 89087CA513A3E46B00911503 /* PBWebCommitController.m */; };
@@ -348,6 +348,7 @@
 		812BDD8A14AA0B110072748D /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PBChangeRemoteUrlSheet.xib; sourceTree = "<group>"; };
 		812BDD8D14AA0E9C0072748D /* PBChangeRemoteUrlSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBChangeRemoteUrlSheet.h; sourceTree = "<group>"; };
 		812BDD8E14AA0E9C0072748D /* PBChangeRemoteUrlSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBChangeRemoteUrlSheet.m; sourceTree = "<group>"; };
+		81401EB114B9DE12003683C1 /* GlobalProtocols.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GlobalProtocols.h; path = Controller/GlobalProtocols.h; sourceTree = "<group>"; };
 		8166B9CD149E1BC0007C8619 /* PBRenameSheet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PBRenameSheet.h; sourceTree = "<group>"; };
 		8166B9CE149E1BC0007C8619 /* PBRenameSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PBRenameSheet.m; sourceTree = "<group>"; };
 		81840632149E1AA00014646A /* English */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = English; path = English.lproj/PBRenameSheet.xib; sourceTree = "<group>"; };
@@ -980,6 +981,7 @@
 				F5E927F90E883EF600056E75 /* Commit */,
 				D82F435F111B9C6D00A25A39 /* Sheets */,
 				8998B1AB13A55A9B00121729 /* Stash */,
+				81401EB114B9DE12003683C1 /* GlobalProtocols.h */,
 				77C8280B06725ACE000B614F /* ApplicationController.h */,
 				77C8280C06725ACE000B614F /* ApplicationController.m */,
 				93CB42C00EAB7B2200530609 /* PBGitDefaults.h */,

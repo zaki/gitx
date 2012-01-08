@@ -20,9 +20,11 @@
 
 	NSOpenPanel *browseSheet;
 	NSView      *browseAccessoryView;
+    
+    NSString *remoteUrl;
 }
 
-+ (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo;
++ (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo withRemoteURL:(NSString*)url;
 
 - (IBAction) browseFolders:(id)sender;
 - (IBAction) addRemote:(id)sender;

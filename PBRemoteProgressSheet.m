@@ -25,7 +25,7 @@ NSString * const kGitXProgressErrorInfo          = @"PBGitXProgressErrorInfo";
 
 
 @interface PBRemoteProgressSheet ()
-- (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController;
+- (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController<Messages>*)windowController;
 - (void) showSuccessMessage;
 - (void) showErrorMessage;
 - (NSString *) progressTitle;
@@ -60,7 +60,7 @@ static PBGitRepository *repository;
 #pragma mark -
 #pragma mark PBRemoteProgressSheet
 
-+ (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController
++ (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController<Messages>*)windowController
 {
     if(!sheet) {
         sheet = [[self alloc] initWithWindowNibName:@"PBRemoteProgressSheet"];
@@ -77,7 +77,7 @@ static PBGitRepository *repository;
 }
 
 
-- (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController *)windowController
+- (void) beginRemoteProgressSheetForArguments:(NSArray *)args title:(NSString *)theTitle description:(NSString *)theDescription inDir:(NSString *)dir windowController:(NSWindowController<Messages>*)windowController
 {
 	controller  = windowController;
 	arguments   = args;
@@ -286,8 +286,7 @@ static PBGitRepository *repository;
 	[info appendString:[self commandDescription]];
 	[info appendString:[self standardOutputDescription]];
 
-	if ([controller respondsToSelector:@selector(showMessageSheet:infoText:)])
-		[(PBGitWindowController *)controller showMessageSheet:[self successTitle] infoText:info];
+    [(NSWindowController<Messages>*)controller showMessageSheet:[self successTitle] infoText:info];
 }
 
 
@@ -305,8 +304,7 @@ static PBGitRepository *repository;
 								   nil];
 	NSError *error = [NSError errorWithDomain:PBGitRepositoryErrorDomain code:0 userInfo:errorUserInfo];
 
-	if ([controller respondsToSelector:@selector(showErrorSheet:)])
-		[(PBGitWindowController *)controller showErrorSheet:error];
+    [(NSWindowController<Messages>*)controller showErrorSheet:error];
 }
 
 

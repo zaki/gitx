@@ -7,9 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "GlobalProtocols.h"
 
 
-@interface PBCloneRepositoryPanel : NSWindowController {
+@interface PBCloneRepositoryPanel : NSWindowController <Messages> {
 	NSTextField *repositoryURL;
 	NSTextField *destinationPath;
 	NSTextField *errorMessage;

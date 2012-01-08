@@ -935,6 +935,9 @@ dispatch_queue_t PBGetWorkQueue() {
 	NSString *description = [NSString stringWithFormat:@"Cloning the repository %@ to %@", [self projectName], path];
 	NSString *title = @"Cloning Repository";
 	[PBRemoteProgressSheet beginRemoteProgressSheetForArguments:arguments title:title description:description inRepository:self];
+    
+    NSDictionary *userInfoDict = [NSDictionary dictionaryWithObject:path forKey:@"CloneToPath"];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"CloneToOperationInProgress" object:self userInfo:userInfoDict];
 }
 
 - (void) beginAddRemote:(NSString *)remoteName forURL:(NSString *)remoteURL

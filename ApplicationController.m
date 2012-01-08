@@ -402,8 +402,7 @@
 		}
 	}
     
-    [self removeObserver:self forKeyPath:@"ErrorMessageDidEnd"];
-    [self removeObserver:self forKeyPath:@"GitCommandSent"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 /**

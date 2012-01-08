@@ -14,7 +14,7 @@
 
 @interface PBAddRemoteSheet ()
 
-- (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo;
+- (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo withRemoteURL:(NSString*)url;
 - (void) openAddRemoteSheet;
 
 @end
@@ -37,18 +37,19 @@ static PBAddRemoteSheet *sheet;
 #pragma mark -
 #pragma mark PBAddRemoteSheet
 
-+ (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo
++ (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo withRemoteURL:(NSString*)url;
 {
     if(!sheet){
         sheet = [[self alloc] initWithWindowNibName:@"PBAddRemoteSheet"];
     }
-	[sheet beginAddRemoteSheetForRepository:repo];
+	[sheet beginAddRemoteSheetForRepository:repo withRemoteURL:url];
 }
 
 
-- (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo
+- (void) beginAddRemoteSheetForRepository:(PBGitRepository *)repo withRemoteURL:(NSString*)url
 {
 	self.repository = repo;
+    remoteUrl = url;
 
 	[self window];
 	[self openAddRemoteSheet];
@@ -58,6 +59,12 @@ static PBAddRemoteSheet *sheet;
 - (void) openAddRemoteSheet
 {
 	[self.errorMessage setStringValue:@""];
+    
+    if (remoteUrl)
+    {
+        [remoteURL setStringValue:remoteUrl];
+        [remoteURL setEnabled:NO]; 
+    }
 
 	[NSApp beginSheet:[self window] modalForWindow:[self.repository.windowController window] modalDelegate:self didEndSelector:nil contextInfo:NULL];
 }
@@ -100,7 +107,7 @@ static PBAddRemoteSheet *sheet;
 {
 	[self.errorMessage setStringValue:@""];
 
-	NSString *name = [[self.remoteName stringValue] copy];
+	NSString *name = [self.remoteName stringValue];
 
 	if ([name isEqualToString:@""]) {
 		[self.errorMessage setStringValue:@"Remote name is required"];
@@ -112,7 +119,7 @@ static PBAddRemoteSheet *sheet;
 		return;
 	}
 
-	NSString *url = [[self.remoteURL stringValue] copy];
+	NSString *url = [self.remoteURL stringValue];
 	if ([url isEqualToString:@""]) {
 		[self.errorMessage setStringValue:@"Remote URL is required"];
 		return;
