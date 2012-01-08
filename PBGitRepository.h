@@ -62,6 +62,8 @@ dispatch_queue_t PBGetWorkQueue();
 	BOOL didCheckBareRepository;
 	BOOL bareRepository;
 	NSString* workingDirectory;
+    
+    PBGitRef *actRef;
 }
 @property (nonatomic, strong, readonly) PBStashController *stashController;
 @property (nonatomic, strong, readonly) PBSubmoduleController *submoduleController;

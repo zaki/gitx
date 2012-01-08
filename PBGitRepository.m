@@ -27,9 +27,14 @@
 #import "PBGitStash.h"
 #import "PBGitSubmodule.h"
 
+#define kDialogDeleteRemoteBranch @"Delete Remote Branch"
+#define kDialogDeleteRemoteTag @"Delete Remote Tag"
+
+
 NSString* PBGitRepositoryErrorDomain = @"GitXErrorDomain";
 
 @interface PBGitRepository()
+- (void)checkDeleteRemoteBranch:(PBGitRef *)ref;
 @end
 
 dispatch_queue_t PBGetWorkQueue() {
@@ -1277,6 +1282,56 @@ dispatch_queue_t PBGetWorkQueue() {
 }
 
 
+- (void)checkDeleteRemoteBranch:(PBGitRef *)ref
+{
+	if (!ref || ([ref refishType] != kGitXRemoteBranchType) )
+    {
+        return;
+    }
+    
+    if (![self isRemoteConnected:ref])
+    {
+        [[NSAlert alertWithMessageText:[NSString stringWithFormat:@"Remote %@ is not conneted!",[ref remoteName]]
+                         defaultButton:@"OK"
+                       alternateButton:nil
+                           otherButton:nil
+             informativeTextWithFormat:[NSString stringWithFormat:@"Can't remove the branch %@ from the remote %@",[ref remoteBranchName],[ref remoteName]]]
+         runModal];
+        return;
+    }
+    
+	if ([PBGitDefaults isDialogWarningSuppressedForDialog:kDialogDeleteRemoteBranch]) {
+		[self deleteRemoteBranch:ref];
+	}
+    
+	NSAlert *alert = [NSAlert alertWithMessageText:[NSString stringWithFormat:@"Delete remotebranch %@ also on remote %@?",[ref remoteBranchName],[ref remoteName] ]
+									 defaultButton:@"Delete"
+								   alternateButton:@"Cancel"
+									   otherButton:nil
+						 informativeTextWithFormat:@"Are you sure you want to remove the remotebranch %@ also on remote %@?",[ref remoteBranchName],[ref remoteName]];
+    [alert setShowsSuppressionButton:YES];
+	
+	[alert beginSheetModalForWindow:[[self windowController] window]
+					  modalDelegate:self
+					 didEndSelector:@selector(checkDeleteRemoteBranchSheetDidEnd:returnCode:contextInfo:)
+						contextInfo:Nil];
+    actRef = ref;
+}
+
+
+- (void)checkDeleteRemoteBranchSheetDidEnd:(NSAlert *)sheet returnCode:(int)returnCode contextInfo:(void  *)contextInfo
+{
+    [[sheet window] orderOut:nil];
+    
+	if ([[sheet suppressionButton] state] == NSOnState)
+        [PBGitDefaults suppressDialogWarningForDialog:kDialogDeleteRemoteBranch];
+    
+	if (returnCode == NSAlertDefaultReturn) {
+		[self deleteRemoteBranch:actRef];
+	}
+}
+
+
 - (BOOL) deleteRemoteBranch:(PBGitRef *)ref
 {
 	if (!ref || ([ref refishType] != kGitXRemoteBranchType) )
@@ -1292,6 +1347,8 @@ dispatch_queue_t PBGetWorkQueue() {
 	[self reloadRefs];
 	return YES;
 }
+
+
 
 - (BOOL) deleteRemoteTag:(PBGitRef *)ref
 {
@@ -1340,14 +1397,6 @@ dispatch_queue_t PBGetWorkQueue() {
     {
 		return [self deleteRemote:ref];
     }
-    else if ([ref refishType] == kGitXRemoteBranchType)
-    {
-		[self deleteRemoteBranch:ref];
-    }
-    else if ([ref refishType] == kGitXTagType)
-    {
-        [self deleteRemoteTag:ref];
-    }
 
 	int retValue = 1;
 	NSArray *arguments = [NSArray arrayWithObjects:@"update-ref", @"-d", [ref ref], nil];
@@ -1361,6 +1410,15 @@ dispatch_queue_t PBGetWorkQueue() {
 	[self removeBranch:[[PBGitRevSpecifier alloc] initWithRef:ref]];
 	PBGitCommit *commit = [self commitForRef:ref];
 	[commit removeRef:ref];
+
+    if ([ref refishType] == kGitXRemoteBranchType)
+    {
+		[self checkDeleteRemoteBranch:ref];
+    }
+    else if ([ref refishType] == kGitXTagType)
+    {
+        [self deleteRemoteTag:ref];
+    }
 
 	[self reloadRefs];
 	return YES;

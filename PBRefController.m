@@ -22,7 +22,8 @@
 #define kDialogConfirmPush @"Confirm Push"
 #define kDialogDeleteRef @"Delete Ref"
 #define kDialogRenameRef @"Rename Ref"
-
+#define kDialogDeleteRemoteBranch @"Delete Remote Branch"
+#define kDialogDeleteRemoteTag @"Delete Remote Tag"
 
 @implementation PBRefController
 
