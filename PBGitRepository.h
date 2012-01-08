@@ -132,6 +132,7 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL)refExists:(PBGitRef *)ref checkOnRemotesWithoutBranches:(BOOL)remoteCheck;
 - (BOOL)refExistsOnRemote:(PBGitRef*)ref remoteName:(NSString*)remote;
 - (BOOL)refExistsOnAnyRemote:(PBGitRef*)ref;
+- (BOOL)tagExistsOnRemote:(PBGitRef *)ref remoteName:(NSString *)remote;
 - (PBGitRef *)refForName:(NSString *)name;
 
 - (NSArray *) remotes;

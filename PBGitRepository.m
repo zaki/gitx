@@ -701,6 +701,24 @@ dispatch_queue_t PBGetWorkQueue() {
     return NO;
 }
 
+- (BOOL)tagExistsOnRemote:(PBGitRef *)ref remoteName:(NSString *)remote
+{
+    if ((!ref) || (![self hasRemotes]) || (![ref isTag]))
+    {
+        return NO;
+    }
+    
+    int retValue = 1;
+    // Check remote refs/tags/ for tag
+    NSArray *arguments = [NSArray arrayWithObjects:@"ls-remote", @"-t", remote, [ref tagName], nil];
+    NSString *output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
+    if (![output isEqualToString:@""])
+        return YES;
+    
+    return NO;
+}
+
+
 // useful for getting the full ref for a user entered name
 // EX:  name: master
 //       ref: refs/heads/master

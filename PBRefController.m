@@ -241,15 +241,39 @@
 	if ([[sender refish] refishType] != kGitXTagType)
 		return;
 
-	NSString *tagName = [(PBGitRef *)[sender refish] tagName];
-
+    PBGitRef *ref = (PBGitRef*)[sender refish]; 
+    NSMutableString *info = [NSMutableString new];
+    
+    NSArray *remotes = [historyController.repository remotes];
+    if (remotes)
+    {
+        for (int i=0; i<[remotes count]; i++)
+        {
+            if ([historyController.repository isRemoteConnected:[PBGitRef refFromString:[NSString stringWithFormat:@"%@%@",kGitXRemoteRefPrefix,[remotes objectAtIndex:i]]]])
+            {
+                [info appendFormat:@"On remote %@:\n%@\n\n",[remotes objectAtIndex:i],[historyController.repository tagExistsOnRemote:ref remoteName:[remotes objectAtIndex:i]]?@"Yes":@"No"];
+            }
+            else
+            {
+                [info appendFormat:@"Remote %@ is not connected!\nCan't check, if tag %@ exists.\n\n",[remotes objectAtIndex:i],[ref tagName]];
+            }
+        }
+    }
+    
 	int retValue = 1;
-	NSArray *args = [NSArray arrayWithObjects:@"tag", @"-n50", @"-l", tagName, nil];
-	NSString *info = [historyController.repository outputInWorkdirForArguments:args retValue:&retValue];
-	if (!retValue) {
-		NSString *message = [NSString stringWithFormat:@"Info for tag: %@", tagName];
-		[historyController.repository.windowController showMessageSheet:message infoText:info];
+	NSArray *args = [NSArray arrayWithObjects:@"tag", @"-n50", @"-l", [ref tagName], nil];
+	NSString *output = [historyController.repository outputInWorkdirForArguments:args retValue:&retValue];    
+	if (!retValue) 
+    {
+        [info appendFormat:@"Annotation or Commitmessage:\n%@",output];
 	}
+    else
+    {
+        [info appendFormat:@"Error:\ngit tag -n50 -l %@\n\n%@",[ref tagName],output];
+	}
+
+    NSString *message = [NSString stringWithFormat:@"Info for tag: %@", [ref tagName]];
+    [historyController.repository.windowController showMessageSheet:message infoText:info];
 }
 
 
