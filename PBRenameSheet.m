@@ -88,7 +88,7 @@ static PBRenameSheet *sheet;
 		return;
 	}
     
-	if ([self.repository refExists:refWithNewName checkOnRemotes:YES]) {
+	if ([self.repository refExists:refWithNewName checkOnRemotesWithoutBranches:YES]) {
 		[errorMessageTextField setStringValue:@"Refname already exists local as tag or branch or remote as tag!"];
 		[errorMessageTextField setHidden:NO];
 		return;

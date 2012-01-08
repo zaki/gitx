@@ -85,6 +85,7 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL) deleteRemote:(PBGitRef *)ref;
 - (BOOL) isRemoteConnected:(PBGitRef *)ref;
 - (BOOL) deleteRemoteBranch:(PBGitRef *)ref;
+- (BOOL) deleteRemoteTag:(PBGitRef *)ref;
 - (BOOL) deleteRef:(PBGitRef *)ref;
 
 - (BOOL) hasSvnRemote;
@@ -128,7 +129,9 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL)isSHAOnHeadBranch:(NSString *)testSHA;
 - (BOOL)isRefOnHeadBranch:(PBGitRef *)testRef;
 - (BOOL)checkRefFormat:(NSString *)refName;
-- (BOOL)refExists:(PBGitRef *)ref checkOnRemotes:(BOOL)remoteCheck;
+- (BOOL)refExists:(PBGitRef *)ref checkOnRemotesWithoutBranches:(BOOL)remoteCheck;
+- (BOOL)refExistsOnRemote:(PBGitRef*)ref remoteName:(NSString*)remote;
+- (BOOL)refExistsOnAnyRemote:(PBGitRef*)ref;
 - (PBGitRef *)refForName:(NSString *)name;
 
 - (NSArray *) remotes;
