@@ -86,13 +86,37 @@ static PBCreateBranchSheet *sheet;
 		[self.errorMessageField setHidden:NO];
 		return;
 	}
-
-	if ([self.repository refExists:ref checkOnRemotesWithoutBranches:YES]) {
-		[self.errorMessageField setStringValue:@"Refname already exists local as tag or branch or remote as tag!"];
-		[self.errorMessageField setHidden:NO];
-		return;
-	}
-
+    
+    NSString *refExistsReturnMessage;
+    if([self.repository refExists:ref checkOnRemotesWithoutBranches:YES resultMessage:&refExistsReturnMessage])
+    {
+        NSError  *error = [NSError errorWithDomain:PBGitRepositoryErrorDomain 
+                                              code:0
+                                          userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                    refExistsReturnMessage, NSLocalizedDescriptionKey,
+                                                    @"Select other branchname.", NSLocalizedRecoverySuggestionErrorKey,
+                                                    nil]
+                           ];
+        [[NSAlert alertWithError:error]runModal];
+        return;
+    }
+    else
+    {
+        if (refExistsReturnMessage != @"")
+        {
+           int returnButton = [[NSAlert alertWithMessageText:refExistsReturnMessage
+                             defaultButton:@"Yes"
+                           alternateButton:@"No"
+                               otherButton:nil
+                 informativeTextWithFormat:@"Still want to create the %@ %@?",[ref refishType],[ref shortName]] runModal];
+            
+            if (returnButton == NSAlertAlternateReturn)
+            {
+                return;
+            }
+        }
+    }
+	
 	[self closeCreateBranchSheet:self];
 
 	[self.repository createBranch:name atRefish:self.startRefish];

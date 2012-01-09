@@ -249,7 +249,7 @@
     {
         for (int i=0; i<[remotes count]; i++)
         {
-            if ([historyController.repository isRemoteConnected:[PBGitRef refFromString:[NSString stringWithFormat:@"%@%@",kGitXRemoteRefPrefix,[remotes objectAtIndex:i]]]])
+            if ([historyController.repository isRemoteConnected:[remotes objectAtIndex:i]])
             {
                 [info appendFormat:@"On remote %@:\n%@\n\n",[remotes objectAtIndex:i],[historyController.repository tagExistsOnRemote:ref remoteName:[remotes objectAtIndex:i]]?@"Yes":@"No"];
             }

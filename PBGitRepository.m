@@ -573,10 +573,14 @@ dispatch_queue_t PBGetWorkQueue() {
 	return YES;
 }
 
-- (BOOL) refExists:(PBGitRef *)ref checkOnRemotesWithoutBranches:(BOOL)remoteCheck
+- (BOOL)refExists:(PBGitRef *)ref checkOnRemotesWithoutBranches:(BOOL)remoteCheck resultMessage:(NSString**)result
 {
     if (!ref)
     {
+        if (result)
+        {
+            *result = @"Ref is Nil, can't progress check existence!";
+        }
         return NO;
     }
     
@@ -607,44 +611,93 @@ dispatch_queue_t PBGetWorkQueue() {
     arguments = [NSArray arrayWithObjects:@"for-each-ref", [NSString stringWithFormat:@"%@%@",kGitXBranchRefPrefix,refShortName], nil];
     output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
     if (![output isEqualToString:@""])
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"%@ exists already local as branch!",refShortName];
+        }
         return YES;
+    }
 
     // Check local refs/tags/ for ref
     arguments = [NSArray arrayWithObjects:@"for-each-ref", [NSString stringWithFormat:@"%@%@",kGitXTagRefPrefix,refShortName], nil];
     output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
     if (![output isEqualToString:@""])
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"%@ exists already local as tag!",refShortName];
+        }
         return YES;
+    }
     
     // Check if any remote exists with refShortName
     NSArray *repoRemotes = [self remotes];
     if ([repoRemotes containsObject:refShortName])
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"%@ exists already local as remotename!",refShortName];
+        }
         return YES;
-    
-    // Check Branches and Tags on any Remotes
+    }
+
+    NSMutableString *completeResults = [NSMutableString string];
+
+    // Check Tags on any Remotes
     if (repoRemotes && remoteCheck)
     {
+
         for (int i=0; i<[repoRemotes count]; i++)
         {
             // Check Remote connection
-            PBGitRef *remoteRef = [PBGitRef refFromString:[NSString stringWithFormat:@"%@%@",kGitXRemoteRefPrefix,[repoRemotes objectAtIndex:i]]];
-            if ([self isRemoteConnected:remoteRef])
+            if ([self isRemoteConnected:[repoRemotes objectAtIndex:i]])
             {
                 // Check remote refs/tags/ for ref
                 arguments = [NSArray arrayWithObjects:@"ls-remote", @"-t",[repoRemotes objectAtIndex:i] ,refShortName, nil];
                 output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
                 if (![output isEqualToString:@""])
+                {
+                    [completeResults appendFormat:@"%@ exists already as tag on remote %@!",refShortName,[repoRemotes objectAtIndex:i]];
+                    if (result)
+                    {
+                        *result = completeResults;
+                    }
                     return YES;
+                }
+            }
+            else
+            {
+                [completeResults appendFormat:@"Remote %@ is actually not connected, can't check for existing refname there!\n",[repoRemotes objectAtIndex:i]];
             }
         }
     }
     
+    if (result)
+    {
+        *result = completeResults;
+    }
     return NO;
 }
 
-- (BOOL)refExistsOnRemote:(PBGitRef *)ref remoteName:(NSString *)remote
+
+- (BOOL)refExistsOnRemote:(PBGitRef *)ref remoteName:(NSString *)remote resultMessage:(NSString**)result
 {
-    if ((!ref) || (![self hasRemotes]))
+    if (!remote)
     {
+        if (result)
+        {
+            *result = @"Remotename is Nil, can't progress check existence!";
+        }
+        return NO;
+    }
+    
+    if (!ref)
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"Ref is Nil, can't progress check existence on remote %@!",remote];
+        }
         return NO;
     }
     
@@ -663,35 +716,111 @@ dispatch_queue_t PBGetWorkQueue() {
         refShortName = [ref remoteBranchName];
     }
     
-    int retValue = 1;
-    // Check remote refs/tags/ and refs/heads for ref
-    NSArray *arguments = [NSArray arrayWithObjects:@"ls-remote", @"-t", @"-h", remote, refShortName, nil];
-    NSString *output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
-    if (![output isEqualToString:@""])
-        return YES;
-    
-    return NO;
-}
-
-- (BOOL)refExistsOnAnyRemote:(PBGitRef*)ref
-{
-    if (!ref)
+    if (![self hasRemotes])
     {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"Repository has no remotes, can't progress check existence from %@ %@ on remote %@!",[ref refishType],refShortName,remote];
+        }
         return NO;
     }
     
+    if (![self isRemoteConnected:remote])
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"Remote %@ is actually not connected, can't check for existing refname there!",remote];
+        }
+        return NO;
+    }
+    
+    int retValue = 1;
+    // Check remote refs/tags/ for ref
+    NSArray *arguments = [NSArray arrayWithObjects:@"ls-remote", @"-t", remote, refShortName, nil];
+    NSString *output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
+    if (![output isEqualToString:@""])
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"%@ exists as tag on remote %@!",refShortName,remote];
+        }
+        return YES;
+    }
+    
+    // Check remote refs/tags/ for ref
+    arguments = [NSArray arrayWithObjects:@"ls-remote", @"-h", remote, refShortName, nil];
+    output = [self outputInWorkdirForArguments:arguments retValue:&retValue];
+    if (![output isEqualToString:@""])
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"%@ exists as branch on remote %@!",refShortName,remote];
+        }
+        return YES;
+    }
+
+    return NO;
+}
+
+
+- (BOOL)refExistsOnAnyRemote:(PBGitRef*)ref resultMessage:(NSString**)result
+{
+    if (!ref)
+    {
+        if (result)
+        {
+            *result = @"Ref is Nil, can't progress check existence on any remotes!";
+        }
+        return NO;
+    }
+
+    NSMutableString *completeResult = [NSMutableString string];
+
     if ([self hasRemotes])
     {
         NSArray *repoRemotes = [self remotes];
+        NSString *oneResult;
         for (int i=0; i<[repoRemotes count]; i++)
         {
-            if ([self refExistsOnRemote:ref remoteName:[repoRemotes objectAtIndex:i]])
+            if ([self refExistsOnRemote:ref remoteName:[repoRemotes objectAtIndex:i] resultMessage:&oneResult])
+            {
+                if (oneResult)
+                {
+                    [completeResult appendString:oneResult];
+                }
+                
+                if (result)
+                {
+                    *result = completeResult;
+                }
+                
                 return YES;
+            }
+            else
+            {
+                if (oneResult)
+                {
+                    [completeResult appendString:oneResult];
+                }
+            }
         }
     }
-    
+    else
+    {
+        if (result)
+        {
+            *result = [NSString stringWithFormat:@"Repository has no remotes, can't progress check existence from %@ on any remotes!",[ref shortName]];
+        }
+        return NO;
+    }
+
+    if (result)
+    {
+        *result = completeResult;
+    }
     return NO;
 }
+
 
 - (BOOL)tagExistsOnRemote:(PBGitRef *)ref remoteName:(NSString *)remote
 {
@@ -817,7 +946,7 @@ dispatch_queue_t PBGetWorkQueue() {
 		if (remoteName && ([remoteName isKindOfClass:[NSString class]] && (![remoteName isEqualToString:@""]))) {
 			PBGitRef *remoteRef = [PBGitRef refFromString:[kGitXRemoteRefPrefix stringByAppendingString:remoteName]];
 			// check that the remote is a valid ref and exists
-			if ([self checkRefFormat:[remoteRef ref]] && [self refExists:remoteRef checkOnRemotesWithoutBranches:NO])
+			if ([self checkRefFormat:[remoteRef ref]] && [self refExists:remoteRef checkOnRemotesWithoutBranches:NO resultMessage:Nil])
 				return remoteRef;
 		}
 	}
@@ -894,17 +1023,17 @@ dispatch_queue_t PBGetWorkQueue() {
 }
 
 
-- (BOOL)isRemoteConnected:(PBGitRef *)ref
+- (BOOL)isRemoteConnected:(NSString*)remoteName
 {
-    if ((![ref isRemote]) || (![[self remotes] containsObject:[ref remoteName]]))
+    if (!remoteName)
         return NO;
     
     // Send a command to the remote and check the ExitCode
     int gitRetValue = 1;
-    NSArray *arguments = [NSArray arrayWithObjects:@"ls-remote", [ref remoteName], nil];
-    NSLog(@"Start testing connection to remote %@",[ref remoteName]);
+    NSArray *arguments = [NSArray arrayWithObjects:@"ls-remote", remoteName, nil];
+    NSLog(@"Start testing connection to remote %@",remoteName);
     [self outputInWorkdirForArguments:arguments retValue:&gitRetValue];
-    NSLog(@"Stop testing connection to remote %@",[ref remoteName]);
+    NSLog(@"Stop testing connection to remote %@",remoteName);
     if (gitRetValue)
     {
         return NO;
@@ -1385,10 +1514,10 @@ dispatch_queue_t PBGetWorkQueue() {
     
     for (int i=0; i<[remotes count]; i++)
     {
-        if ([self refExistsOnRemote:ref remoteName:[remotes objectAtIndex:i]])
+        if ([self refExistsOnRemote:ref remoteName:[remotes objectAtIndex:i] resultMessage:Nil])
         {
             BOOL remoteConnected = YES;
-            if (![self isRemoteConnected:[PBGitRef refFromString:[NSString stringWithFormat:@"%@%@",kGitXRemoteRefPrefix,[remotes objectAtIndex:i]]]])
+            if (![self isRemoteConnected:[remotes objectAtIndex:i]])
             {
                 NSString *info = [NSString stringWithFormat:@"Remote %@ is not conneted!",[remotes objectAtIndex:i]];
                 NSError  *error = [NSError errorWithDomain:PBGitRepositoryErrorDomain 
@@ -1459,7 +1588,7 @@ dispatch_queue_t PBGetWorkQueue() {
     }
     else if ([ref refishType] == kGitXTagType)
     {
-        if ([self refExistsOnAnyRemote:ref])
+        if ([self refExistsOnAnyRemote:ref resultMessage:Nil])
         {
             [self deleteRemoteTag:ref];
         }

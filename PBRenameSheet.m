@@ -88,11 +88,36 @@ static PBRenameSheet *sheet;
 		return;
 	}
     
-	if ([self.repository refExists:refWithNewName checkOnRemotesWithoutBranches:YES]) {
-		[errorMessageTextField setStringValue:@"Refname already exists local as tag or branch or remote as tag!"];
-		[errorMessageTextField setHidden:NO];
-		return;
-	}
+    NSString *refExistsReturnMessage;
+    if([self.repository refExists:refWithNewName checkOnRemotesWithoutBranches:YES resultMessage:&refExistsReturnMessage])
+    {
+        NSError  *error = [NSError errorWithDomain:PBGitRepositoryErrorDomain 
+                                              code:0
+                                          userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                    refExistsReturnMessage, NSLocalizedDescriptionKey,
+                                                    [NSString stringWithFormat:@"Select other name for %@ %@.",[refToRename refishType],[refToRename shortName]], NSLocalizedRecoverySuggestionErrorKey,
+                                                    nil]
+                           ];
+        [[NSAlert alertWithError:error]runModal];
+        return;
+    }
+    else
+    {
+        if (refExistsReturnMessage != @"")
+        {
+            int returnButton = [[NSAlert alertWithMessageText:refExistsReturnMessage
+                                                defaultButton:@"Yes"
+                                              alternateButton:@"No"
+                                                  otherButton:nil
+                                    informativeTextWithFormat:@"Still want to rename the %@ %@?",[refToRename refishType],[refToRename shortName]] runModal];
+            
+            if (returnButton == NSAlertAlternateReturn)
+            {
+                return;
+            }
+        }
+    }
+
 	[self cancelRenameSheet:self];
     
 	[self.repository renameRef:self.refToRename withNewName:[newRefNameTextField stringValue]];
