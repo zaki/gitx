@@ -36,7 +36,7 @@
 
 + (void)beginCloneRepository:(NSString *)repository toURL:(NSURL *)targetURL isBare:(BOOL)bare
 {
-	if (!repository || [repository isEqualToString:@""] || !targetURL || [[targetURL path] isEqualToString:@""])
+	if ((!repository) || [repository isEqualToString:@""] || (!targetURL) || [[targetURL path] isEqualToString:@""])
 		return;
 
 	PBCloneRepositoryPanel *clonePanel = [PBCloneRepositoryPanel panel];
