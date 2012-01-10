@@ -103,7 +103,7 @@ static PBRenameSheet *sheet;
     }
     else
     {
-        if (refExistsReturnMessage != @"")
+        if (refExistsReturnMessage)
         {
             int returnButton = [[NSAlert alertWithMessageText:refExistsReturnMessage
                                                 defaultButton:@"Yes"

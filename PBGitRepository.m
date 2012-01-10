@@ -675,7 +675,14 @@ dispatch_queue_t PBGetWorkQueue() {
     
     if (result)
     {
-        *result = completeResults;
+        if ([completeResults length])
+        {
+            *result = completeResults;
+        }
+        else
+        {
+            result = Nil;
+        }
     }
     return NO;
 }
@@ -759,6 +766,7 @@ dispatch_queue_t PBGetWorkQueue() {
         return YES;
     }
 
+    result = Nil;
     return NO;
 }
 
@@ -774,7 +782,7 @@ dispatch_queue_t PBGetWorkQueue() {
         return NO;
     }
 
-    NSMutableString *completeResult = [NSMutableString string];
+    NSMutableString *completeResults = [NSMutableString string];
 
     if ([self hasRemotes])
     {
@@ -786,12 +794,12 @@ dispatch_queue_t PBGetWorkQueue() {
             {
                 if (oneResult)
                 {
-                    [completeResult appendString:oneResult];
+                    [completeResults appendString:oneResult];
                 }
                 
                 if (result)
                 {
-                    *result = completeResult;
+                    *result = completeResults;
                 }
                 
                 return YES;
@@ -800,7 +808,7 @@ dispatch_queue_t PBGetWorkQueue() {
             {
                 if (oneResult)
                 {
-                    [completeResult appendString:oneResult];
+                    [completeResults appendString:oneResult];
                 }
             }
         }
@@ -816,7 +824,14 @@ dispatch_queue_t PBGetWorkQueue() {
 
     if (result)
     {
-        *result = completeResult;
+        if ([completeResults length])
+        {
+            *result = completeResults;
+        }
+        else
+        {
+            result = Nil;
+        }
     }
     return NO;
 }
