@@ -35,7 +35,7 @@ dispatch_queue_t PBGetWorkQueue() {
 	static dispatch_queue_t work_queue;
 	static dispatch_once_t onceToken;
 	dispatch_once(&onceToken, ^{
-		work_queue = dispatch_queue_create("PBWorkQueue", 0);
+		work_queue = dispatch_queue_create("PBWorkQueue", DISPATCH_QUEUE_CONCURRENT);
 	});
 	return work_queue;
 #else
