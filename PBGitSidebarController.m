@@ -127,7 +127,7 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
 		PBGitMenuItem *lastItem = nil;
 		for (PBGitStash *stash in newStashes) {
 			PBGitMenuItem *item = [[PBGitMenuItem alloc] initWithSourceObject:stash];
-			[stashes addChild:item];
+			[stashes addChildWithoutSort:item];
 			lastItem = item;
 		}
 		if (lastItem) {
