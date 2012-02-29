@@ -10,13 +10,7 @@
 #import "PBGitRepository.h"
 #import "PBOpenDocumentCommand.h"
 
-@interface PBSubmoduleController()
-@property (nonatomic, retain) NSArray *submodules;
-@end
-
-
 @implementation PBSubmoduleController
-@synthesize submodules;
 
 - (id) initWithRepository:(PBGitRepository *) repo {
     if ((self = [super init])){
@@ -56,7 +50,7 @@
             }
         }
         
-        self.submodules = loadedSubmodules;
+        submodules = loadedSubmodules;
     });
 }
 
@@ -120,7 +114,7 @@
 		shouldBeEnabled = NO;
 		//TODO implementation missing
 	} else {
-		shouldBeEnabled = [self.submodules count] > 0;
+		shouldBeEnabled = [submodules count] > 0;
 	}
 	return shouldBeEnabled;
 }
