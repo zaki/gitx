@@ -138,6 +138,8 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
 		[sourceView reloadData];
 	} else if ([kObservingContextSubmodules isEqualToString:(__bridge NSString *)context]) {
 		[submodules.children removeAllObjects];
+		[sourceView reloadData]; //reload now otherwise the outline view may crash while loading old objects
+		
 		NSArray *newSubmodules = [change objectForKey:NSKeyValueChangeNewKey];
 		
 		for (PBGitSubmodule *submodule in newSubmodules) {
