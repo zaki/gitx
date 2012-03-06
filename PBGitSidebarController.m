@@ -65,7 +65,8 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
 	commitViewController = [[PBGitCommitController alloc] initWithRepository:repository superController:superController];
 	stashViewController = [[PBStashContentController alloc] initWithRepository:repository superController:superController];
 	
-	[stashViewController loadView];
+	[historyViewController view]; //preload historyViewController so the contextual menus in the sidebar work
+	[stashViewController view];
 	
 	[repository addObserver:self forKeyPath:@"refs" options:0 context:@"updateRefs"];
 	[repository addObserver:self forKeyPath:@"currentBranch" options:0 context:@"currentBranchChange"];
