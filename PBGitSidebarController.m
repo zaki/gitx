@@ -84,6 +84,7 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
 	
 	[sourceView setDoubleAction:@selector(outlineDoubleClicked)];
 	[sourceView setTarget:self];
+    [self updateMetaDataForBranches];
 }
 
 - (void)closeView
@@ -162,15 +163,14 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
 		for(PBGitSVRemoteItem* remote in [remotes children]){
 			[self performSelectorInBackground:@selector(evaluateRemoteBadge:) withObject:remote];
 		}
-		
-		[self updateMetaDataforBranches:branches];
+		[self updateMetaDataForBranches];
 	}else{
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
 
 
--(void)updateMetaDataforBranches:(PBSourceViewItem *)theBranches
+-(void)updateMetaDataForBranches:(PBSourceViewItem *)theBranches
 {
     for(PBGitSVBranchItem* branch in [theBranches children]){
         if([branch isKindOfClass:[PBGitSVBranchItem class]]){
@@ -184,11 +184,15 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
                 });
             });
         }else if ([branch isKindOfClass:[PBGitSVFolderItem class]]) {
-            [self updateMetaDataforBranches: branch];
+            [self updateMetaDataForBranches: branch];
         }
     }
 }
 
+-(void)updateMetaDataForBranches
+{
+    [self updateMetaDataForBranches: branches];
+}
 
 #pragma mark Badges Methods
 

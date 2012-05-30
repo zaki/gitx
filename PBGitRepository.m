@@ -186,13 +186,13 @@ dispatch_queue_t PBGetWorkQueue() {
 {
 	config = [[PBGitConfig alloc] initWithRepositoryPath:[[self fileURL] path]];
 	self.branches = [NSMutableArray array];
-	[self reloadRefs];
 	currentBranchFilter = [PBGitDefaults branchFilter];
 	revisionList = [[PBGitHistoryList alloc] initWithRepository:self];
-	
 	resetController = [[PBGitResetController alloc] initWithRepository:self];
 	stashController = [[PBStashController alloc] initWithRepository:self];
 	submoduleController = [[PBSubmoduleController alloc] initWithRepository:self];
+    [self reloadRefs];
+    [self readCurrentBranch];
 }
 
 - (void)close
