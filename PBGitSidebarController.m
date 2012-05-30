@@ -175,8 +175,8 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
     for(PBGitSVBranchItem* branch in [theBranches children]){
         if([branch isKindOfClass:[PBGitSVBranchItem class]]){
             dispatch_async(PBGetWorkQueue(),^{
-                id ahead = [self countCommintsOf:[NSString stringWithFormat:@"origin/%@..%@",branch.revSpecifier,branch.revSpecifier]]; 
-                id behind = [self countCommintsOf:[NSString stringWithFormat:@"%@..origin/%@",branch.revSpecifier,branch.revSpecifier]];
+                id ahead = [self countCommitsOf:[NSString stringWithFormat:@"origin/%@..%@",branch.revSpecifier,branch.revSpecifier]]; 
+                id behind = [self countCommitsOf:[NSString stringWithFormat:@"%@..origin/%@",branch.revSpecifier,branch.revSpecifier]];
                 dispatch_async(dispatch_get_main_queue(),^{
                     [branch setAhead:ahead];
                     [branch setBehind:behind];
@@ -205,7 +205,7 @@ NSString *kObservingContextSubmodules = @"submodulesChanged";
 	}
 }
 
--(NSNumber *)countCommintsOf:(NSString *)range
+-(NSNumber *)countCommitsOf:(NSString *)range
 {
 	NSArray *args = [NSArray arrayWithObjects:@"rev-list", range, nil];
 	int ret;
