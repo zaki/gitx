@@ -703,7 +703,7 @@ NSString *searchString;
 
 - (void) updateSearch
 {
-    [view search:searchField update:YES direction:YES];
+    [view search:searchField update:YES grabFocus:NO direction:YES];
     [self updateSearchUI];
 }
 
@@ -725,7 +725,7 @@ NSString *searchString;
 {
     BOOL update=[[searchField stringValue] isEqualToString:searchString]? NO: YES;
     searchString=[searchField stringValue];
-    [view search:searchField update:update direction:YES];
+    [view search:searchField update:update grabFocus:YES direction:YES];
     [self updateSearchUI];
 }
 
@@ -734,9 +734,9 @@ NSString *searchString;
     NSInteger selectedSegment = [sender selectedSegment];
     
 	if (selectedSegment == 0)
-        [view search:searchField update:NO direction:NO];
+        [view search:searchField update:NO grabFocus:YES direction:NO];
 	else
-		[view search:searchField update:NO direction:YES];
+		[view search:searchField update:NO grabFocus:YES direction:YES];
 }
 
 @end
