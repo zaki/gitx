@@ -55,7 +55,10 @@
 
 - (IBAction)searchFieldChanged:(NSSearchField *)sender;
 - (IBAction)stepperPressed:(id)sender;
-  
+
+-(void)updateSearch;
+-(void)updateSearchUI;
+
 @property(strong) NSMutableArray *groups;
 @property(strong) NSString *logFormat;
 
