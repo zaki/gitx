@@ -178,6 +178,15 @@
 	[historyController.repository rebaseBranch:nil onRefish:refish];
 }
 
+#pragma mark Containing Branches
+
+- (void) containingBranches:(PBRefMenuItem *)sender
+{
+	id <PBGitRefish> refish = [sender refish];
+
+	NSString* branches = [historyController.repository containingBranchesOnRefish:refish];
+	[[NSAlert alertWithMessageText:@"Branches containing commit" defaultButton:@"OK" alternateButton:nil otherButton:nil informativeTextWithFormat:@"%@", branches] runModal];
+}
 
 #pragma mark Create Branch
 

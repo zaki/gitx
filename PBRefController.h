@@ -45,6 +45,7 @@
 - (void) diffWithHEAD:(PBRefMenuItem *)sender;
 - (void) createTag:(PBRefMenuItem *)sender;
 - (void) showTagInfoSheet:(PBRefMenuItem *)sender;
+- (void) containingBranches:(PBRefMenuItem *)sender;
 
 - (NSArray *) menuItemsForRef:(PBGitRef *)ref;
 - (NSArray *) menuItemsForCommit:(PBGitCommit *)commit;

@@ -1969,4 +1969,10 @@ dispatch_queue_t PBGetWorkQueue() {
 	return nil;
 }
 
+- (NSString*) containingBranchesOnRefish:(id <PBGitRefish>)ref
+{
+	NSString* br = [self outputForArguments:[NSArray arrayWithObjects: @"branch", @"-r", @"--contains", [ref refishName], nil]];
+
+	return(br);
+}
 @end

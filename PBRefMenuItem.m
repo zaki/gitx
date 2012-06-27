@@ -199,6 +199,10 @@
 	NSString *rebaseTitle = isOnHeadBranch ? @"Rebase commit" : [NSString stringWithFormat:@"Rebase %@ on commit", headBranchName];
 	[items addObject:[PBRefMenuItem itemWithTitle:rebaseTitle action:@selector(rebaseHeadBranch:) enabled:!isOnHeadBranch]];
 
+  // List branches containing commit
+	[items addObject:[PBRefMenuItem separatorItem]];
+	[items addObject:[PBRefMenuItem itemWithTitle:@"Containing branches" action:@selector(containingBranches:) enabled:YES]];
+
 	for (PBRefMenuItem *item in items) {
 		[item setTarget:target];
 		[item setRefish:commit];

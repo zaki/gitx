@@ -86,6 +86,7 @@ dispatch_queue_t PBGetWorkQueue();
 - (BOOL) deleteRemoteBranch:(PBGitRef *)ref;
 - (BOOL) deleteRemoteTag:(PBGitRef *)ref;
 - (BOOL) deleteRef:(PBGitRef *)ref;
+- (NSString*) containingBranchesOnRefish:(id <PBGitRefish>)ref;
 
 - (BOOL) hasSvnRemote;
 - (NSArray*) svnRemotes;
